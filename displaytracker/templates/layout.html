@@ -1,211 +1,127 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no"
-		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 		<script src="{{ url_for('static', filename='holder.js') }}"></script>
 		<script src="{{ url_for('static', filename='jquery-3.js') }}"></script>
 		<script src="{{ url_for('static', filename='popper.js') }}"></script>
-
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/sketchy/bootstrap.min.css"
-		/>
-
-
-		<link
-			rel="icon"
-			type="image/x-icon"
-			class="favicon"
-			href="
-			http://icons.iconarchive.com/icons/grafikartes/flat-retro-modern/256/rainbow-apple-logo-icon.png
-			"
-		/>
 		
-		<link
-			rel="stylesheet"
-			href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
-			integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
-			crossorigin="anonymous"
-		/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/united/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+		<link rel="icon" type="image/x-icon" class="favicon" href="
+			https://raw.githubusercontent.com/attila5287/displaytracker_img/master/dtSquare.png"/>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+			integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous" />
 
 		{% if title %}
-		<title> PythonFlaskBP | {{ title }}</title>
+		<title> DisplayTracker | {{ title }}</title>
 		{% else %}
-		<title> PythonFlaskBP</title>
+		<title> DisplayTracker | InvApp</title>
 		{% endif %}
 
 	</head>
-	<body style="background-color: #FECD82;">
-		<nav class="navbar navbar-expand-md navbar-secondary bg-brick fixed-top">
-
-			<a class="navbar-brand" href="/">
-				<img src="https://raw.githubusercontent.com/attila5287/task_app_img/master/ndo_demo.png" alt="" style="max-height: 2rem;">
-			</a>
-
-			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<i class="fas fa-arrow-circle-down text-secondary fa-2x"></i>
-			</button>
-
-			<div class="collapse navbar-collapse" id="collapsibleNavId">
-			  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-				{% if current_user.is_authenticated %}
-				<li class="nav-item">
-				<a class="nav-link" href="">Module01</a>
-				</li>				
-				<li class="nav-item">
-				  <a class="nav-link" href="">Module02</a>
-				</li>
-				{% else %}
-				<li class="nav-item">
-					<a class="nav-link" href="">
-						<i class="fas fa-clipboard-list"></i>
-						Module01Demo</a>
-					</li>				
-					<li class="nav-item">
-					  <a class="nav-link" href="">
-						  <i class="fas fa-football-ball"></i>
-						  Module02Demo</a>
-					</li>
-        {% endif %}
-				{% if current_user.is_authenticated %}
-				<!-- auth usr -->
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i>
-						NewItemUser</a>
-					<div class="dropdown-menu bg-body" aria-labelledby="dropdownId">
-						<a class="dropdown-item" href="">
-							<i class="fas fa-clipboard-check"></i>
-							Module01Item</a>
-						<a class="dropdown-item" href="">
-							<i class="fas fa-football-ball    "></i>
-							Module02Item</a>
-					</div>
-				</li>
-				{% else %}
-				<!-- not auth -->
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user-slash"></i>
-						NewItemGuest</a>
-					<div class="dropdown-menu bg-body" aria-labelledby="dropdownId">
-					  <a class="dropdown-item" href="">
-						  <i class="fas fa-clipboard-check    "></i>
-						  Module01Item</a>
-					  <a class="dropdown-item" href="
-					  
-					  ">
-						  <i class="fas fa-football-ball    "></i>
-						  Module02Item</a>
-					</div>
-				  </li>
-				  {% endif %}
-				  <li class="nav-item">
-					<a class="nav-link" href="{{ url_for('main.aboutdev') }}">
-						<i class="fas fa-pen    "></i>
-						<i class="fas fa-signature    "></i>
-						abt dev</a>
-					</li>
-			  </ul>
-			</div>
-		  </nav>
-		  <!-- CHALKBOARD INFO BAR  -->
-		  <!-- this is the part that pops up below navbar -->
-		<div class="collapse bg-dark text-dark mt-0 mb-0" id="navbarHeader" >
-			<div class="d-flex justify-content-around align-items-center mt-0 pt-4 px-2 mx-1 ">
-						<small class="text-muted p-0">
-							Code basics in stack-like diagram
-						</small>
-						<p class="text-light text-center mt-0 mb-0 p-0">
-							<i class="fas  fw fa-flag mt-0"></i>
-						</p>
-						<p class="text-light text-center mt-0 mb-0 p-0">
-							<i class="fas fa-fw fa-arrow-right"></i>
-						</p>
-						<div class="alert alert-light bg-dark border-light text-light text-center mb-1 p-1" role="alert">
-							<i class="fas fa-user    "></i>	create a user acct
-							&RightArrowLeftArrow; 
-							<i class="fas fa-database"></i> stores hash pw into db
-						</div>
-						
-						<p class="text-light text-center mt-0 mb-0 p-0">
-						<i class="fas  fa-fw fa-arrow-right mt-0"></i>
-						</p>
-
-
-						<div class="alert alert-light bg-dark border-light text-light text-center mb-1 p-1" role="alert">
-							<i class="fas fa-clipboard-list    "></i> user create obj (def: post) via forms
-							&RightArrowLeftArrow; 
-							<i class="fas fa-database    "></i> stores to db and reads when returned as a result of a query
-						</div>
-												
-						<p class="text-light text-center mt-0 mb-0 p-0">
-							<i class="fas fa-fw fa-level-down-alt mx-2 mt-0"></i>
-						</p>
-			</div>
-			<div class="d-flex flex-row-reverse justify-content-around align-items-center mt-0 pt-2 px-2 mr-2">
-				<p class="text-light text-center mt-0 mb-0 mx-2 p-0">
-					<i class="fas fa-level-down-alt  fa-rotate-90 mt-0"></i>
-				</p>
-				<div class="alert alert-light bg-dark border-light text-light text-center mb-1 p-1"  role="alert">
-					<i class="fas fa-clipboard-check    "></i> user updates items/edits or delete records &RightArrowLeftArrow; 
-					<i class="fas fa-database    "></i> db stores or removes records
-				</div>
-				
-				<p class="text-light text-center mt-0 mb-0 p-0">
-					<i class="fas  fa-fw fa-arrow-left mt-0"></i>
-				</p>
-
-				<div class="alert alert-light bg-dark border-light text-light text-center mb-1 p-1" role="alert">
-					<i class="fas fa-chart-line    "></i> user obj itself could also be edited
-					&RightArrowLeftArrow;
-					<i class="fas fa-image    "></i> db records reflecting the profile pic, email, username.
-				</div>
-				<p class="text-light text-center mt-0 mb-0 p-0">
-					<i class="fas  fa-fw fa-arrow-left mt-0"></i>
-				</p>
-				<p class="text-light text-center mt-0 mb-0 p-0">
-					<i class="fas  fa-flag-checkered mt-0"></i>
-				</p>
-
-			</div>
-		</div>
-		</div>
-		<div class="navbar navbar-dark bg-orange border-dark box-shadow mt-0">
-			<div class="container d-flex justify-content-between pt-2">
-				<a class="navbar-brand d-flex align-items-center">
-					<i class="fa fa-code mr-2 text-smaller text-muted" aria-hidden="true"> </i >
-					<small class="text-dark text-smaller text-muted"> Show Me The Code!</small>
-					<i class="fa fa-arrow-right mx-3 text-smaller text-muted" aria-hidden="true"></i>
+	<body>
+		<style>
+			.bg-purpleSeethru {
+				background-color: rgba(128, 0, 128, 0.448);
+			}
+			body {
+				padding-top: 2rem;
+				padding-bottom: 3rem;
+			}
+		</style>
+		<nav class="navbar navbar-expand-md navbar-dark bg-purpleSeethru fixed-top mb-1 px-2 pt-1">
+			<div class="container">
+				<a class="navbar-brand" href="http://bereniceauto.herokuapp.com">
+					<img src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/dtSquare.png"
+						style="height: 3rem;">
 				</a>
-				<button
-					class="navbar-toggler border-orange mt-1 p-1"
-					type="button"
-					data-toggle="collapse"
-					data-target="#navbarHeader"
-					aria-controls="navbarHeader"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-					style="border-color: #eeaa88;"
-				>
-					<i class="fas fa-chalkboard text-dark mt-1">i</i>
-				</button>
-			</div>
-		</div>
 
-		<main role="main" class="container my-2 px-0">
+				<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+					aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-arrow-circle-down fa-2x"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="collapsibleNavId">
+					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+						{% if current_user.is_authenticated %}
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<i class="fas fa-user-cog text-dark"></i>
+								UserMenu</a>
+							<div class="dropdown-menu " aria-labelledby="dropdownId">
+								<a class="dropdown-item" 
+								href="
+								{{ url_for('posts.new_post') }}
+								">
+									<i class="fas fa-envelope"></i>
+									Post | Create a post</a>
+							</div>
+							<div class="dropdown-menu " aria-labelledby="dropdownId">
+								<a class="dropdown-item" 
+								href="
+								{{ url_for('users.account') }}
+								">
+									<i class="fas fa-cogs    "></i>
+									Account | Create a post</a>
+							</div>							
+							<div class="dropdown-menu " aria-labelledby="dropdownId">
+								<a class="dropdown-item" 
+								href="
+								{{ url_for('users.account') }}
+								">
+									<i class="fas fa-sign-out-alt    "></i>
+									Log Out | </a>
+							</div>											
+						</li>
+
+						{% else %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="/register">
+								<i class="fas fa-registered text-dark"></i>
+								Register!</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="/login">
+								<i class="fas fa-registered text-dark"></i>
+								Login!</a>
+						</li>												
+
+						{% endif %}
+
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{url_for('main.about')}}">
+								<i class="fas fa-info-circle mr-auto"></i>
+								info
+								<i class="fas fa-question m-0"></i>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+				<a class="navbar-brand-disabled mr-auto" href="http://displaytracker.herokuapp.com">
+					<img src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/coloradoThemed/navbar_colorado_co_flag.ico"
+						style="height: 2rem;">
+				</a></div>
+		</nav>
+		<!-- this is only cosmetic to give a bottom border to navbar that is not gonna slide down with the real one! -->
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark mt-2 py-0">
+			-
+		</nav>
+
+
+
+		<main role="main" class="container my-1 px-0">
 			<div class="row">
 				<div class="col-sm-9">
 					{% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -216,324 +132,226 @@
 					{% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock
 					%}
 				</div>
+
+
+				<!-- SIDEBAR -->
 				<div class="col-sm-3">
-					<div class="content-section px-3 py-0">
-						<div class="container-fluid text-center my-2 py-0 px-2">
-							<div
-								class="nav-flex-column text-center"
-								style="width: fit-content; height:max-content;"
-							>
-								<img
-									src="https://raw.githubusercontent.com/attila5287/task_app_img/master/nodaysoff_menuedt.ico"
-									class="card-img-top mb-2"
-								/>
-								{% if current_user.is_authenticated %}
 
-								<a
-									class="nav-item btn btn-large bg-gold nav-link text-dark border-dark pb-2"
-									href=""
-									data-toggle="tooltip"
-									data-placement="right"
-									title="score points as you complete tasks color grouped depending on their urgency-importance levels with a score-dynamic avatar of user-preferred theme"
-									style="border-width: medium;"
-								>
-									<i class="fas fa-trophy"> Task Hero </i>
-								</a>
-								<a class="nav-item">
-									<div class="row">
-										<div class="col-xs-6">
-											<a
-												class="nav-link text-dark p b-2"
-												href=""
-												data-toggle="tooltip"
-												data-placement="right"
-												title="create a new task, select urgency-importance so app will assign points then complete to score points"
-											>
-												<i class="fas fa-dolly"> New Task </i>
-											</a>
-										</div>
-										<div class="col-xs-6">
-											<a
-												class="nav-link text-dark mb-2"
-												href=""
-												data-toggle="tooltip"
-												data-placement="right"
-												title="lists all tasks in a minimalist way with no points or colors, swipe through your TODO list fast!"
-											>
-												<i class="fas fa-list-ul"> Mini~Ma~List </i>
-											</a>
-										</div>
-									</div>
-								</a>
-								<a
-									class="nav-item btn btn-large bg-grass nav-link text-dark border-dark mb-2"
-									href=""
-									data-toggle="tooltip"
-									data-placement="right"
-									title="Plan a productive day by adding activities and try to keep up by tracking your score.A fun way to organize daily activities. Could be any day, week end, work day etc."
-									style="border-width: medium;"
-								>
-									<i class="fas fa-football-ball"> Pro Day</i>
-								</a>
+					<div class="container-fluid text-center mt-0 py-0 px-2">
 
-								<a class="nav-item">
-									<div class="row">
-										<div class="col-xs-6">
-											<a
-												class="nav-link text-dark mb-2"
-												href=""
-												data-toggle="tooltip"
-												data-placement="right"
-												title="Start planning a productive day by adding activities. Check examples on the playbook first!"
-											>
-												<i class="fas fa-chalkboard-teacher">
-													Game Plan
-												</i>
-											</a>
-										</div>
-										<div class="col-xs-6">
-											<a
-												class="nav-link text-dark mb-2"
-												href=""
-												data-toggle="tooltip"
-												data-placement="right"
-												title="sample pro-days to review, intro to activities, categories and scoring points.Game up!"
-											>
-												<i class="fas fa-book">
-													PlayBook
-												</i>
-											</a>
-										</div>
-									</div>
-								</a>
-
-								<a
-									class="nav-item btn btn-large bg-brick nav-link text-dark border-dark mb-2"
-									href=""
-									data-toggle="tooltip"
-									data-placement="right"
-									title="the art of setting goals and crossing them off your list! App will help you set goals under five key metrics then much more to track those!"
-									style="border-width: medium;"
+						<div class="nav-flex-column text-center">
+							<img class="img-fluid px-4 my-5"
+								src="https://raw.githubusercontent.com/attila5287/displaytracker_img/master/dtSquareLarge.png"
+								style="height: 10rem;"
 								>
-									<i class="fas fa-parachute-box"> SMART GoalTracker</i>
-								</a>
-								<a class="nav-item">
-									<div class="row">
-										<div class="col-xs-6">
-											<a
-												class="nav-link text-dark mb-2"
-												href=""
-												data-toggle="tooltip"
-												data-placement="right"
-												title="set a goal first by filling out the forms"
-											>
-												<i class="fas fa-crosshairs">
-													Set A Goal
-												</i>
-											</a>
-										</div>
-										<div class="col-xs-6">
-											<a
-												class="nav-link text-dark mb-2"
-												href=""
-												data-toggle="tooltip"
-												data-placement="right"
-												title="about SMART:"
-											>
-												<i class="fas fa-binoculars"> Track'N</i>
-											</a>
-										</div>
-									</div>
-								</a>
+								<h3>
+										Hello World! 
+								</h3>
+								<style>
+									.bg-orchid {
 
-								<a
-									class="nav-item btn btn-large bg-sky nav-link text-dark border-dark mb-2"
-									href=""
-									data-toggle="tooltip"
-									data-placement="right"
-									title="introduced by Nancy Ratey, app will take you through this self-coaching strategy step by step to structure a sustainable strategy with easy-to-remember mechanics."
-									style="border-width: medium;"
-								>
-									<i class="fas fa-puzzle-piece">
-										ANSWER Self-Coaching
-									</i>
-								</a>
-								<a
-									class="nav-item btn btn-small bg-orange nav-link text-dark border-dark mb-2"
-									href=""
-									data-toggle="tooltip"
-									data-placement="right"
-									title="generates random cards with quotes from inspirational figures, authors, writers, motivational speakers, personal coaches; 1oo% dev's choices!"
-									style="border-width: medium;"
-								>
-									<i class="fas fa-quote-left"> got Inspired? </i>
-									<i class="fas fa-quote-right"></i>
-								</a>
-								<div class="row">
-									<div class="col-xs-6">
-										<a
-											class="nav-item nav-link text-dark col-md-10"
-											href="{{ url_for('users.account') }}"
-										>
-											<i class="fas fa-cogs mr-2"> Account</i>
-										</a>
-									</div>
-									<div class="col-xs-6">
-										<a
-											class="nav-item nav-link text-dark2"
-											href="{{ url_for('users.logout') }}"
-										>
-											<i class="fas fa-sign-out-alt mr-2"> Logout</i></a
-										>
-									</div>
-								</div>
+										background-color: orchid;
+									}
+									.border-orchid {
+										border-color: orchid;
+									}																		
+									.text-orchid {
+										color: orchid;
+									}
+								</style>
+								<p class="text-orchid my-0" style="font-style: italic;">
+									<i class="fas fa-robot fa-2x my-0 text-dark"></i>
+									developed for helping restock inventory items!
+								</p>
+							<div class=" container-fluid">
 
-								{% else %}
-								<a
-									class="nav-item btn btn-large bg-orange nav-link text-dark border-dark mb-2"
-									href="{{ url_for('main.about') }}"
-									data-toggle="tooltip"
-									data-placement="right"
-									title="info abt app: complete tasks grouped under urgency-importance and score points accordingly,  TODO"
-									style="border-width: medium;"
-								>
-									<img
-										src="https://raw.githubusercontent.com/attila5287/task_app_img/master/noDaysOff_task_info.ico"
-										style="height: 2rem;"
-									/>
-								</a>
-								<a
-									class="nav-item btn btn-large bg-orange nav-link text-dark border-dark mb-2"
-									href="{{ url_for('users.register') }}"
-									data-toggle="tooltip"
-									data-placement="right"
-									title="complete tasks grouped under urgency-importance and score points accordingly,  TODO"
-									style="border-width: medium;"
-								>
-									<img
-										src="https://raw.githubusercontent.com/attila5287/task_app_img/master/noDaysOff_register.ico"
-										style="height: 2rem;"
-									/>
-								</a>
-								<a
-									class="nav-item btn btn-large bg-orange nav-link text-dark border-dark mb-2"
-									href="{{ url_for('users.login') }}"
-									data-toggle="tooltip"
-									data-placement="right"
-									title="complete tasks grouped under urgency-importance and score points accordingly,  TODO"
-									style="border-width: medium;"
-								>
-									<img
-										src="https://raw.githubusercontent.com/attila5287/task_app_img/master/noDaysOff_login.ico"
-										style="height: 2rem;"
-									/>
-								</a>
 
-								{% endif %}
+							{% if current_user.is_authenticated %}
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link border-success py-1 mt-2"
+								href="" data-toggle="tooltip" data-placement="right"
+								title="a python flask app developed tailor-made to meet the needs of an overseas auto export company operate in coordination via desktop or mobile internet platform"
+								style="border-width: medium;border-radius: 12px;border-width: medium;">
 
-								<img
-									class="card-img-top mb-2"
-									src="https://raw.githubusercontent.com/attila5287/task_app_img/master/nodaysoff_menu_bottomedt.ico"
-								/> 
+								<i class="fas fa-user-cog fa-2x"></i>
+									<i class="text-small">UserMenu
 
-								<div class="card border-body">
-									<div class="card-body bg-body border-body p-1">
-										<small
-											class="card-subtitle text-muted"
-											style="font-style: italic;"
-										> blueprinted by: 										
-										<i class="fa fa-code-branch text-muted ml-2" aria-hidden="true"
-										> attila#52 </i>
-									</small>
-									</div>
-								</div>
-							</div>
+								</i>
+
+							</a>
+
+
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link   border-primary pb-2 mt-2"
+								href="" data-toggle="tooltip" data-placement="right"
+								title="profiler collects user input via forms" style="border-width: medium;border-radius: 9px;">
+								<i class="fas fa-ship"></i>
+								Ship Car
+							</a>
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link   border-primary pb-2 mt-2"
+								href="" data-toggle="tooltip" data-placement="right"
+								title="display cars" style="border-width: medium;border-radius: 9px;">
+								<i class="fas fa-car"></i>
+								My Cars
+							</a>
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link   border-primary pb-2 mt-2"
+								href="{{url_for('main.home')}}" data-toggle="tooltip" data-placement="right"
+								title="profiler collects user input via forms" style="border-width: medium;border-radius: 9px;">
+								<i class="fa fa-envelope" aria-hidden="true"></i>
+								Announcements
+							</a>							
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link   border-primary pb-2 mt-2"
+								href="{{url_for('users.account')}}" data-toggle="tooltip" data-placement="right"
+								title="change user preferences or records"
+								 style="border-width: medium;border-radius: 9px;">
+									<i class="fas fa-cogs mr-2"> Account</i>
+							</a>							
+
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link   border-primary pb-2 mt-2"
+								href="{{url_for('users.logout')}}" data-toggle="tooltip" data-placement="right"
+								
+								title="logout current user"
+								 style="border-width: medium;border-radius: 9px;">
+									<i class="fas fa-sign-out-alt mr-2"> Logout</i>
+							</a>							
+
+							{% else %}
+							<a class="nav-item btn btn-large btn-secondary bg-orchid btn-rounded nav-link bg-orchid border-dark py-1 mt-2"
+								href="" data-toggle="tooltip" data-placement="right"
+								title="a python flask app that scraps indeed job postings fast and displays with a mobile-friendly easy-on-eyes design. *Remake of original DU Coding Bootcamp final project*"
+								style="border-width: medium;border-radius: 12px;border-width: medium;">
+
+								<i class="fas fa-map-signs fa-2x text-light mt-1">
+									SiteMap
+								</i>
+
+							</a>
+
+
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link border-secondary pb-2 mt-2"
+								href="{{ url_for('main.about') }}" data-toggle="tooltip" data-placement="right"
+								title="information about app" style="border-width: medium;border-radius: 9px;">
+
+
+								<i class="fas fa-info">
+									<strong>
+										Info
+									</strong>
+								</i>
+
+							</a>
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link border-secondary pb-2 mt-2"
+								href="{{ url_for('users.register') }}" data-toggle="tooltip" data-placement="right"
+								title="register to enjoy user features" style="border-width: medium;border-radius: 9px;">
+								<i class="fas fa-user-alt-slash"> Register</i>
+							</a>
+
+							<a class="nav-item btn btn-large btn-dark btn-rounded nav-link border-secondary pb-2 mt-2"
+								href="{{ url_for('users.login') }}" data-toggle="tooltip" data-placement="right"
+								title="login if registered user already" style="border-width: medium;border-radius: 9px;">
+								<i class="fa fa-user-plus mr-2" aria-hidden="true"> Login</i>
+							</a>
+
+							{% endif %}
+														<img class="img-fluid px-4 my-5"
+								src="https://raw.githubusercontent.com/attila5287/displaytracker_img/master/dtSquareLarge.png"
+								style="height: 10rem;"
+								>
 						</div>
+
+
+
 					</div>
 				</div>
+			</div>
 			</div>
 		</main>
-		
 
-		<footer class="footer">
-			<div class="row bg-body">
-				<div class="col-sm-6 offset-sm-3">
-					<div class="d-flex flex-row justify-content-around bg-body text-muted text-center text-bottom my-0">
-						<a> &middot;</a>
-						<a>BoilerPlate </a><a> &middot;</a>
-						<a>BluePrint </a><a> &middot;</a>
-						<a>by Attila Turkoz </a><a> &middot;</a>
-						<a>Github: @attila5287 </a><a> &middot;</a>
-						<a>Full Stack Web App </a><a> &middot;</a>
+
+		<footer class="footer mt-2 no-print">
+			<div class="row">
+				<div class="col-sm-4">
+					<img class="p-0 float-right"
+						src="https://raw.githubusercontent.com/attila5287/displaytracker_img/master/loadingRedGears/jam_favIcon_png256_tri.png" alt=""
+						style="height: 6rem;">
+				</div>
+
+				<div class="col-sm-2">
+					<div class="d-flex flex-column justify-content-around text-danger text-center">
+						<a>DisplayTracker</a>
+						<a>Full Stack App </a>
+						<a>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="d-flex flex-column justify-content-between text-danger text-center">
+						<a>Heroku SalesForce Server</a>
+						<a>Mobile Friendly Design</a>
 					</div>
 				</div>
 			</div>
-				<div class="row bg-body">
-					<div class="col-sm-8 offset-sm-2">
-						<div class="d-flex flex-row justify-content-between bg-body text-muted text-bottom mt-0">
-							<a> &middot;</a><a>Python Object Oriented Programming</a><a>&middot;</a>
-							<a>Flask Web FrameWork</a><a>&middot;</a>
-							<a>PostgreSQL Database</a><a>&middot;</a>
-							<a>Heroku Server (SalesForce)</a><a>&middot;</a>
-							<a>Bootstrap Front End</a><a>&middot;</a>
-						</div>
-					</div>
-				</div>
 		</footer>
 
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+		</script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+		</script>
 		<style>
-			.bg-body {
-				background-color: #fecd82;
-			  }
-			  .border-body {
-				border-color: #fecd82;
+			.border-body {
 				border-width: medium;
-			  }
-			  .border-brick {
-				border-color: rgb(212, 125, 119);
-			  }			  
-			  .bg-grass {
-				background-color: rgba(170, 177, 130, 0.877);
-			  }
-			  .bg-sky {
-				background-color: rgba(152, 170, 199, 0.883);
-			  }
-			  .bg-orange {
-				background-color: #eeaa88;
-			  }
-			  .bg-bisque {
-				background-color: rgb(250, 208, 184);
-			  }
-			  .bg-brick {
-				background-color: rgb(212, 125, 119);
-			  }
-			  .bg-gold {
-				background-color: rgba(238, 156, 79, 0.966);
-			  }
-			  .bg-silver {
-				background-color: rgba(221, 226, 225, 0.932);
-			  }
-			  html {
+			}
+
+			html {
 				position: relative;
 				min-height: 100%;
-			  }
-			  body {
-				margin-bottom: 60px; /* Margin bottom by footer height */
-			  }
-			  .footer {
+			}
+
+			body {
+				margin-top: 20px;
+				margin-bottom: 60px;
+				/* Margin bottom by footer height */
+			}
+
+			.footer {
 				position: absolute;
 				bottom: 0;
 				width: 100%;
-				height: 20px; /* Set the fixed height of the footer here */
-				line-height: 20px; /* Vertically center the text there */
-			  }
-			  
+				height: 20px;
+				/* Set the fixed height of the footer here */
+				line-height: 20px;
+				/* Vertically center the text there */
+			}
+
+			.fa-ul li {
+				padding-left: 12px;
+				font-family: Tahoma, sans-serif;
+				font-weight: normal;
+				text-align: left;
+				font-size: 60%;
+			}
+
+		a.card-title {
+		color:darkorchid;
+		font-size: 2rem;
+		font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-weight: bold;
+		}
+		a.card-title:hover {
+			color: #428bca;
+			text-decoration: none;
+		}
+
+		
+
 		</style>
 
 	</body>
+
 </html>
+
+	          

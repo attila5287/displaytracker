@@ -1,11 +1,11 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from pythonFlaskApp import db, bcrypt
-from pythonFlaskApp.models import User, Post
-from pythonFlaskApp.users.forms import (
+from displaytracker import db, bcrypt
+from displaytracker.models import User, Post
+from displaytracker.users.forms import (
     RegistrationForm, LoginForm, UpdateAccountForm,RequestResetForm, ResetPasswordForm
 )
-from pythonFlaskApp.users.utils import save_picture
+from displaytracker.users.utils import save_picture
 
 users = Blueprint('users', __name__)
 

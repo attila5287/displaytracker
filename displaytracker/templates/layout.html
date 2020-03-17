@@ -42,7 +42,7 @@
 					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
 						{% if current_user.is_authenticated %}
-
+						<!-- USER_MENU_NAVBAR -->
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">
@@ -54,26 +54,38 @@
 								{{ url_for('posts.new_post') }}
 								">
 									<i class="fas fa-envelope"></i>
-									Post | Create a post</a>
-							</div>
-							<div class="dropdown-menu " aria-labelledby="dropdownId">
+									<strike>Post</strike> | TestDatabase
+								</a>
 								<a class="dropdown-item" 
 								href="
 								{{ url_for('users.account') }}
 								">
 									<i class="fas fa-cogs    "></i>
-									Account | Create a post</a>
-							</div>							
+									Account | ProfPicEmail</a>									
+								<a class="dropdown-item" 
+								href="
+								{{ url_for('users.logout') }}
+								">
+									<i class="fas fa-sign-out-alt    "></i>
+									Log Out | GoodBye</a>									
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<i class="fas fa-boxes text-dark"></i>
+								Inventory</a>
 							<div class="dropdown-menu " aria-labelledby="dropdownId">
 								<a class="dropdown-item" 
 								href="
-								{{ url_for('users.account') }}
+								{{ url_for('posts.new_post') }}
 								">
-									<i class="fas fa-sign-out-alt    "></i>
-									Log Out | </a>
-							</div>											
-						</li>
+									<i class="fas fa-envelope"></i>
+									<strike>Post</strike> | TestDatabase
+								</a>
 
+							</div>
+						</li>
 						{% else %}
 
 						<li class="nav-item">
@@ -133,22 +145,20 @@
 									src="https://raw.githubusercontent.com/attila5287/displaytracker_img/master/sidebar_denver_clean.png"
 									style="height: 10rem;"
 									>
-									<h3 class="mb-0">
-											Hello World! 
-									</h3>
+									<h5 class="my-0">
+										~Display Tracker!~
+									</h5>
 
 								<div class=" container-fluid">
 								{% if current_user.is_authenticated %}
-								<a class="nav-item btn btn-large btn-dark btn-rounded nav-link  border-info py-1 mt-2"
+								<a class="nav-item btn btn-large btn-dark bg-purpleSeethru btn-rounded nav-link border-dark py-2 mt-2"
 									href="" data-toggle="tooltip" data-placement="right"
-									title="a python flask app developed tailor-made to meet the needs of an overseas auto export company operate in coordination via desktop or mobile internet platform"
-									style="border-width: medium;border-radius: 12px;border-width: medium;">
+									title="a python flask app tailor-made developed for inventory management, restocking, display set-up"
+									style="border-width: medium;border-radius: 16px;border-width: medium;">
+									<i class="fas fa-user-check"></i>
 
-									<i class="fas fa-user-cog fa-2x"></i>
-										<i class="text-small">UserMenu
-
-									</i>
-
+										Hi, {{current_user.username}}
+										
 								</a>
 
 								<a class="nav-item btn btn-large btn-dark bg-info disab btn-rounded nav-link border-info b-2 mt-2"
@@ -197,34 +207,27 @@
 									</i>
 
 								</a>
+								
 								<a class="nav-item btn btn-large btn-info btn-rounded nav-link border-orchid pb-2 mt-2"
 									href="{{ url_for('users.register') }}" data-toggle="tooltip" data-placement="right"
 									title="register to enjoy user features" style="border-width: medium;border-radius: 9px;">
 									<i class="fas fa-user-alt-slash"> Register</i>
 								</a>
 
-								<a class="nav-item btn btn-large btn-info btn-rounded nav-link border-orchid pb-2 mt-2"
-									href="{{ url_for('users.login') }}" data-toggle="tooltip" data-placement="right"
-									title="login if registered user already" style="border-width: medium;border-radius: 9px;">
+								<a class="nav-item btn btn-large btn-info btn-rounded nav-link border-orchid pb-2 mt-2" 
+								href="{{ url_for('users.login') }}"
+								data-toggle="tooltip"
+								data-placement="right"
+								title="login if registered user already" 
+								style="border-width: medium;border-radius: 9px;"
+								>
 									<i class="fa fa-user-plus mr-2" aria-hidden="true"> Login</i>
 								</a>
 
 								{% endif %}
-								<p class="text-orchid my-0" style="font-style: italic;">
-									<i class="fas fa-robot fa-2x my-0 text-dark"></i>
-									developed for helping restock inventory items!
-								</p>								
-
-								<img class="img-fluid px-4 my-2"
-									src="https://raw.githubusercontent.com/attila5287/displaytracker_img/master/dtSquareLarge.png"
-									style="height: 10rem;"
-									>
 							</div>
-
-
-
 						</div>
-						</div>
+					</div>
 				</div>
 				
 			</div>

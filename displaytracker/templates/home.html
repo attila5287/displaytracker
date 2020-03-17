@@ -2,20 +2,20 @@
 {% block content %}
     {% if posts ==[] %}
     <br>
-    Jinja nested statement works great with try - except of Python! These are introductory posts only to show up when demonstration required:
+    No posts at the moment, demo posts served, user for database test connection only since slack does the team comm.
     <br>
     
     {% for post in PostDemoList %}
     
     <div class="media m-2">
       <a class="d-flex align-self-center">
-        <div class="alert alert-primary p-1 bg-body" role="alert" style="border-color: black;">
+        <div class="alert alert-primary bg-primary border-primary mr-2 p-2" role="alert" style="border-width: medium;">
         <img class="rounded mr-1"
         src="{{ url_for('static', filename='profile_pics/' + 'attila.jpg') }}" alt="" 
         style="max-height: 6rem;">
         </div>
       </a>
-      <div class="alert alert-secondary bg-body" role="alert" style="border-color: black;">
+      <div class="alert alert-warning" role="alert" style="border-color: black;">
       
       <div class="media-body">
         

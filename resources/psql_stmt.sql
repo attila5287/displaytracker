@@ -3,18 +3,15 @@
 DROP TABLE public.user CASCADE;
 
 
--- table exists
+-- STEP I: create table in sql
 CREATE TABLE "user" (
 		"id"	BIGSERIAL NOT NULL PRIMARY KEY,
 		"username"	VARCHAR(20) NOT NULL UNIQUE,
 		"email"	VARCHAR(120) NOT NULL UNIQUE,
 		"image_file"	VARCHAR(255) NOT NULL,
-		"password"	VARCHAR(255) NOT NULL,
-		"is_shipper"	VARCHAR(8),
-		"location_id"	SMALLINT 
-	);
-
-
+		"password"	VARCHAR(255) NOT NULL
+	)
+	
 
 -- delete all data and related records
 TRUNCATE TABLE public.user CASCADE;

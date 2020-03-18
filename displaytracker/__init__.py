@@ -23,10 +23,13 @@ def create_app(config_class=Config):
     from displaytracker.users.routes import users
     from displaytracker.posts.routes import posts
     from displaytracker.main.routes import main
+    from displaytracker.inventory.routes import inventory
     from displaytracker.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
+    app.register_blueprint(inventory)
     app.register_blueprint(errors)
+    
 
     return app

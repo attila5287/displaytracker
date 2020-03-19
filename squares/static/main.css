@@ -1,3 +1,16 @@
+html {
+  font-size: 10px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 960px;
+}
+
 .sidebar-h5 {
   font-family: initial;
 }

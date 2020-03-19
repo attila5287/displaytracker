@@ -29,3 +29,19 @@ class Post(db.Model):
 
   def __repr__(self):
       return f"Post('{self.title}', '{self.date_posted}')"
+
+
+class Item(db.Model):
+    pass
+    id = db.Column(db.Integer, primary_key=True)
+    make = db.Column(db.String(16), nullable=False, default='Ford')
+    model = db.Column(db.String(16), nullable=False, default='Mustang')
+    year = db.Column(db.String(16), nullable=False, default='2007')
+    body_type = db.Column(db.String(16), nullable=False, default='3')
+    dest_id = db.Column(db.String(16), nullable=False, default='0')
+    ship_status = db.Column(db.String(16), nullable=False, default='0')
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"Item('\n...{self.make}'\n\t '{self.model}' \n\t '{self.year}')"

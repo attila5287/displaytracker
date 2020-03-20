@@ -92,20 +92,3 @@ class ItemForm(FlaskForm):
           ], default='0'
       )
 
-
-class ItemDemo():
-    pass
-    date_posted = 'date_posted'
-
-    def __init__(self, make='', model='', year='', body_type='', dest_id='', ship_status=''):
-        pass
-
-        self.make = make
-        self.model = model
-        self.year = year
-        self.body_type = body_type
-        self.dest_id = dest_id
-        self.ship_status = ship_status
-
-    def __repr__(self):
-        return f"ItemDemo('\n...{self.make}'\n\t '{self.model}' \n\t '{self.year}')"

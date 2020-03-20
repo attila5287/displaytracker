@@ -3,119 +3,23 @@
 {% block content %}
 
 {% if inventory==[] %}
-
-<div class="row">
-
-  <div class="col-sm-8 offset-2 p-4">
-
-    <div
-     class="alert alert-light alert-{{destStyler(current_user.location_id|string)}} alert-dismissible fade show mt-2" role="alert"
-     >
-
-      <button 
-        class="close" 
-        type="button" 
-        data-dismiss="alert" 
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-
-        <span class="sr-only">Close</span>
-
-      </button
-      >
-
-      <strong>Dont get too excited!</strong> 
-      Database do not show any cars shipped to your location, so these are demo items! 
-    </div
-    >
-  </div>
-</div>
+ 
 
 <div class="row">
   
 {% for item in ItemDemoList %}
-  <div class="col-sm-6">
-      
-    <div 
-    class="card border-{{destStyler(item.dest_id)}} text-{{destStyler(item.dest_id)}} text-break text-italic text-right mx-4 my-2"
-    >
-      <div class="card-header bg-transparent text-center border-{{destStyler(item.dest_id)}} text-{{destStyler(item.dest_id)}} py-0 my-1">
-        <i class="fas fa-ship"></i>
-        {{ statusFinder(item.ship_status) }}
-      </div>
-      <div class="row">
+  
+<div class="card border-primary">
+  <img class="card-img-top" src="{{item.image_url}}" alt="" style="3rem">
+  <div class="card-body">
+    <h4 class="card-title">Title</h4>
+    {{item.id}}
+{{item.manufacturer}}
+{{item.catalog_no}}
+{{item.catalog_desc}}
+  </div>
+</div>
 
-        <div class="col-sm-4">
-            <img
-            class="mx-auto d-block p-2"
-             src="
-          https://raw.githubusercontent.com/attila5287/berenice_img/master/itemB0dyTyp3/{{imageFinder(item.body_type)}}
-          " alt="" style="max-height: 6rem;"
-          >
-        
-        </div>
-
-        <div class="col-sm-4">
-            <ul class="fa-ul py-1 text-light text-center">
-              <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-              </span>
-              {{item.make}}
-              </p>
-              <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-              </span>
-              {{item.model}}
-              </p>
-              <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-              </span>
-              {{item.year}}
-              </p>
-              <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-              </span>
-              {{ typeFinder(item.body_type) }}
-              </p>                        
-          
-          </ul>
-        </div>
-
-        <div class="col-sm-4">
-          <ul class="fa-ul py-1">
-            <p>
-              <i class="fas fa-anchor"></i>
-            </span>
-            {{item.dest_id }}|{{cityFinder(item.dest_id) }} 
-            </p>
-            <p>
-              <i class="fa fa-caret-right" aria-hidden="true"></i>
-            </span>
-            Item Info
-            </p>
-            <p>
-              <i class="fa fa-caret-right" aria-hidden="true"></i>
-            </span>
-            Item Info
-            </p>
-            <p>
-              <i class="fa fa-caret-right" aria-hidden="true"></i>
-            </span>
-            Item Info
-            </p>                
-          </ul>
-        </div>
-        
-      </div>
-
-      <div class="card-footer bg-transparent text-center border-{{destStyler(item.dest_id)}} text-{{destStyler(item.dest_id)}} py-0 text-small my-0">
-        <i class="fa fa-caret-right text-center" aria-hidden="true"></i>
-        DE15R06PKZM52WA89E
-      </div>
-    </div>
-      
-  </div>  
 {% endfor %}
 </div>
 

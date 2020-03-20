@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/superhero/bootstrap.min.css" />
 
@@ -48,10 +45,13 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">
                 <i class="fas fa-envelope-open"></i>
-                HomeTest</a>
+                PostHome</a>
+              <a class="nav-item nav-link" href="{{ url_for('inv_home') }}">
+                <i class="fas fa-boxes"></i>
+                InvHome</a>
               <a class="nav-item nav-link" href="{{ url_for('create_item') }}">
-                <i class="fas fa-edit"></i>
-                CreateItem</a>                
+                <i class="fas fa-dolly"></i>
+                NewItem</a>                
               <a class="nav-item nav-link" href="{{ url_for('about') }}">
                 <i class="fas fa-info-circle    "></i>
                 About</a>
@@ -111,20 +111,19 @@
         <!-- sidebar -->
         <div class="col-md-3">
           <div class="sidebar-section px-1">
-              <div class="text-center py-0">
+              <div class="text-centersidebar-section  py-0 mt-0">
                 <img 
-                class="img-fluid" 
+                class="img-fluid mt-0 mb-1" 
                 alt="sidebar top img"
-                src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/sidebar_denver_clean.png"
-                style="height: 5rem;"
+                src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_denver_realPhoto.png"
+                style="height: 8rem;"
                 >
-
               </div>
               <button type="button" class="btn btn-info btn-lg btn-block disabled sidebar-section border-info py-1 mb-0">
                 <i class="fas fa-map-signs"></i>
                 Site Map
               </button>
-              <div class="list-group sidebar-section text-center mt-1" style="border-radius: 4px;">
+              <div class="list-group sidebar-section text-center mt-1 mb-0" style="border-radius: 4px;">
                 <a href="/register" class="list-group-item list-group-item-action">
                   <i class="fas fa-registered    "></i>
                   Register
@@ -138,6 +137,15 @@
                   About
                 </a>
               </div>              
+              <div class="text-center py-0">
+              <img 
+                class="img-fluid mb-2 mt-1" 
+                alt="sidebar bottom img"
+                src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_bottom_waves05.png"
+                style="height: 7rem;"
+                >
+              </div>  
+                
             </div>
         </div>
       </div>
@@ -146,9 +154,9 @@
     <footer class="container p-5">
       <div class="row">
         <div class="col-12 col-md">
-<img
-src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/dtSquare.png"
-class="img-fluid p-4" alt="">
+          <img
+          src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/dtSquare.png"
+          class="img-fluid p-4" alt="">
           <small class="d-block mb-3 text-muted">© 2017-2018</small>
         </div>
         <div class="col-6 col-md">

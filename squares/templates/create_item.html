@@ -6,11 +6,11 @@
         <div class="row">
             {% for field in form %}
             <div class="col-sm-5 offset-1">
-                <i class="fas fa-car ml-2 my-0 text-success">
-                    {{field.label(class="text-success", style="border-radius: 1rem;") }}
+                <i class="fas fa-edit text-success">
+                {{field.label(class="text-success", style="border-radius: 1rem;") }}
                 </i>
 
-                {{field(class="form-control form-control-success form-control-lg border-body pl-4 mb-2 p-2", style="border-radius: 1rem;") }}
+                {{field(class="form-control form-control-success form-control-lg border-body  text-success text-italic pl-4 mb-2 p-2", style="border-radius: 1rem;") }}
             </div>
             {% endfor %}
         </div>

@@ -9,13 +9,14 @@
   
 {% for item in ItemDemoList %}
   
-<div class="card border-primary">
-  <img class="card-img-top" src="{{item.image_url}}" alt="" style="6rem">
-  <div class="card-body">
-    <h4 class="card-title">Title</h4>
+<div class="card border-primary bg-transparent">
+  <img class="card-img-top bg-transparent" src="{{item.image_url}}" alt="" style="6rem">
+  <div class="card-body bg-transparent">
+    <h4 class="card-title">
+      {{item.catalog_no}}
+    </h4>
       {{item.id}}
       {{item.manufacturer}}
-      {{item.catalog_no}}
       {{item.catalog_desc}}
   </div>
 </div>

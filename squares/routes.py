@@ -29,7 +29,7 @@ def inv_home():
         _ = [item for item in inventory]
     except:
         inventory = []
-    return render_template('inv_home.html', inventory=inventory, title='My Cars')
+    return render_template('inv_home.html', inventory=inventory, title='Yuupon')
 
 
 @app.route("/inventory/new", methods=['GET', 'POST'])
@@ -592,3 +592,4 @@ def inject_ItemDemoList():
     print(*ItemDemoList)
 
     return dict(ItemDemoList=ItemDemoList)
+  

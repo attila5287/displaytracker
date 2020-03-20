@@ -48,7 +48,6 @@ class Post(db.Model):
 
 class ItemDemo():
   pass
-  base_url = 'https://shop.flexfit.com/product/image/medium/'
 
   def __init__(self, id='9999', manufacturer='YUUPONG',
                catalog_no='999DEMO', catalog_desc='noItemDesc',

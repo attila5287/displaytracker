@@ -48,7 +48,6 @@ class Post(db.Model):
 
 class ItemDemo():
   pass
-
   def __init__(self, id='9999', manufacturer='YUUPONG',
                catalog_no='999DEMO', catalog_desc='noItemDesc',
                image_url=''
@@ -61,4 +60,4 @@ class ItemDemo():
       self.catalog_desc = catalog_desc
 
   def __repr__(self):
-      return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}')"
+      return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}'\n\t '{self.image_url}')"

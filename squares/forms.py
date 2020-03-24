@@ -1,4 +1,5 @@
-from flask_wtf import FlaskForm
+from flask import request
+from flask_wtf import FlaskForm 
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import SelectField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
@@ -60,35 +61,77 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError(
                     'That email is taken. Please choose a different one.')
 
-
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
 
-
 class ItemForm(FlaskForm):
-      pass
-      make = StringField('make', validators=[DataRequired()], default='Ford')
-      model = StringField('model', validators=[DataRequired()], default='Mustang')
-      year = StringField('year', validators=[DataRequired()], default='2007')
-      body_type = SelectField(
-          choices=[
-              ('0', 'Sedan'),('1', 'Compact'),
-              ('2', 'Coupe'), ('3', 'Pickup'),
-              ('4' ,'SUV')
-              ], default='2')
+    pass
 
-      dest_id = SelectField(
-          choices=[('0', 'Alabama'),('1', 'Baltimore'),
-                   ('2', 'California'), ('3', 'Delaware'), ('4', 'Exeter')], default='0')
-      ship_status = SelectField(
-          choices=[
-              ('0', 'not yet shipped'),
-              ('1', 'receive next week'),
-              ('2', 'receive following week'),
-              ('3', 'receive within a month'),
-              ('4', 'receive next month'),
-          ], default='0'
-      )
+    manufacturer = StringField(
+        'Manufacturer', validators=[DataRequired()], default='Manufacturer')
+    catalog_no = StringField(
+        'Catalog No',
+        validators=[DataRequired()], default='no_entry'
+        )
+    catalog_fullname = StringField(
+        'Catalog Name', default='Catalog Full Name')
+    color_primary = StringField(
+        'Primary Color', validators=[DataRequired()], default='Primary Color')
+    color_secondary = StringField(
+        'Secondary Color', default='Secondary Color')
+    imagewhtbg_url = StringField(
+        'Image URL Wht Bg JPG',  default='http://item.image.white.background')
+    imageclean_url = StringField(
+        'Image URL Trnsprnt PNG',  default='http://item.image.trnsprnt.background')
+    product_url = StringField(
+        'Product', default='http://manufacturer.item.info'
+        )
+    
+    is_snapback = SelectField('Snapback?',
+                              choices=[('no', 'NO'), ('yes', 'YES')], default='no')
+    is_adjustable = SelectField('Velcro/Strap?',
+                                choices=[('no', 'NO'), ('yes', 'YES')], default='no')
+    is_flexfit = SelectField('Flexfit',
+                             choices=[('no', 'NO'), ('yes', 'YES')], default='no')
+    is_youth = SelectField('Youth',
+                           choices=[('no', 'NO'), ('yes', 'YES')],  default='no')
+    is_fitted = SelectField('Fitted',
+                            choices=[('no', 'NO'), ('yes', 'YES')],  default='no')
+    has_structcrwn = SelectField('Has structured crown?',
+                                choices=[('no', 'NO'), ('yes', 'YES')], default='yes')
+    has_curvedbill = SelectField('Has curved bill?',
+                                 choices=[('no', 'NO'), ('yes', 'YES')], default='no')
+    has_flatbill = SelectField('Has flat bill?',
+                               choices=[('no', 'NO'), ('yes', 'YES')],  default='no')
+    inv_lowinstock = SelectField('Low In Stocks?',
+                                 choices=[('no', 'NO'), ('yes', 'YES')],  default='no')
+    inv_outofstock = SelectField('Out of Stock?',
+                                 choices=[('no', 'NO'), ('yes', 'YES')], default='no')
 
+class CSVReaderForm(FlaskForm):
+    csv_file = FileField(
+        'Inv CSV Feed',
+        validators=[
+        FileAllowed(['csv'])
+        ]
+        )
+    submit = SubmitField('Feed Inv | Read CSV')
+
+
+
+
+# ---------
+
+# @app.route("/pie")
+# def rick():
+#     pass
+#     lyrics = get_lyrics()
+#     labels, values = zip(*lyrics.items())
+#     data = [{
+#         "labels": labels,
+#         "values": values,
+#         "type": "pie"}]
+
+#     return jsonify(data)

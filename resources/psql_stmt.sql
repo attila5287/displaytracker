@@ -1,3 +1,65 @@
+CREATE TABLE "item" (
+	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
+	"manufacturer"	VARCHAR(32),
+	"catalog_no"	VARCHAR(64),
+	"catalog_desc"	VARCHAR(256),
+	"imagewhtbg_url"	VARCHAR(256),
+	"imageclean_url"	VARCHAR(256),
+	"color_bill"	VARCHAR(32),
+	"color_crown"	VARCHAR(32),
+	"reorder_url"	VARCHAR(256),
+	"is_onhand"	BOOLEAN,
+	"is_lowonhand"	BOOLEAN,
+	"is_outofstock"	BOOLEAN,
+	"is_adjustable"	BOOLEAN,
+	"is_snapback"	BOOLEAN,
+	"is_flexfit"	BOOLEAN,
+	"is_fitted"	BOOLEAN,
+	"is_youth"	BOOLEAN,
+	"has_curvedbill"	BOOLEAN,
+	"has_flatbill"	BOOLEAN
+);
+
+
+
+CREATE TABLE "proday" (
+	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
+	"title"	VARCHAR(100),
+	"desc"	VARCHAR(100),
+	"date_posted"	TIMESTAMP,
+	"cat01"	VARCHAR(100),
+	"act01"	VARCHAR(100),
+	"done01"	BOOLEAN,
+	"cat02"	VARCHAR(100),
+	"act02"	VARCHAR(100),
+	"done02"	BOOLEAN,
+	"act03"	VARCHAR(100),
+	"cat03"	VARCHAR(100),
+	"done03"	BOOLEAN,
+	"cat04"	VARCHAR(100),
+	"act04"	VARCHAR(100),
+	"done04"	BOOLEAN,
+	"icon01"	VARCHAR(100),
+	"icon02"	VARCHAR(100),
+	"icon03"	VARCHAR(100),
+	"icon04"	VARCHAR(100),
+	"count_c01"	SMALLINT,
+	"count_c02"	SMALLINT,
+	"count_c03"	SMALLINT,
+	"count_c04"	SMALLINT,
+	"countD_c01"	SMALLINT,
+	"countD_c02"	SMALLINT,
+	"countD_c03"	SMALLINT,
+	"countD_c04"	SMALLINT,
+	"count_done"	SMALLINT,
+	"count_total"	SMALLINT,
+	"perc_done"	SMALLINT,
+	"message_total"	VARCHAR(256),
+    "user_id"	BIGINT REFERENCES public.user
+)
+
+
+
 -- WORKS
 -- now drop the table try add again
 DROP TABLE public.user CASCADE;

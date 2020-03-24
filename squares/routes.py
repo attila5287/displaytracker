@@ -1,42 +1,46 @@
 import os
 import secrets
+import csv
+import codecs
 from PIL import (
     Image
 )
 from flask import (
-    render_template, url_for, flash, redirect, request, abort
+    render_template, url_for, flash, redirect, request, abort, 
 )
 from squares import (
     app, db, bcrypt
 )
 from squares.forms import (
-    RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm
+    RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm
 )
 from squares.models import (
-    User, Post, ItemDemo
+    User, Post, ItemDemo, Item
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required
 )
+@app.route('/square00')
+def square_00():
+    return render_template('square_00.html', title='Square 00')
 
 @app.route("/inventory/home")
 def inv_home():
     pass
-    # inventory = Item.query.all()
-    inventory = []
+
+    inventory = Item.query.all()
 
     try:
         _ = [item for item in inventory]
     except:
         inventory = []
-    return render_template('inv_home.html', inventory=inventory, title='Yuupon')
+    return render_template('inv_home.html', inventory=inventory, title='InvDemoRandCol')
 
 @app.route("/")
 @app.route("/home")
 def home():
     posts = Post.query.all()
     return render_template('home.html', posts=posts)
-
 
 @app.route("/about")
 def about():
@@ -48,12 +52,23 @@ def create_item():
     form = ItemForm()
     if form.validate_on_submit():
         item = Item(
-            make=request.form["make"],
-            model=request.form["model"],
-            year=request.form["year"],
-            body_type=request.form["body_type"],
-            dest_id=request.form["dest_id"],
-            ship_status=request.form["ship_status"],
+            manufacturer=request.form["manufacturer"],
+            catalog_no=request.form["catalog_no"],
+            catalog_fullname=request.form["catalog_fullname"],
+            imagewhtbg_url=request.form["imagewhtbg_url"],
+            imageclean_url=request.form["imageclean_url"],
+            color_primary=request.form["color_primary"],
+            color_secondary=request.form["color_secondary"],
+            product_url=request.form["product_url"],
+            is_adjustable=request.form["is_adjustable"],
+            is_flexfit=request.form["is_flexfit"],
+            is_youth=request.form["is_youth"],
+            is_fitted=request.form["is_fitted"],
+            has_structcrwn=request.form["has_structcrwn"],
+            has_curvedbill=request.form["has_curvedbill"],
+            has_flatbill=request.form["has_flatbill"],
+            inv_lowinstock=request.form["inv_lowinstock"],
+            inv_outofstock=request.form["inv_outofstock"],
         )
         db.session.add(item)
         db.session.commit()
@@ -135,7 +150,6 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
@@ -149,13 +163,10 @@ def new_post():
     return render_template('create_post.html', title='New Post',
                        form=form, legend='New Post')
 
-
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
-
-
 
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
@@ -175,7 +186,6 @@ def update_post(post_id):
         form.content.data = post.content
     return render_template('create_post.html', title='Update Post',
                            form=form, legend='Update Post')
-
 
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
@@ -205,7 +215,6 @@ def inject_destStyleDict():
 
     return dict(destStyler=destStyler)
 
-
 @app.context_processor
 def inject_bodyTypeImgDict():
     pass
@@ -222,7 +231,6 @@ def inject_bodyTypeImgDict():
         return bodyTypeImgDict.get(item_bodyType_index, '00.png')
 
     return dict(imageFinder=imageFinder)
-
 
 @app.context_processor
 def inject_bodyTypeTextDict():
@@ -241,7 +249,6 @@ def inject_bodyTypeTextDict():
 
     return dict(typeFinder=typeFinder)
 
-
 @app.context_processor
 def inject_shipStatMsgDict():
     pass
@@ -259,6 +266,21 @@ def inject_shipStatMsgDict():
 
     return dict(statusFinder=statusFinder)
 
+@app.context_processor
+def inject_destCityDict():
+    pass
+
+    def cityFinder(item_dest_id):
+        pass
+        destCityNameDict = {
+            '0': 'Alabama',
+            '1': 'Baltimore',
+            '2': 'California',
+            '3': 'Delaware',
+            '4': 'Exeter',
+        }
+        return destCityNameDict.get(item_dest_id, 'UnknownDestinationCity')
+    return dict(cityFinder=cityFinder)
 
 @app.context_processor
 def inject_destCityDict():
@@ -276,32 +298,13 @@ def inject_destCityDict():
         return destCityNameDict.get(item_dest_id, 'UnknownDestinationCity')
     return dict(cityFinder=cityFinder)
 
-
-
-@app.context_processor
-def inject_destCityDict():
-    pass
-
-    def cityFinder(item_dest_id):
-        pass
-        destCityNameDict = {
-            '0': 'Alabama',
-            '1': 'Baltimore',
-            '2': 'California',
-            '3': 'Delaware',
-            '4': 'Exeter',
-        }
-        return destCityNameDict.get(item_dest_id, 'UnknownDestinationCity')
-    return dict(cityFinder=cityFinder)
-
-
-# ============== UPLOAD ALL YUUPONG HATS ~100
-
+# ============== demo yupoong trns-png'ed items ~100
 @app.context_processor
 def inject_ItemDemoList():
     pass
     # base_url = 'https://shop.flexfit.com/product/image/medium/'
-    base_url = 'https://raw.githubusercontent.com/attila5287/displaytracker_img/master/yupoong/'
+    base_url = 'https://raw.githubusercontent.com/attila5287/displaytracker_img/master/yupoong/image_clean/'
+    
     # 110C
     end_url = '.png'
 
@@ -508,7 +511,33 @@ def inject_ItemDemoList():
             
         )
     ]
-    print(*ItemDemoList)
+    # print(*ItemDemoList)
 
     return dict(ItemDemoList=ItemDemoList)
-  
+
+# inv_feed
+@app.route('/inventory/feed', methods=['GET', 'POST'])
+def csv_feed():
+    form = CSVReaderForm()
+    if request.method == 'POST':
+        csvfile = request.files['csv_file']
+        reader = csv.DictReader(codecs.iterdecode(csvfile, 'windows-1252'))
+
+        #create list of dictionaries keyed by header row
+        csv_dicts = [{k: v for k, v in row.items()} for row in reader]
+        
+        print(len(csv_dicts))
+        
+        inventory = []
+        #     Item(**dictcsv) for dictcsv in csv_dicts
+        # ]  
+
+        flash('CSV read successfully!', 'success')
+        return render_template('inv_home.html', inventory=inventory)
+
+    return render_template(
+        'csv_feed.html',
+        title='CSV Feed',
+        form=form,
+    )
+

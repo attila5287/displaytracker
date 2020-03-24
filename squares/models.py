@@ -34,16 +34,31 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 
-# class Item(db.Model):
-#     pass
+class Item(db.Model):
+    pass
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     manufacturer = db.Column(db.String(32), nullable=False)
-#     catalog_no = db.Column(db.String(64), nullable=False)
-#     image_url = db.Column(db.String(256), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    manufacturer = db.Column(db.String(32))
+    catalog_no = db.Column(db.String(32))
+    catalog_fullname = db.Column(db.String(256))
+    imagewhtbg_url = db.Column(db.String(256))
+    imageclean_url = db.Column(db.String(256))
+    color_primary = db.Column(db.String(32))
+    color_secondary = db.Column(db.String(32))
+    product_url = db.Column(db.String(256))
+    inv_lowinstock = db.Column(db.String(32))
+    inv_outofstock = db.Column(db.String(32))
+    is_adjustable = db.Column(db.String(32))
+    is_snapback = db.Column(db.String(32))
+    is_flexfit = db.Column(db.String(32))
+    is_fitted = db.Column(db.String(32))
+    is_youth = db.Column(db.String(32))
+    has_structcrwn = db.Column(db.String(32))
+    has_curvedbill = db.Column(db.String(32))
+    has_flatbill = db.Column(db.String(32))
 
-#     def __repr__(self):
-#         return f"Item('\n...{self.make}'\n\t '{self.model}' \n\t '{self.year}')"
+    def __repr__(self):
+        return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}')"
 
 
 class ItemDemo():

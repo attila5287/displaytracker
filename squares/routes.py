@@ -523,14 +523,10 @@ def csv_feed():
         csvfile = request.files['csv_file']
         reader = csv.DictReader(codecs.iterdecode(csvfile, 'windows-1252'))
 
-        #create list of dictionaries keyed by header row
-        csv_dicts = [{k: v for k, v in row.items()} for row in reader]
-        
-        print(len(csv_dicts))
-        
-        inventory = []
-        #     Item(**dictcsv) for dictcsv in csv_dicts
-        # ]  
+        inventory = [
+            Item(**row) for row in reader
+        ]
+          
 
         flash('CSV read successfully!', 'success')
         return render_template('inv_home.html', inventory=inventory)

@@ -36,8 +36,7 @@
         </div>
 
         <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
-        <img class="card-img" src="{{item.image_url}}" alt="{{item.image_url}}">
-        
+          <img class="card-img" src="{{item.image_url}}" alt="{{item.image_url}}">
         </div>
       
         <ul class="list-group list-group-flush mb-2">
@@ -76,19 +75,9 @@
 </div> 
 
 {% else %}
-
+<!-- one two three action -->
 
 <div class="row">
-  
-<style>
-  .bg-yes {
-    background-color: mediumaquamarine;
-  }
-
-  .bg-no {
-    background-color: lightcoral;
-  }
-</style>
 
 
   <div class="row">
@@ -101,7 +90,6 @@
         >
           <div class="d-flex w-100 justify-content-around mx-0 mt-2 px-0">
             <div class="d-flex flex-column mb-1 p-1">
-              
               {{item.catalog_fullname}} 
             </div>
           </div>
@@ -161,7 +149,12 @@
               <i class="fas fa-angle-right ml-2 mr-0"></i>
               <small>{{label}}</small>
               </i>
-              {{property}} 
+              <span class="badge badge-pill badge-dark bg-{{property}}">
+                <small>
+                  {{property}} 
+                </small>
+              </span>
+
             </div>
         </div>
         
@@ -176,6 +169,5 @@
 
 
 {% endif %}
-
 {% endblock content %}
 

@@ -99,6 +99,29 @@ class Item(db.Model):
         ]
         return dict(zip(labels, properties))
 
+    def display_tablerow(self):
+        pass
+        _tablerow_data = [
+            str(self.id),
+            self.manufacturer,
+            self.catalog_fullname,
+            self.color_primary,
+            self.color_secondary,
+            self.inv_lowinstock,
+            self.inv_outofstock,
+            self.is_snapback,
+            self.is_adjustable,
+            self.is_flexfit,
+            self.is_youth,
+            self.is_fitted,
+            self.has_structcrwn,
+            self.has_curvedbill,
+            self.has_flatbill,
+        ]
+        return [td for td in _tablerow_data]
+        
+
+
     def __repr__(self):
         return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}')"
 

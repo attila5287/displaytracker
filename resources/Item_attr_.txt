@@ -1,15 +1,12 @@
 manufacturer
-catalog_no
 catalog_fullname
 color_primary
 color_secondary
 imagewhtbg_url
 imageclean_url
 product_url
-
 inv_lowinstock
 inv_outofstock
-
 is_snapback
 is_adjustable
 is_flexfit
@@ -18,4 +15,3 @@ is_fitted
 has_structcrwn
 has_curvedbill
 has_flatbill
-

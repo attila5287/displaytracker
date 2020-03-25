@@ -1,0 +1,121 @@
+{% extends "layout_squares.html" %}
+{% block content %}
+{% if inventory==[] %}
+<div class="row">
+  {% for item in ItemDemoList[:6] %}
+    <div class="col-sm-6">
+      <div class="item-section box-shadow border-dark px-0">
+        <div 
+        class="btn btn-dark btn-block border-dark mt-0 mx-0 pt-1" 
+        style="border-width:thick;border-radius: 16px;"
+        >
+          <div class="d-flex w-100 justify-content-around mx-0 mt-2">
+            
+            <i class="text-muted text-monospace"> 
+              <i class="fas fa-angle-right mr-2"></i>
+              {{item.manufacturer}} 
+            </i>
+            <h3 class="text-monospace text-center">
+              {{item.catalog_no}} 
+            </h3>
+          </div>
+        </div>
+
+        <div class="d-flex w-100 justify-content-around">
+          <div class="d-flex flex-column mb-1 p-1">
+            <span class="badge badge-danger text-dark"> COL_CROWN </span>
+            <i class="text-muted">ColorCrown</i>
+          </div>
+          <div class="d-flex flex-column bd-highlight mb-1 p-1">
+            <span class="badge badge-success text-dark"> COL_BILL </span>
+            <i class="text-muted">ColorBill</i>
+          </div>    
+        </div>
+
+        <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
+        <img class="card-img" src="{{item.image_url}}" alt="{{item.image_url}}">
+        
+        </div>
+      
+        <ul class="list-group list-group-flush mb-2">
+        <li class="list-group-item list-group-item flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+          <i class="text-muted">
+            <i class="fas fa-angle-right mr-2"></i>
+            catalog description
+            </i>
+          </div>
+        <p class="mt-1 mb-1 text-right"> {{item.catalog_fullname}} </p>
+        </li>
+        <li class="list-group-item list-group-item flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+          <i class="text-muted">
+            <i class="fas fa-angle-right mr-2"></i>
+            item id 
+            </i>
+          {{item.id}} 
+          </div>
+        </li>      
+        <li class="list-group-item list-group-item flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+          <i class="text-muted">
+            <i class="fas fa-angle-right mr-2"></i>
+            inventory status 
+            </i>
+            InStock 
+          </div>
+        </li>      
+        </ul>
+
+      </div>
+    </div>
+  {% endfor %}
+</div> 
+{% else %}
+<table class="table table-hover table-borderless table-striped">
+  <thead>
+    <tr>
+      {% for header in DisplayHeaders %}
+      <th scope="col">
+        {{header}}  
+      </th>
+      {% endfor %}
+    </tr>
+  </thead>
+<tbody>
+  
+{% for item in inventory %}
+
+<tr>
+
+<td>
+    <img 
+  class="img-thumbnail"
+  src="{{item.imageclean_url}}" 
+  alt="thumbnail"
+  style="height: 5rem;"
+  >
+</td>
+<td>
+    <img 
+  class="img-thumbnail"
+  src="{{item.imagewhtbg_url}}" 
+  alt="thumbnail"
+  style="height: 5rem;"
+  >
+</td>
+
+
+{% for value in item.display_tablerow()  %}
+      <td>
+        {{value}}
+      </td>
+      {% endfor %}
+    </tr>
+{% endfor %}
+</tbody>
+
+</table>
+{% endif %}
+{% endblock content %}
+

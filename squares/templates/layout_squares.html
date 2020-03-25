@@ -28,7 +28,6 @@
   <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-purpseethru fixed-top py-1">
-        <div class="container">
           <a class="navbar-brand mr-4" href="https://displaytracker.herokuapp.com" style="font-family: cursive;">
           <img 
           class="m-0 p-0"
@@ -51,6 +50,9 @@
               <a class="nav-item nav-link" href="{{ url_for('inv_home') }}">
                 <i class="fas fa-boxes"></i>
                 InvHome</a>
+              <a class="nav-item nav-link" href="{{ url_for('inv_lister') }}">
+                <i class="fas fa-th-list"></i>
+                InvList</a>                                
               <a class="nav-item nav-link" href="{{ url_for('square_00') }}">
                 <i class="fas fa-th"></i>
                 Square 00
@@ -89,20 +91,18 @@
               {% endif %}
             </div>
           </div>
-        </div>
       </nav>
       
     </header>
     
     <!-- this is only cosmetic to give a bottom border to navbar that is not gonna slide down with the real one! -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-info mt-5 py-2 text-center justify-content-center">
-      <div class="d-flex text-center">
+    <nav class="navbar navbar-dark bg-info mt-5 mb-2 py-2 text-center justify-content-center">
         <i class="fas fa-battery-empty text-light"> . . . </i>
         <i class="fas fa-battery-quarter text-warning"> . . . </i>
         <i class="fas fa-battery-half text-primary"> . . . </i>
         <i class="fa fa-battery-three-quarters text-danger"> . . . </i>
-      </div>
     </nav>
+    
     <main role="main" class="container-fluid">
           {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}

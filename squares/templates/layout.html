@@ -28,7 +28,6 @@
   <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-purpseethru fixed-top py-1">
-        <div class="container">
           <a class="navbar-brand mr-4" href="https://displaytracker.herokuapp.com" style="font-family: cursive;">
           <img 
           class="m-0 p-0"
@@ -51,6 +50,9 @@
               <a class="nav-item nav-link" href="{{ url_for('inv_home') }}">
                 <i class="fas fa-boxes"></i>
                 InvHome</a>
+              <a class="nav-item nav-link" href="{{ url_for('inv_lister') }}">
+                <i class="fas fa-th-list"></i>
+                InvList</a>                
               <a class="nav-item nav-link" href="{{ url_for('square_00') }}">
                 <i class="fas fa-th"></i>
                 Square 00
@@ -89,7 +91,7 @@
               {% endif %}
             </div>
           </div>
-        </div>
+
       </nav>
     </header>
     

@@ -20,6 +20,44 @@ from squares.models import (
 from flask_login import (
     login_user, current_user, logout_user, login_required
 )
+
+
+@app.route("/inventory/list")
+def inv_lister():
+    pass
+
+    inventory = Item.query.all()
+
+    try:
+        _ = [item for item in inventory]
+    except:
+        inventory = []
+    return render_template('inv_lister.html', inventory=inventory, title='InvDemoListRandData')
+
+# inv_feed (doc: CSV read ex)
+@app.route('/inventory/feed', methods=['GET', 'POST'])
+def csv_feed():
+    form = CSVReaderForm()
+    if request.method == 'POST':
+        csvfile = request.files['csv_file']
+        reader = csv.DictReader(codecs.iterdecode(csvfile, 'windows-1252'))
+
+        inventory = [
+            Item(**row) for row in reader
+        ]
+
+        db.session.add_all(inventory)
+        db.session.commit()
+
+        flash('CSV read successfully!', 'success')
+        return render_template('inv_home.html', inventory=inventory)
+
+    return render_template(
+        'csv_feed.html',
+        title='CSV Feed',
+        form=form,
+    )
+
 @app.route('/square00')
 def square_00():
     return render_template('square_00.html', title='Square 00')
@@ -194,106 +232,6 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
-
-@app.context_processor
-def inject_destStyleDict():
-    pass
-    def destStyler(item_dest_index):
-        pass
-        destStyleDict = {
-            '0': 'danger',
-            '1': 'warning',
-            '2': 'success',
-            '3': 'info',
-            '4': 'primary',
-            '99': 'secondary',
-        }
-        return destStyleDict.get(item_dest_index, 'secondary')
-
-    return dict(destStyler=destStyler)
-
-@app.context_processor
-def inject_bodyTypeImgDict():
-    pass
-
-    def imageFinder(item_bodyType_index):
-        pass
-        bodyTypeImgDict = {
-            '0': '00.png',
-            '1': '01.png',
-            '2': '02.png',
-            '3': '03.png',
-            '4': '04.png',
-        }
-        return bodyTypeImgDict.get(item_bodyType_index, '00.png')
-
-    return dict(imageFinder=imageFinder)
-
-@app.context_processor
-def inject_bodyTypeTextDict():
-    pass
-
-    def typeFinder(item_bodyType_id):
-        pass
-        bodyTypeTextDict = {
-            '0': 'Sedan',
-            '1': 'Compact',
-            '2': 'Coupe',
-            '3': 'Pickup',
-            '4': 'SUV',
-        }
-        return bodyTypeTextDict.get(item_bodyType_id, 'UnknownBodyType')
-
-    return dict(typeFinder=typeFinder)
-
-@app.context_processor
-def inject_shipStatMsgDict():
-    pass
-
-    def statusFinder(item_ship_status):
-        pass
-        shipStatMsgDict = {
-            '0': 'not yet shipped',
-            '1': 'receive next week',
-            '2': 'receive following week',
-            '3': 'receive within a month',
-            '4': 'receive next month',
-        }
-        return shipStatMsgDict.get(item_ship_status, 'UnknownShipmentStatus')
-
-    return dict(statusFinder=statusFinder)
-
-@app.context_processor
-def inject_destCityDict():
-    pass
-
-    def cityFinder(item_dest_id):
-        pass
-        destCityNameDict = {
-            '0': 'Alabama',
-            '1': 'Baltimore',
-            '2': 'California',
-            '3': 'Delaware',
-            '4': 'Exeter',
-        }
-        return destCityNameDict.get(item_dest_id, 'UnknownDestinationCity')
-    return dict(cityFinder=cityFinder)
-
-@app.context_processor
-def inject_destCityDict():
-    pass
-
-    def cityFinder(item_dest_id):
-        pass
-        destCityNameDict = {
-            '0': 'Alabama',
-            '1': 'Baltimore',
-            '2': 'California',
-            '3': 'Delaware',
-            '4': 'Exeter',
-        }
-        return destCityNameDict.get(item_dest_id, 'UnknownDestinationCity')
-    return dict(cityFinder=cityFinder)
 
 # demo objects (no db) yupoong trns-png'ed items ~100
 @app.context_processor
@@ -512,27 +450,30 @@ def inject_ItemDemoList():
 
     return dict(ItemDemoList=ItemDemoList)
 
-# inv_feed (doc: CSV read ex)
-@app.route('/inventory/feed', methods=['GET', 'POST'])
-def csv_feed():
-    form = CSVReaderForm()
-    if request.method == 'POST':
-        csvfile = request.files['csv_file']
-        reader = csv.DictReader(codecs.iterdecode(csvfile, 'windows-1252'))
-
-        inventory = [
-            Item(**row) for row in reader
-        ]
-        
-
-        db.session.add_all(inventory)
-        db.session.commit()
-
-        flash('CSV read successfully!', 'success')
-        return render_template('inv_home.html', inventory=inventory)
-
-    return render_template(
-        'csv_feed.html',
-        title='CSV Feed',
-        form=form,
-    )
+@app.context_processor
+def inject_headers():
+    ''' GENERATES A LIST OF ITEM ATTIRIBUTES TO BE USED AS TABLE HEADERS '''
+    pass
+    _list = [
+        "imagewhtbg_url", 
+        "imageclean_url", 
+        "id", 
+        "manufacturer",
+        "catalog_fullname", 
+        "color_primary", 
+        "color_secondary", 
+        "inv_lowinstock", 
+        "inv_outofstock", 
+        "is_snapback", 
+        "is_adjustable", 
+        "is_flexfit", 
+        "is_youth", 
+        "is_fitted", 
+        "has_structcrwn", 
+        "has_curvedbill", 
+        "has_flatbill",
+    ]
+    DisplayHeaders = [
+        header for header in _list
+    ]
+    return dict(DisplayHeaders=DisplayHeaders)

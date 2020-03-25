@@ -240,7 +240,6 @@ def inject_ItemDemoList():
     # base_url = 'https://shop.flexfit.com/product/image/medium/'
     base_url = 'https://raw.githubusercontent.com/attila5287/displaytracker_img/master/yupoong/image_clean/'
     
-    # 110C
     end_url = '.png'
 
     ItemDemoList = [
@@ -448,32 +447,84 @@ def inject_ItemDemoList():
     ]
     # print(*ItemDemoList)
 
-    return dict(ItemDemoList=ItemDemoList)
+    return dict(ItemDemoList=ItemDemoList[:20])
 
 @app.context_processor
 def inject_headers():
-    ''' GENERATES A LIST OF ITEM ATTIRIBUTES TO BE USED AS TABLE HEADERS '''
+    ''' GENERATES A LIST OF ITEM ATTRIBUTES TO BE USED AS TABLE HEADERS '''
     pass
     _list = [
-        "imagewhtbg_url", 
-        "imageclean_url", 
         "id", 
-        "manufacturer",
-        "catalog_fullname", 
-        "color_primary", 
-        "color_secondary", 
-        "inv_lowinstock", 
-        "inv_outofstock", 
-        "is_snapback", 
-        "is_adjustable", 
-        "is_flexfit", 
-        "is_youth", 
-        "is_fitted", 
-        "has_structcrwn", 
-        "has_curvedbill", 
-        "has_flatbill",
+        "ImgClean", 
+        "ImgWhtBG", 
+        "Manufacturer",
+        "CatalogName", 
+        "LowInStock", 
+        "OutOfStock", 
+        "ColorMain", 
+        "ColorSide", 
+        "Snapback", 
+        "Adjustable", 
+        "Flexfit", 
+        "Youth", 
+        "Fitted", 
+        "Structured", 
+        "CurvedBill", 
+        "FlatBill",
     ]
-    DisplayHeaders = [
-        header for header in _list
-    ]
+    DisplayHeaders = [ header for header in _list ]
     return dict(DisplayHeaders=DisplayHeaders)
+
+
+@app.context_processor
+def inject_lowinvalerts():
+    pass
+    def LowInStckStyler(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _btnStylesDict = {
+            'yes': 'btn-warning btn-lg btn-block',
+            'no': 'btn-outline-warning p-3 px-5',
+            }
+        return _btnStylesDict.get(yes_or_no, 'btn-outline-warning p-3')
+    return dict(LowInStckStyler=LowInStckStyler)
+
+
+@app.context_processor
+def inject_outinvalerts():
+    pass
+    def OutOfStckStyler(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _btnStylesDict = {
+            'yes': 'btn-danger btn-lg btn-block',
+            'no': 'btn-outline-danger p-3 px-5',
+        }
+        return _btnStylesDict.get(yes_or_no, 'btn-outline-danger p-3')
+    return dict(OutOfStckStyler=OutOfStckStyler)
+
+@app.context_processor
+def inject_yesnoicons():
+    pass
+    def YesNoIconizer(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _iconYesNoDict = {
+            'no': 'fa-times fa-2x',
+            'yes': 'fa-check fa-2x',
+        }
+        return _iconYesNoDict.get(yes_or_no, 'fa-square fa-2x')
+    return dict(YesNoIconizer=YesNoIconizer)
+
+@app.context_processor
+def inject_yesnobuttons():
+    pass
+    def YesNoButtonizer(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR YES-NO'''
+        pass
+        _btnStylesDict = {
+            'yes': 'btn-dark disabled btn-sm py-2',
+            'no': 'btn-outline-secondary disabled',
+        }
+        return _btnStylesDict.get(yes_or_no, 'btn-outline-secondary')
+    return dict(YesNoButtonizer=YesNoButtonizer)

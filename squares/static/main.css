@@ -1,3 +1,46 @@
+.bg-White {
+  background-color: snow;
+}
+.bg-Black {
+  background-color: black;
+}
+.bg-Red {
+  background-color: orangered;
+}
+.bg-Gold {
+  background-color: goldenrod;
+}
+.bg-Orange {
+  background-color: peru;
+}
+.bg-Silver {
+  background-color: silver;
+}
+.bg-Charcoal {
+  background-color: darkgray;
+}
+.bg-Royal {
+  background-color: royalblue;
+}
+.bg-Teal {
+  background-color: teal;
+}
+.bg-Purple {
+  background-color: purple;
+}
+.bg-Pink {
+  background-color:  hotpink;
+}
+.bg-Green {
+  background-color: green;
+}
+
+.rotated-text {
+    -webkit-transform: rotate(-60deg);
+    -ms-transform: rotate(-60deg);
+    transform: rotate(-60deg);
+    font-size: larger;
+}
 .bg-yes {
   background-color: rgba(102, 205, 171, 0.781);
 }

@@ -75,7 +75,7 @@ class Item(db.Model):
     has_flatbill = db.Column(db.String(32))
 
     def display_properties(self):
-        '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN'''
+        '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN FOR INV-HOME'''
         pass
         labels = [
             'Snap Back',
@@ -100,15 +100,9 @@ class Item(db.Model):
         return dict(zip(labels, properties))
 
     def display_tablerow(self):
+        '''GENERATES A LIST OF ITEM YES-NO ATTRIBUTES FOR EASE OF FRONT-END DESIGN INV-LISTER'''
         pass
         _tablerow_data = [
-            str(self.id),
-            self.manufacturer,
-            self.catalog_fullname,
-            self.color_primary,
-            self.color_secondary,
-            self.inv_lowinstock,
-            self.inv_outofstock,
             self.is_snapback,
             self.is_adjustable,
             self.is_flexfit,
@@ -120,7 +114,6 @@ class Item(db.Model):
         ]
         return [td for td in _tablerow_data]
         
-
 
     def __repr__(self):
         return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}')"

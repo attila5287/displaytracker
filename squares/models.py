@@ -34,9 +34,26 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 
+class ItemDemo():
+  pass
+
+  def __init__(self, id='9999', manufacturer='YUUPONG',
+               catalog_no='999DEMO', catalog_desc='noItemDesc',
+               image_url=''
+               ):
+      pass
+      self.id = id
+      self.manufacturer = manufacturer
+      self.image_url = image_url
+      self.catalog_no = catalog_no
+      self.catalog_desc = catalog_desc
+
+  def __repr__(self):
+      return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}'\n\t '{self.image_url}')"
+
+
 class Item(db.Model):
     pass
-
     id = db.Column(db.Integer, primary_key=True)
     manufacturer = db.Column(db.String(32))
     catalog_no = db.Column(db.String(32))
@@ -57,22 +74,31 @@ class Item(db.Model):
     has_curvedbill = db.Column(db.String(32))
     has_flatbill = db.Column(db.String(32))
 
+    def display_properties(self):
+        '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN'''
+        pass
+        labels = [
+            'Snap Back',
+            'Adjustable', 
+            'FlexFit', 
+            'Youth', 
+            'Fitted', 
+            'Structured',
+            'Curved Bill',
+            'Flat Bill',
+        ]
+        properties = [
+            self.is_snapback, 
+            self.is_adjustable,
+            self.is_flexfit, 
+            self.is_youth, 
+            self.is_fitted, 
+            self.has_structcrwn, 
+            self.has_curvedbill, 
+            self.has_flatbill,
+        ]
+        return dict(zip(labels, properties))
+
     def __repr__(self):
         return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}')"
 
-
-class ItemDemo():
-  pass
-  def __init__(self, id='9999', manufacturer='YUUPONG',
-               catalog_no='999DEMO', catalog_desc='noItemDesc',
-               image_url=''
-               ):
-      pass
-      self.id = id
-      self.manufacturer = manufacturer
-      self.image_url = image_url
-      self.catalog_no = catalog_no
-      self.catalog_desc = catalog_desc
-
-  def __repr__(self):
-      return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}'\n\t '{self.image_url}')"

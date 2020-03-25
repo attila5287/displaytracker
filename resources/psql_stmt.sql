@@ -1,26 +1,29 @@
+TRUNCATE TABLE public.post
+;
+DROP TABLE public.item CASCADE
+;
+
 CREATE TABLE "item" (
-	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
+"id"	BIGSERIAL NOT NULL PRIMARY KEY,
 	"manufacturer"	VARCHAR(32),
 	"catalog_no"	VARCHAR(64),
-	"catalog_desc"	VARCHAR(256),
+	"catalog_fullname"	VARCHAR(256),
 	"imagewhtbg_url"	VARCHAR(256),
 	"imageclean_url"	VARCHAR(256),
-	"color_bill"	VARCHAR(32),
-	"color_crown"	VARCHAR(32),
-	"reorder_url"	VARCHAR(256),
-	"is_onhand"	BOOLEAN,
-	"is_lowonhand"	BOOLEAN,
-	"is_outofstock"	BOOLEAN,
-	"is_adjustable"	BOOLEAN,
-	"is_snapback"	BOOLEAN,
-	"is_flexfit"	BOOLEAN,
-	"is_fitted"	BOOLEAN,
-	"is_youth"	BOOLEAN,
-	"has_curvedbill"	BOOLEAN,
-	"has_flatbill"	BOOLEAN
-);
-
-
+	"product_url"	VARCHAR(256),
+	"color_primary"	VARCHAR(32),
+	"color_secondary"	VARCHAR(32),
+	"is_snapback"	VARCHAR(32),
+	"is_adjustable"	VARCHAR(32),
+	"is_flexfit"	VARCHAR(32),
+	"is_youth"	VARCHAR(32),
+	"is_fitted"	VARCHAR(32),
+	"has_structcrwn"	VARCHAR(32),
+	"has_curvedbill"	VARCHAR(32),
+	"has_flatbill"	VARCHAR(32),
+	"inv_lowinstock"	VARCHAR(32),
+	"inv_outofstock"	VARCHAR(32)
+)
 
 CREATE TABLE "proday" (
 	"id"	BIGSERIAL NOT NULL PRIMARY KEY,

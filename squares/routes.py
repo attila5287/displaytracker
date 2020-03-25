@@ -109,12 +109,10 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -128,7 +126,6 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
-
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -298,7 +295,7 @@ def inject_destCityDict():
         return destCityNameDict.get(item_dest_id, 'UnknownDestinationCity')
     return dict(cityFinder=cityFinder)
 
-# ============== demo yupoong trns-png'ed items ~100
+# demo objects (no db) yupoong trns-png'ed items ~100
 @app.context_processor
 def inject_ItemDemoList():
     pass
@@ -515,7 +512,7 @@ def inject_ItemDemoList():
 
     return dict(ItemDemoList=ItemDemoList)
 
-# inv_feed
+# inv_feed (doc: CSV read ex)
 @app.route('/inventory/feed', methods=['GET', 'POST'])
 def csv_feed():
     form = CSVReaderForm()
@@ -526,7 +523,10 @@ def csv_feed():
         inventory = [
             Item(**row) for row in reader
         ]
-          
+        
+
+        db.session.add_all(inventory)
+        db.session.commit()
 
         flash('CSV read successfully!', 'success')
         return render_template('inv_home.html', inventory=inventory)
@@ -536,4 +536,3 @@ def csv_feed():
         title='CSV Feed',
         form=form,
     )
-

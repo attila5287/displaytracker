@@ -21,7 +21,50 @@ from flask_login import (
     login_user, current_user, logout_user, login_required
 )
 
+@app.route("/markas/outofstock/<int:item_id>")
+def mark_as_outofstock(item_id):
+    pass
+    item = Item.query.get(item_id)  # this is the item to edit
+    print('item to edit is....')
+    print(item)
+    print()
 
+    if item.inv_outofstock == 'no':
+        pass
+        item.just_ran_out()
+        db.session.commit()
+    elif item.inv_outofstock == 'yes':
+        pass
+        item.now_restock3d()
+        db.session.commit()
+    else:
+        pass
+        print('\n\t item could not be modified check yes-no values')
+
+    return redirect(url_for('inv_lister'))
+
+@app.route("/markas/lowinv/<int:item_id>")
+def mark_as_lowinv(item_id):
+    pass
+    item = Item.query.get(item_id)  #this is the item to edit
+    print('item to edit is....')
+    print(item)
+    print()
+
+    if item.inv_lowinstock == 'no':
+        pass
+        item.running_low()
+        db.session.commit()
+    elif item.inv_lowinstock == 'yes':
+        pass
+        item.now_restocked()
+        db.session.commit()
+    else:
+        pass
+        print('\n\t item could not be modified check yes-no values')
+
+    return redirect(url_for('inv_lister'))
+    
 @app.route("/inventory/list")
 def inv_lister():
     pass
@@ -72,6 +115,7 @@ def inv_home():
         _ = [item for item in inventory]
     except:
         inventory = []
+    
     return render_template('inv_home.html', inventory=inventory, title='InvDemoRandCol')
 
 @app.route("/")
@@ -89,25 +133,12 @@ def about():
 def create_item():
     form = ItemForm()
     if form.validate_on_submit():
-        item = Item(
-            manufacturer=request.form["manufacturer"],
-            catalog_no=request.form["catalog_no"],
-            catalog_fullname=request.form["catalog_fullname"],
-            imagewhtbg_url=request.form["imagewhtbg_url"],
-            imageclean_url=request.form["imageclean_url"],
-            color_primary=request.form["color_primary"],
-            color_secondary=request.form["color_secondary"],
-            product_url=request.form["product_url"],
-            is_adjustable=request.form["is_adjustable"],
-            is_flexfit=request.form["is_flexfit"],
-            is_youth=request.form["is_youth"],
-            is_fitted=request.form["is_fitted"],
-            has_structcrwn=request.form["has_structcrwn"],
-            has_curvedbill=request.form["has_curvedbill"],
-            has_flatbill=request.form["has_flatbill"],
-            inv_lowinstock=request.form["inv_lowinstock"],
-            inv_outofstock=request.form["inv_outofstock"],
-        )
+        dict_userInput = dict(request.form)
+        dict_userInput.pop('csrf_token')
+        # this trick removes seventeen lines of code
+        # thx to python dictionary 
+        # (resources>userInputDictTrick.txt)
+        item = Item(**dict_userInput)
         db.session.add(item)
         db.session.commit()
         flash('Item added to inventory!', 'success')
@@ -130,7 +161,6 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
-
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -450,7 +480,7 @@ def inject_ItemDemoList():
     return dict(ItemDemoList=ItemDemoList[:20])
 
 @app.context_processor
-def inject_headers():
+def inject_TableHeaders():
     ''' GENERATES A LIST OF ITEM ATTRIBUTES TO BE USED AS TABLE HEADERS '''
     pass
     _list = [
@@ -475,56 +505,84 @@ def inject_headers():
     DisplayHeaders = [ header for header in _list ]
     return dict(DisplayHeaders=DisplayHeaders)
 
-
 @app.context_processor
-def inject_lowinvalerts():
+def inject_LowInvButtons():
     pass
     def LowInStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
         _btnStylesDict = {
             'yes': 'btn-warning btn-lg btn-block',
-            'no': 'btn-outline-warning p-3 px-5',
+            'no': 'btn-outline-secondary py-2 px-5',
             }
-        return _btnStylesDict.get(yes_or_no, 'btn-outline-warning p-3')
+        return _btnStylesDict.get(yes_or_no, 'btn-outline-warning')
     return dict(LowInStckStyler=LowInStckStyler)
 
-
 @app.context_processor
-def inject_outinvalerts():
+def inject_OutInvButtons():
     pass
     def OutOfStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
         _btnStylesDict = {
             'yes': 'btn-danger btn-lg btn-block',
-            'no': 'btn-outline-danger p-3 px-5',
+            'no': 'btn-outline-secondary py-2 px-5',
         }
         return _btnStylesDict.get(yes_or_no, 'btn-outline-danger p-3')
     return dict(OutOfStckStyler=OutOfStckStyler)
 
 @app.context_processor
-def inject_yesnoicons():
+def inject_YesNoIcons():
     pass
     def YesNoIconizer(yes_or_no):
-        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        '''DICTIONARY CONTAINS FONT AWESOME ICONS'''
         pass
         _iconYesNoDict = {
-            'no': 'fa-times fa-2x',
-            'yes': 'fa-check fa-2x',
+            'no': 'fa-times text-dark',
+            'yes': 'fa-check',
         }
         return _iconYesNoDict.get(yes_or_no, 'fa-square fa-2x')
     return dict(YesNoIconizer=YesNoIconizer)
 
 @app.context_processor
-def inject_yesnobuttons():
+def inject_LowInvIcons():
     pass
-    def YesNoButtonizer(yes_or_no):
-        '''DICTIONARY CONTAINS BUTTON STYLES FOR YES-NO'''
+
+    def LowInvIconizer(yes_or_no):
+        '''DICTIONARY CONTAINS FONT AWESOME ICONS FOR LOW-INV '''
         pass
-        _btnStylesDict = {
-            'yes': 'btn-dark disabled btn-sm py-2',
-            'no': 'btn-outline-secondary disabled',
+        _iconYesNoDict = {
+            'no': 'fa-thumbs-up',
+            'yes': 'fa-sort-amount-down text-light',
         }
-        return _btnStylesDict.get(yes_or_no, 'btn-outline-secondary')
-    return dict(YesNoButtonizer=YesNoButtonizer)
+        return _iconYesNoDict.get(yes_or_no, 'fa-square')
+    return dict(LowInvIconizer=LowInvIconizer)
+
+@app.context_processor
+def inject_OutInvIcons():
+    pass
+    def OutInvIconizer(yes_or_no):
+        '''DICTIONARY CONTAINS FONT AWESOME ICONS FOR OUT-INV '''
+        pass
+        _iconYesNoDict = {
+            'no': 'fa-thumbs-up',
+            'yes': 'fa-battery-empty text-light',
+        }
+        return _iconYesNoDict.get(yes_or_no, 'fa-square')
+    return dict(OutInvIconizer=OutInvIconizer)
+
+
+@app.route("/filterby/manuf/<string:item_manufacturer>")
+def filterby_manuf(item_manufacturer):
+    pass
+    inventory = Item.query.filter_by(manufacturer=item_manufacturer).all()
+
+    try:
+        _ = [item for item in inventory]
+    except:
+        inventory = []
+    return render_template(
+        'inv_lister.html',
+        inventory=inventory,
+        title='InvFilterByManuf'
+    )

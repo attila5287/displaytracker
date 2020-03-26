@@ -1,0 +1,36 @@
+# user_input
+
+manufacturer=request.form["manufacturer"],
+catalog_no=request.form["catalog_no"],
+catalog_fullname=request.form["catalog_fullname"],
+imagewhtbg_url=request.form["imagewhtbg_url"],
+imageclean_url=request.form["imageclean_url"],
+color_primary=request.form["color_primary"],
+color_secondary=request.form["color_secondary"],
+product_url=request.form["product_url"],
+is_adjustable=request.form["is_adjustable"],
+is_flexfit=request.form["is_flexfit"],
+is_youth=request.form["is_youth"],
+is_fitted=request.form["is_fitted"],
+has_structcrwn=request.form["has_structcrwn"],
+has_curvedbill=request.form["has_curvedbill"],
+has_flatbill=request.form["has_flatbill"],
+inv_lowinstock=request.form["inv_lowinstock"],
+inv_outofstock=request.form["inv_outofstock"],
+
+
+@app.route("/inventory/new", methods=['GET', 'POST'])
+@login_required
+def create_item():
+    form = ItemForm()
+    if form.validate_on_submit():
+        dict_userInput = dict(request.form)
+        dict_userInput.pop('csrf_token')
+        item = Item(**dict_userInput) #this saves from all of the above
+        db.session.add(item)
+        db.session.commit()
+        flash('Item added to inventory!', 'success')
+        return redirect(url_for('inv_home'))
+
+    return render_template('create_item.html', title='New Item',
+                           form=form, legend='New Item')

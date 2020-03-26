@@ -1,81 +1,24 @@
 {% extends "layout_squares.html" %}
 {% block content %}
 
+<style>
+  .table > tbody > tr > td {
+     vertical-align: middle;
+}
+</style>
+
 {% if inventory==[] %}
 <div class="row">
 
-  {% for item in ItemDemoList %}
-    <div class="col-sm-6">
-      <div class="item-section box-shadow border-dark px-0">
-        <div 
-        class="btn btn-dark btn-block border-dark mt-0 mx-0 pt-1" 
-        style="border-width:thick;border-radius: 16px;"
-        >
-          <div class="d-flex w-100 justify-content-around mx-0 mt-2">
-            
-            <i class="text-muted text-monospace"> 
-              <i class="fas fa-angle-right mr-2"></i>
-              {{item.manufacturer}} 
-            </i>
-            <h3 class="text-monospace text-center">
-              {{item.catalog_no}} 
-            </h3>
-          </div>
-        </div>
-
-        <div class="d-flex w-100 justify-content-around">
-          <div class="d-flex flex-column mb-1 p-1">
-            <span class="badge badge-danger text-dark"> COL_CROWN </span>
-            <i class="text-muted">ColorCrown</i>
-          </div>
-          <div class="d-flex flex-column bd-highlight mb-1 p-1">
-            <span class="badge badge-success text-dark"> COL_BILL </span>
-            <i class="text-muted">ColorBill</i>
-          </div>    
-        </div>
-
-        <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
-        <img class="card-img" src="{{item.image_url}}" alt="{{item.image_url}}">
-        
-        </div>
-      
-        <ul class="list-group list-group-flush mb-2">
-        <li class="list-group-item list-group-item flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-          <i class="text-muted">
-            <i class="fas fa-angle-right mr-2"></i>
-            catalog description
-            </i>
-          </div>
-        <p class="mt-1 mb-1 text-right"> {{item.catalog_fullname}} </p>
-        </li>
-        <li class="list-group-item list-group-item flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-          <i class="text-muted">
-            <i class="fas fa-angle-right mr-2"></i>
-            item id 
-            </i>
-          {{item.id}} 
-          </div>
-        </li>      
-        <li class="list-group-item list-group-item flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-          <i class="text-muted">
-            <i class="fas fa-angle-right mr-2"></i>
-            inventory status 
-            </i>
-            InStock 
-          </div>
-        </li>      
-        </ul>
-
-      </div>
-    </div>
-  {% endfor %}
+  <div class="alert alert-danger m-4 p-4" role="alert">
+    <strong>
+      NO INVENTORY?
+    </strong>
+  </div>
 
 </div> 
 {% else %}
-<table class="table table-hover table-borderless table-striped mt-2">
+<table class="table table-hover table-borderless table-striped text-center mt-2">
 
   <thead>
     <tr>
@@ -113,7 +56,7 @@
 </td>
 
 <td>
-  <a href="/filterby/manufacturer/{{item.manufacturer}}">
+  <a href="/filterby/manuf/{{item.manufacturer}}">
     {{item.manufacturer}} 
   </a>
 
@@ -125,34 +68,29 @@
 
 </td>
 
-<style>
-  .bg-lowinstockyes{
-    background-color: sandybrown;
-  }
-  .bg-outofstockyes{
-    background-color: indianred;
-  }  
-</style>
 <td>
   
-  <button 
+  <a href="{{url_for('mark_as_lowinv', item_id=item.id)}}"
   class="btn {{LowInStckStyler(item.inv_lowinstock)}}"
-  type="button" name="" id="" 
   >
-    {{item.inv_lowinstock}}
-
-  </button>
-
+  <i class="fas {{LowInvIconizer(item.inv_lowinstock)}}"></i>
+  
+</a>  
 </td>
+
 <td>
-    <button type="button" name="" id="" class="btn {{OutOfStckStyler(item.inv_outofstock)}}">
-      {{item.inv_outofstock}}
-  </button>
+    <a 
+    href="{{url_for('mark_as_outofstock', item_id=item.id)}}"
+    type="button" name="" id="" class="btn {{OutOfStckStyler(item.inv_outofstock)}}">
+      <i class="fas {{OutInvIconizer(item.inv_outofstock)}}"></i>
+  </a>
 </td>
+
+
 <td class="text-center">
 <div class="d-flex flex-column">
   <span class="badge badge-primary bg-{{item.color_primary}} p-2 mt-2">
-    <strong>PrimaryColor</strong>
+    <strong>First</strong>
   </span>
   {{item.color_primary}} 
 </div>
@@ -162,7 +100,7 @@
 >
 <div class="d-flex flex-column">
 <span class="badge badge-primary bg-{{item.color_secondary}} p-2 mt-2">
-  <strong>SecondaryColor</strong>
+  <strong>Secnd</strong>
 </span>
 {{item.color_secondary}} 
 </div>
@@ -171,13 +109,8 @@
 
 
 {% for value in item.display_tablerow()  %}
-  <td>
-        <button 
-        class="btn btn-rounded {{YesNoButtonizer(value)}}"
-        type="button" name="" id="" style="border-radius: 8px;"
-        >
-          <i class="fas {{YesNoIconizer(value)}}"></i>
-        </button> 
+  <td class="text-center">
+    <i class="fas {{YesNoIconizer(value)}}"></i>
   </td>
 {% endfor %}
 </tr>

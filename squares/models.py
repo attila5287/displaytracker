@@ -114,6 +114,24 @@ class Item(db.Model):
         ]
         return [td for td in _tablerow_data]
         
+    def running_low(self):
+        pass
+        self.inv_lowinstock = 'yes'
+        self.inv_outofstock = 'no'
+
+    def now_restocked(self):
+        pass
+        self.inv_lowinstock = 'no'
+
+    def just_ran_out(self):
+        pass
+        self.inv_lowinstock = 'no'
+        self.inv_outofstock = 'yes'
+
+    def now_restock3d(self):
+        pass
+        self.inv_outofstock = 'no'
+
 
     def __repr__(self):
         return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}')"

@@ -80,6 +80,11 @@ def inv_lister():
 @app.route("/markas/outofstock/<int:item_id>")
 def mark_as_outofstock(item_id):
     pass
+    def redir3ct_url(default='inv_lister'):
+        pass
+        return request.referrer or \
+            request.args.get('next') or \
+                url_for(default)
     item = Item.query.get(item_id)  # this is the item to edit
     print()
     print(item)
@@ -96,18 +101,20 @@ def mark_as_outofstock(item_id):
         pass
         print('\n\t item could not be modified check yes-no values')
 
-    return redirect(url_for('inv_lister'))
+    return redirect(redir3ct_url())
 
 
 @app.route("/markas/lowinv/<int:item_id>")
 def mark_as_lowinv(item_id):
     pass
-    
-    # this is the item to edit
-    item = Item.query.get(item_id)
+    def redir3ct_url(default='inv_lister'):
+        pass
+        return request.referrer or \
+            request.args.get('next') or \
+                url_for(default)
     print('item to edit is....')
+    item = Item.query.get(item_id)
     print(item)
-    print()
 
     if item.inv_lowinstock == 'no':
         pass
@@ -121,7 +128,7 @@ def mark_as_lowinv(item_id):
         pass
         print('\n\t item could not be modified check yes-no values')
 
-    return redirect(url_for('inv_lister'))
+    return redirect(redir3ct_url())
 
 
 # inv_feed (doc: CSV read ex)
@@ -566,12 +573,11 @@ def inject_TableHeaders():
 @app.context_processor
 def inject_LowInvButtons():
     pass
-
     def LowInStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
         _btnStylesDict = {
-            'yes': 'btn-warning btn-lg btn-block',
+            'yes': 'btn-warning btn-lg py-2 px-5',
             'no': 'btn-outline-secondary py-2 px-5',
         }
         return _btnStylesDict.get(yes_or_no, 'btn-outline-warning')
@@ -581,16 +587,45 @@ def inject_LowInvButtons():
 @app.context_processor
 def inject_OutInvButtons():
     pass
-
     def OutOfStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
         _btnStylesDict = {
-            'yes': 'btn-danger btn-lg btn-block',
+            'yes': 'btn-danger btn-lg py-2 px-5',
             'no': 'btn-outline-secondary py-2 px-5',
         }
         return _btnStylesDict.get(yes_or_no, 'btn-outline-danger p-3')
     return dict(OutOfStckStyler=OutOfStckStyler)
+
+
+@app.context_processor
+def inject_OutInvBtns4Grid():
+    pass
+
+    def OutOfStckStylerGrid(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _btnStylesDict = {
+            'yes': 'btn-warning btn-md',
+            'no': 'btn-outline-secondary',
+        }
+        return _btnStylesDict.get(yes_or_no, 'btn-outline-danger p-3')
+    return dict(OutOfStckStylerGrid=OutOfStckStylerGrid)
+
+
+@app.context_processor
+def inject_LowInvBts4Grid():
+    pass
+    def LowInStckStylerGrid(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _btnStylesDict = {
+            'yes': 'btn-primary btn-md',
+            'no': 'btn-outline-secondary',
+        }
+        return _btnStylesDict.get(yes_or_no, 'btn-outline-warning')
+    return dict(LowInStckStylerGrid=LowInStckStylerGrid)
+
 
 
 @app.context_processor

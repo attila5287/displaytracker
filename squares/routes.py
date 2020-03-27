@@ -6,7 +6,7 @@ from PIL import (
     Image
 )
 from flask import (
-    render_template, url_for, flash, redirect, request, abort, 
+    render_template, url_for, flash, redirect, request, abort,
 )
 from squares import (
     app, db, bcrypt
@@ -21,13 +21,68 @@ from flask_login import (
     login_user, current_user, logout_user, login_required
 )
 
+
+@app.route("/item/<int:item_id>/delete", methods=['GET', 'POST'])
+@login_required
+def delete_item(item_id):
+    item = Item.query.get_or_404(item_id)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Item has been deleted from inventory!', 'danger')
+    return redirect(url_for('inv_lister'))
+
+
+# updateitem
+@app.route("/item/<int:item_id>/edit", methods=['GET', 'POST'])
+def edit_item(item_id):
+    item = Item.query.get_or_404(item_id)
+    # trick is the obj to show item info on the form
+    form = ItemForm(obj=item)
+    if form.validate_on_submit():
+        pass
+        item.update_via_wtforms(form)
+        db.session.commit()
+        flash('Item Updated!', 'success')
+        return redirect(url_for('show_item', item_id=item_id))
+
+    return render_template(
+        'edit_item.html',
+        item=item,
+        form=form,
+        title='Edit Item',
+        legend='Edit Form For Item ID: '+str(item.id) 
+        )
+
+
+@app.route("/item/<int:item_id>")
+def show_item(item_id):
+    item = Item.query.get_or_404(item_id)
+    custom_title = 'Show ' + str(item.id) + ' ' +  item.catalog_fullname
+    return render_template('show_item.html', title=custom_title, legend='Show Item ' + str(item.id), item=item)
+
+
+@app.route("/")
+@app.route("/inventory/list")
+def inv_lister():
+    pass
+    inventory = Item.query.all()
+    try:
+        _ = [item for item in inventory]
+    except:
+        inventory = []
+    return render_template(
+        'inv_lister.html',
+        inventory=inventory,
+        title='InvListMaster'
+    )
+
+
 @app.route("/markas/outofstock/<int:item_id>")
 def mark_as_outofstock(item_id):
     pass
     item = Item.query.get(item_id)  # this is the item to edit
-    print('item to edit is....')
-    print(item)
     print()
+    print(item)
 
     if item.inv_outofstock == 'no':
         pass
@@ -43,10 +98,13 @@ def mark_as_outofstock(item_id):
 
     return redirect(url_for('inv_lister'))
 
+
 @app.route("/markas/lowinv/<int:item_id>")
 def mark_as_lowinv(item_id):
     pass
-    item = Item.query.get(item_id)  #this is the item to edit
+    
+    # this is the item to edit
+    item = Item.query.get(item_id)
     print('item to edit is....')
     print(item)
     print()
@@ -64,18 +122,7 @@ def mark_as_lowinv(item_id):
         print('\n\t item could not be modified check yes-no values')
 
     return redirect(url_for('inv_lister'))
-    
-@app.route("/inventory/list")
-def inv_lister():
-    pass
 
-    inventory = Item.query.all()
-
-    try:
-        _ = [item for item in inventory]
-    except:
-        inventory = []
-    return render_template('inv_lister.html', inventory=inventory, title='InvDemoListRandData')
 
 # inv_feed (doc: CSV read ex)
 @app.route('/inventory/feed', methods=['GET', 'POST'])
@@ -101,9 +148,11 @@ def csv_feed():
         form=form,
     )
 
+
 @app.route('/square00')
 def square_00():
     return render_template('square_00.html', title='Square 00')
+
 
 @app.route("/inventory/home")
 def inv_home():
@@ -115,18 +164,20 @@ def inv_home():
         _ = [item for item in inventory]
     except:
         inventory = []
-    
+
     return render_template('inv_home.html', inventory=inventory, title='InvDemoRandCol')
 
-@app.route("/")
+
 @app.route("/home")
 def home():
     posts = Post.query.all()
     return render_template('home.html', posts=posts)
 
+
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
+
 
 @app.route("/inventory/new", methods=['GET', 'POST'])
 @login_required
@@ -136,7 +187,7 @@ def create_item():
         dict_userInput = dict(request.form)
         dict_userInput.pop('csrf_token')
         # this trick removes seventeen lines of code
-        # thx to python dictionary 
+        # thx to python dictionary
         # (resources>userInputDictTrick.txt)
         item = Item(**dict_userInput)
         db.session.add(item)
@@ -147,20 +198,24 @@ def create_item():
     return render_template('create_item.html', title='New Item',
                            form=form, legend='New Item')
 
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
-    
+
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        user = User(username=form.username.data,
+                    email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -177,16 +232,19 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    picture_path = os.path.join(
+        app.root_path, 'static/profile_pics', picture_fn)
 
     output_size = (125, 125)
     i = Image.open(form_picture)
@@ -194,6 +252,7 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
+
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -211,28 +270,33 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
+
 
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        post = Post(title=form.title.data,
+                    content=form.content.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post',
-                       form=form, legend='New Post')
+                           form=form, legend='New Post')
+
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
+# updatepost
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
@@ -252,6 +316,7 @@ def update_post(post_id):
     return render_template('create_post.html', title='Update Post',
                            form=form, legend='Update Post')
 
+
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
 def delete_post(post_id):
@@ -269,16 +334,16 @@ def inject_ItemDemoList():
     pass
     # base_url = 'https://shop.flexfit.com/product/image/medium/'
     base_url = 'https://raw.githubusercontent.com/attila5287/displaytracker_img/master/yupoong/image_clean/'
-    
+
     end_url = '.png'
 
     ItemDemoList = [
         ItemDemo(
-            id = '9999',
-            manufacturer = 'YUUPONG',
+            id='9999',
+            manufacturer='YUUPONG',
             catalog_no=str(catalog_no).lstrip(),
-            catalog_desc = catalog_desc,
-            image_url = base_url + catalog_no + end_url,
+            catalog_desc=catalog_desc,
+            image_url=base_url + catalog_no + end_url,
         )
         for (catalog_no, catalog_desc) in
         zip(
@@ -472,55 +537,51 @@ def inject_ItemDemoList():
                 "Flexfit Mossy Oak",
                 "Classic Jockey Camper",
             ],
-            
+
         )
     ]
     # print(*ItemDemoList)
 
     return dict(ItemDemoList=ItemDemoList[:20])
 
+
 @app.context_processor
 def inject_TableHeaders():
     ''' GENERATES A LIST OF ITEM ATTRIBUTES TO BE USED AS TABLE HEADERS '''
     pass
     _list = [
-        "id", 
-        "ImgClean", 
-        "ImgWhtBG", 
-        "Manufacturer",
-        "CatalogName", 
-        "LowInStock", 
-        "OutOfStock", 
-        "ColorMain", 
-        "ColorSide", 
-        "Snapback", 
-        "Adjustable", 
-        "Flexfit", 
-        "Youth", 
-        "Fitted", 
-        "Structured", 
-        "CurvedBill", 
+        "Snapback",
+        "Adjustable",
+        "Flexfit",
+        "Youth",
+        "Fitted",
+        "Structured",
+        "CurvedBill",
         "FlatBill",
     ]
-    DisplayHeaders = [ header for header in _list ]
+    DisplayHeaders = [header for header in _list]
     return dict(DisplayHeaders=DisplayHeaders)
+
 
 @app.context_processor
 def inject_LowInvButtons():
     pass
+
     def LowInStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
         _btnStylesDict = {
             'yes': 'btn-warning btn-lg btn-block',
             'no': 'btn-outline-secondary py-2 px-5',
-            }
+        }
         return _btnStylesDict.get(yes_or_no, 'btn-outline-warning')
     return dict(LowInStckStyler=LowInStckStyler)
+
 
 @app.context_processor
 def inject_OutInvButtons():
     pass
+
     def OutOfStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
@@ -531,9 +592,11 @@ def inject_OutInvButtons():
         return _btnStylesDict.get(yes_or_no, 'btn-outline-danger p-3')
     return dict(OutOfStckStyler=OutOfStckStyler)
 
+
 @app.context_processor
 def inject_YesNoIcons():
     pass
+
     def YesNoIconizer(yes_or_no):
         '''DICTIONARY CONTAINS FONT AWESOME ICONS'''
         pass
@@ -543,6 +606,7 @@ def inject_YesNoIcons():
         }
         return _iconYesNoDict.get(yes_or_no, 'fa-square fa-2x')
     return dict(YesNoIconizer=YesNoIconizer)
+
 
 @app.context_processor
 def inject_LowInvIcons():
@@ -558,9 +622,11 @@ def inject_LowInvIcons():
         return _iconYesNoDict.get(yes_or_no, 'fa-square')
     return dict(LowInvIconizer=LowInvIconizer)
 
+
 @app.context_processor
 def inject_OutInvIcons():
     pass
+
     def OutInvIconizer(yes_or_no):
         '''DICTIONARY CONTAINS FONT AWESOME ICONS FOR OUT-INV '''
         pass
@@ -586,3 +652,36 @@ def filterby_manuf(item_manufacturer):
         inventory=inventory,
         title='InvFilterByManuf'
     )
+
+
+@app.route("/showonly/lowinstock/yes")
+def showonly_invlow():
+    pass
+    inventory = Item.query.filter_by(inv_lowinstock='yes').all()
+
+    try:
+        _ = [item for item in inventory]
+    except:
+        inventory = []
+    return render_template(
+        'inv_lister.html',
+        inventory=inventory,
+        title='InvShowOnlyLow'
+    )
+
+
+@app.route("/showonly/outofstock/yes")
+def showonly_invout():
+    pass
+    inventory = Item.query.filter_by(inv_outofstock='yes').all()
+
+    try:
+        _ = [item for item in inventory]
+    except:
+        inventory = []
+    return render_template(
+        'inv_lister.html',
+        inventory=inventory,
+        title='InvShowOnlyLow'
+    )
+

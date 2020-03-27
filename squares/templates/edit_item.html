@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section"
+style="border-width: thick;"
+>
+  <div class="row">
+  <div class="col-md-4">
+      <img class="img-fluid" src="{{item.imageclean_url}}" alt="">
+  </div>
+  <div class="col-md-4">
+      <div class="card bg-dark text-white">
+      <img class="card-img p-4" src="{{item.imagewhtbg_url}}" alt="">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <a 
+    class="btn btn-danger btn-lg btn-block py-2 mt-3" 
+    href="item/{{item.id}}/delete" 
+    role="button"
+    >
+      <i class="fas fa-trash-alt">
+        <small>
+          Delete Item #{{item.id|string}}
+        </small>
+      </i>
+    </a>
+
+  </div>
+</div>
+
+  <div class="container-fluid">
+    <legend class="border-bottom mb-4">{{ legend }}</legend>
+    <form method="POST" action="">
+        
+        <i class="text-hide">
+          {{ form.hidden_tag() }}
+        </i>
+        <div class="row">
+            {% for field in form %}
+            <div class="col-md-4 text-center">
+                <div class="form-group" style="font-size: 7px;">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex w-100 justify-content-center">
+                                <i class="fas fa-edit text-muted"></i>
+                                {{field.label(class="text-muted mb-1", style="font-size:6px;")}}
+                            </div>
+                            {{field(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 8px;")}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary text-light btn-rounded btn-lg  box-shadow"
+            style="border-radius: 12px;">
+            <h3>
+                <i class="fas fa-edit    "></i>
+                update item info
+            </h3>
+        </button>
+
+    </form>
+    </div>
+  </div>
+{% endblock content %}

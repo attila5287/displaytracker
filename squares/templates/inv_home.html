@@ -119,25 +119,47 @@
           </div>    
         </div>
 
-
-
         <!-- required for responsive /image placed in a bs-card -->
         <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
         <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
         
         </div>
-        <!-- alert buttons low-inv out of stock -->
-        <div class="container text-center mt-2">
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-warning">
-                <i class="fas fa-sort-amount-down    "></i>
-                <small>LowInStock</small>
-            </button>
 
-            <button type="button" class="btn btn-danger">
+        <!-- alert buttons low-inv out of stock -->
+        <div class="container text-center my-2 mx-0">
+          <div class="btn-group my-3" role="group">
+            <a 
+            role="button" 
+            class="btn btn-primary" 
+            href="{{ url_for('mark_as_lowinv',item_id=item.id) }}" 
+            >
+              <i class="fa fa-battery-quarter" aria-hidden="true"></i>
+                <small>LowInStock</small>
+            </a>                        
+            <a 
+            role="button" 
+            class="btn btn-warning" 
+            href="{{ url_for('mark_as_outofstock',item_id=item.id) }}" 
+            >
               <i class="fa fa-battery-empty" aria-hidden="true"></i>
                 <small>OutOfStock</small>
-            </button>
+            </a>                        
+            <a 
+            role="button" 
+            class="btn btn-info" 
+            href="{{ url_for('edit_item',item_id=item.id) }}" 
+            >
+              <i class="fas fa-edit"></i>
+                <small>EditItem</small>
+            </a>                        
+            <a 
+            role="button" 
+            class="btn btn-danger" 
+            href="{{ url_for('delete_item',item_id=item.id) }}" 
+            >
+              <i class="fas fa-times"></i>
+                <small>DeleteItem</small>
+            </a>                                                            
           </div>
         </div>
 
@@ -159,7 +181,8 @@
         </div>
         
         {% endfor %}
-      </div>
+        </div>
+
       </div>
     </div>
   {% endfor %}

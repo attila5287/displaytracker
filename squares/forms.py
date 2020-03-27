@@ -68,25 +68,20 @@ class PostForm(FlaskForm):
 
 class ItemForm(FlaskForm):
     pass
-
     manufacturer = StringField(
         'Manufacturer', validators=[DataRequired()], default='Manufacturer')
-    catalog_no = StringField(
-        'Catalog No',
-        validators=[DataRequired()], default='no_entry'
-        )
     catalog_fullname = StringField(
         'Catalog Name', default='Catalog Full Name')
     color_primary = StringField(
         'Primary Color', validators=[DataRequired()], default='Primary Color')
     color_secondary = StringField(
         'Secondary Color', default='Secondary Color')
-    imagewhtbg_url = StringField(
-        'Image URL Wht Bg JPG',  default='http://item.image.white.background')
     imageclean_url = StringField(
-        'Image URL Trnsprnt PNG',  default='http://item.image.trnsprnt.background')
+        'ImgURL TrsPNG',  default='http://image.trnsprnt.background')
+    imagewhtbg_url = StringField(
+        'ImgURL WhtBg',  default='http://image.white.background')
     product_url = StringField(
-        'Product', default='http://manufacturer.item.info'
+        'Product', default='http://brand.product.info'
         )
     
     is_snapback = SelectField('Snapback?',
@@ -122,7 +117,6 @@ class CSVReaderForm(FlaskForm):
 
 
 
-# ---------
 
 # @app.route("/pie")
 # def rick():

@@ -202,3 +202,72 @@ class Item(db.Model):
     def __repr__(self):
         return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_fullname}')"
 
+
+class Square(db.Model):
+    '''A SQUARE CONTAINS 6 ITEMS IN EA. ROW and 9 IN COL '''
+    pass
+    __tablename__ = 'square'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32))
+    A1 = db.Column(db.Integer)
+    A2 = db.Column(db.Integer)
+    A3 = db.Column(db.Integer)
+    A4 = db.Column(db.Integer)
+    A5 = db.Column(db.Integer)
+    A6 = db.Column(db.Integer)
+
+    B1 = db.Column(db.Integer)
+    B2 = db.Column(db.Integer)
+    B3 = db.Column(db.Integer)
+    B4 = db.Column(db.Integer)
+    B5 = db.Column(db.Integer)
+    B6 = db.Column(db.Integer)
+
+    C1 = db.Column(db.Integer)
+    C2 = db.Column(db.Integer)
+    C3 = db.Column(db.Integer)
+    C4 = db.Column(db.Integer)
+    C5 = db.Column(db.Integer)
+    C6 = db.Column(db.Integer)
+
+    D1 = db.Column(db.Integer)
+    D2 = db.Column(db.Integer)
+    D3 = db.Column(db.Integer)
+    D4 = db.Column(db.Integer)
+    D5 = db.Column(db.Integer)
+    D6 = db.Column(db.Integer)
+
+    E1 = db.Column(db.Integer)
+    E2 = db.Column(db.Integer)
+    E3 = db.Column(db.Integer)
+    E4 = db.Column(db.Integer)
+    E5 = db.Column(db.Integer)
+    E6 = db.Column(db.Integer)
+
+    F1 = db.Column(db.Integer)
+    F2 = db.Column(db.Integer)
+    F3 = db.Column(db.Integer)
+    F4 = db.Column(db.Integer)
+    F5 = db.Column(db.Integer)
+    F6 = db.Column(db.Integer)
+
+    G1 = db.Column(db.Integer)
+    G2 = db.Column(db.Integer)
+    G3 = db.Column(db.Integer)
+    G4 = db.Column(db.Integer)
+    G5 = db.Column(db.Integer)
+    G6 = db.Column(db.Integer)
+
+    H1 = db.Column(db.Integer)
+    H2 = db.Column(db.Integer)
+    H3 = db.Column(db.Integer)
+    H4 = db.Column(db.Integer)
+    H5 = db.Column(db.Integer)
+    H6 = db.Column(db.Integer)
+
+    I1 = db.Column(db.Integer)
+    I2 = db.Column(db.Integer)
+    I3 = db.Column(db.Integer)
+    I4 = db.Column(db.Integer)
+    I5 = db.Column(db.Integer)
+    I6 = db.Column(db.Integer)

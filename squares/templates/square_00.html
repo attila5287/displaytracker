@@ -20,7 +20,7 @@
 
 <div class="container-fluid m-0">
   <div class="row mt-2">
-    {% for item in ItemDemoList[-54:] %}
+    {% for item in display %}
     <div class="col-md-2">
       <div class="square-section border-dark m-0 p-0">
         <!-- item title at the top -->
@@ -34,7 +34,7 @@
                 {{item.manufacturer}} 
               </i>
               <h4 class="text-monospace text-center">
-                {{item.catalog_no}} 
+                {{item.catalog_fullname}} 
               </h4>
             </div>
           </div>      
@@ -44,8 +44,8 @@
         <div class="card bg-transparent border-dark my-1 mx-1 p-1" style="border-width: medium;border-radius: 16px;">
           <img
             class="card-img p-2"
-            src="{{item.image_url}}"
-            alt="{{item.image_url}}"
+            src="{{item.imageclean_url}}"
+            alt="{{item.imageclean_url}}"
             >
         </div>
 
@@ -55,7 +55,7 @@
         >
           <p class="text-center my-1">
             &middot; 
-            {{ item.catalog_desc }}
+            {{ item.catalog_fullname }}
             &middot;
           </p>
         </div>
@@ -91,4 +91,8 @@
     {% endfor %}
 </div>
 </div>
+
+
+
 {% endblock %}
+

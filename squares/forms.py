@@ -73,9 +73,9 @@ class ItemForm(FlaskForm):
     catalog_fullname = StringField(
         'Catalog Name', default='Catalog Full Name')
     color_primary = StringField(
-        'Primary Color', validators=[DataRequired()], default='Primary Color')
+        'Primary Color', validators=[DataRequired()], default='primary')
     color_secondary = StringField(
-        'Secondary Color', default='Secondary Color')
+        'Secondary Color', default='secondary')
     imageclean_url = StringField(
         'ImgURL TrsPNG',  default='http://image.trnsprnt.background')
     imagewhtbg_url = StringField(
@@ -113,7 +113,6 @@ class CSVReaderForm(FlaskForm):
         ]
         )
     submit = SubmitField('Feed Inv | Read CSV')
-
 
 
 

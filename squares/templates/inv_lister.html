@@ -7,22 +7,15 @@
 }
 </style>
 
-{% if inventory==[] %}
-<div class="row">
-
-  <div class="alert alert-danger m-4 p-4" role="alert">
-    <strong>
-      NO INVENTORY?
-    </strong>
-  </div>
-
-</div> 
-{% else %}
 <table class="table table-hover table-borderless table-striped text-center mt-2">
 
   <thead>
     <tr>
-      <th scope="col" class="text-center">id</th>
+      <th scope="col" class="text-center">
+        <i class="fas fa-eye    "></i>
+      </th>
+      <th scope="col" class="text-center">edit</th>
+      <th scope="col" class="text-center">delt</th>            
       <th scope="col" class="text-center">ImgClean</th>
       <th scope="col" class="text-center">ImgWhtBG</th>
       <th scope="col" class="text-center">Manufacturer</th>
@@ -73,17 +66,59 @@
     </tr>
   </thead>
 <tbody>
-  
-{% for item in inventory %}
+
+{% if inventory.items==[] %}  
+<tr> 
+
+  {% for table_data in range(17) %}
+  <td>
+    n/a
+  </td>
+  {% endfor %}
+
+</tr>
+{% else %}
+
+{% for item in inventory.items %}
 
 <tr>
+  <td>
+<a href="{{url_for('show_item', item_id=item.id) }}">
+  
+  {{item.id|string}}
+</a>    
+  </td>
+  <td>
+    <a href="{{url_for('edit_item', item_id=item.id) }}">
+  <i class="fas fa-edit text-primary"></i>
+  </a>
+  </td>
 <td>
 
 
-<a href="{{url_for('show_item', item_id=item.id) }}">
-  {{item.id|string}}
-</a>
+<a type="button" class="btn bg-transparent" data-toggle="modal" data-target="#deleteModal">
+  <i class="fas fa-trash-alt text-danger"></i>
+  </a>
 
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Item, confirm?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>                                         
 
 </td>
 
@@ -107,19 +142,22 @@
 <td>
   <a href="/filterby/manuf/{{item.manufacturer}}">
     <i class="text-uppercase">
-      <strong>
-
+      <small>
         <em style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
           {{item.manufacturer}}
         </em> 
-      </strong>
+      </small>
     </i>
   </a>
 
 </td>
 <td>
   <a href="{{ item.product_url }}">
-    {{item.catalog_fullname.upper()}} 
+    <i class="text-uppercase">
+      <em>
+        {{item.catalog_fullname}} 
+      </em>
+    </i>
   </a>
 
 </td>
@@ -173,9 +211,29 @@
 </tr>
 
 {% endfor %}
+
+
+
+
+
+{% endif %}
+
 </tbody>
 
 </table>
-{% endif %}
-{% endblock content %}
 
+<div class="container text-center">
+      {% for page_num in inventory.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if inventory.page == page_num %}
+          <a class="btn btn-success mb-4" href="{{ url_for('inv_lister', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-success mb-4" href="{{ url_for('inv_lister', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock content %}

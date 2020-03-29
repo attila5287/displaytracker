@@ -2,6 +2,8 @@
 -- go to route /createfirst/units
 --  go to route /createall/squares
 
+DROP TABLE public.unit CASCADE
+;
 
 CREATE TABLE "unit" (
 	"id" BIGSERIAL NOT NULL PRIMARY KEY,

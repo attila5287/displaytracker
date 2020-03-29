@@ -540,7 +540,7 @@ def createfirst_units():
     random.seed(42)
     units = [
         Unit(
-            square_id=2,
+            square_id=1,
             pstn_rowcol=_position,
             unique_tag=_tag,
             mainitem_id=1,
@@ -577,7 +577,22 @@ def createall_squares():
     db.session.add_all(squares)
     db.session.commit()
     flash('all squares created', 'info')
-    return redirect(url_for('square_00', square_id=1))
+    return redirect(url_for('about'))
+
+
+# squares_all
+@app.route('/squares/all')
+def sqr_home():
+    ''' SQUARE-HOME: ALL SQRS'''
+    pass
+    squares = Square.query.all()
+    
+
+    return render_template(
+        'squares_home.html',
+        squares=squares,
+        title = 'SqrHome',
+    )
 
 @app.route('/square/byid/<int:square_id>')
 def square_byid(square_id):

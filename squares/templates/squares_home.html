@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+
+<div class="row">
+
+  {% for square in squares[:-3] %}
+  <div class="col-md-3 offset-md-7 text-left">
+    
+    <div class="d-flex flex-column">
+      <i class="text-uppercase text-monospace">
+        <i class="fa fa-th-large mr-2" aria-hidden="true">
+        </i>
+        {{square.name }} 
+        
+    </i>
+      <i class="fas fa-arrows-alt-h"> <small>{{square.col_count}}</small></i>
+      <i class="fas fa-arrows-alt-v"> <small>{{square.row_count}}</small></i>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+
+    <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg btn-rounded py-5 mb-1"
+    href="{{ url_for('square_byid', square_id=square.id) }}" 
+    role="button"
+      style="border-radius: 1rem; border-width: medium;">
+      <i class="fas fa-grip-vertical fa-2x text-secondary">
+      </i>
+    </a>
+  </div>
+  {% endfor %}
+  <div class="d-flex w-100 flex-column-reverse pr-4">
+    <div class="row">
+      {% for square in squares[-3:] %}
+      <div class="col-md-4">
+        <div class="row">
+          <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg px-4 py-1 mx-1"
+          href="{{ url_for('square_byid', square_id=square.id) }}" 
+          role="button"
+            style="border-radius: 1rem; border-width: medium;">
+            <i class="fas fa-grip-horizontal text-secondary fa-2x"></i>
+          </a>
+        </div>
+
+        <div class="row text-center">
+          <div class="d-flex flex-column">
+            <i class="text-uppercase text-monospace">
+              <i class="fa fa-th-large mr-2" aria-hidden="true"> 
+              </i>
+                {{square.name }} 
+            </i>
+            <i class="fas fa-arrows-alt-h text-muted"> 
+              <small>
+                {{square.col_count}}
+              </small>
+
+            </i>
+            <i class="fas fa-arrows-alt-v text-muted"> 
+              <small>
+                {{square.row_count}}
+              </small>
+
+            </i>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

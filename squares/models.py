@@ -291,7 +291,7 @@ class Unit(Item):
     pass
     __tablename__ = 'unit'
 
-    unit_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     square_id = db.Column(db.Integer)
     pstn_rowcol = db.Column(db.String(32))
     unique_tag = db.Column(db.String(32))

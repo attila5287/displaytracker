@@ -487,15 +487,16 @@ def showonly_invout():
     )
 
 
-@app.route('/fixfirst/units')
-def fixfirst_units():
+@app.route('/fixfirst/units/<int:square_id>')
+def fixfirst_units(square_id):
     pass
-    units = Unit.query.filter_by(square_id=1).all()
+    units = Unit.query.filter_by(square_id=square_id).all()
     for unit in units:
         pass
         _int = unit.mainitem_id
         unit.dispitem_id = _int
         db.session.commit()
+    flash('all units fixed', 'primary')
     return redirect(url_for('about'))
 
 
@@ -550,7 +551,7 @@ def createfirst_units():
     
     db.session.add_all(units)
     db.session.commit()
-
+    flash('all units created!', 'success')
     return redirect(url_for('about'))
 
 
@@ -575,28 +576,11 @@ def createall_squares():
     ]
     db.session.add_all(squares)
     db.session.commit()
+    flash('all squares created', 'info')
     return redirect(url_for('square_00', square_id=1))
 
-# old route now squar3
-@app.route('/square/<int:square_id>')
-def square_00(square_id):
-    square = Squar3.query.filter_by(id=square_id).first()
-    display = []
-    seq = [
-        _id for _id in range(33, 87)
-    ]
-    display = Item.query.filter(Item.id.in_(seq)).all()
-
-
-    return render_template(
-        'square_00.html',
-        display=display,
-        title=square.name.upper(),
-    )
-
-
-@app.route('/showbyid/square/<int:square_id>')
-def showsqr_byid(square_id):
+@app.route('/square/byid/<int:square_id>')
+def square_byid(square_id):
     pass
 
     units = Unit.query.filter_by(square_id=square_id).all()

@@ -1,4 +1,13 @@
-
+CREATE TABLE "unit" (
+	"id" BIGSERIAL NOT NULL PRIMARY KEY,
+	"square_id"	INTEGER,
+	"pstn_rowcol"	VARCHAR(32),
+	"unique_tag"	VARCHAR(32),
+	"mainitem_id"	VARCHAR(32),
+	"maininv_out"	VARCHAR(32),
+	"dispitem_id"	VARCHAR(32)
+)
+;
 
 TRUNCATE TABLE public.item CASCADE
 ;

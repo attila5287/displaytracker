@@ -4,7 +4,7 @@
 <div class="container-fluid m-0 p-0">
   <div class="row mt-2">
     {% for item in display %}
-    <div class="col-lg-2">
+    <div class="col-md-2">
       <div class="square-section box-shadow border-dark">
         <ul class="nav nav-pills nav-fill mb-0">
           <li class="nav-item">
@@ -14,10 +14,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <i class="fas fa-tag"></i>
-              Displayed
-            </a>
+            <a class="nav-link active" href="/filterby/manuf/{{item.manufacturer}}">
+              <i class="fas fa-tag mr-1"></i>
+                  {{item.manufacturer}}
+            </a>              
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
@@ -27,117 +27,77 @@
           </li>
         </ul>
 
-        <div class="d-flex w-100 justify-content-center mx-0 mt-0 px-0">
-          <a 
-          class="btn btn-dark border-dark mt-0 mx-0 pt-1 mb-2 text-uppercase 
-          text-light" 
-          style="border-width:thick;border-radius: 16px;"            
-          type="button" 
-          data-toggle="modal"
-          data-target="#infoModal{{item.id}}"
-          >
-            &middot;
-              {{item.catalog_fullname[:29]}} 
-            &middot;
-            </a>
+        <!-- FULL NAME ON TOP -->
+        <div class="container-fluid text-center">
+          <!-- fullname -->
+          <a class="btn btn-dark border-dark mt-0 mx-0 pt-1 mb-2 text-uppercase 
+          text-light" style="border-width:thick;border-radius: 16px;" type="button" data-toggle="modal"
+            data-target="#infoModal{{item.id}}">
+            <i>
+              <small>
+                {{item.catalog_fullname[:20]}}
+              </small>
+            </i>
+          </a>
         </div>
+        <!-- COLORS -->
+        <div class="container-fluid text-center mb-2">
+          <i class="text-center mr-2">
+            {{item.color_primary[:7]}}
+          </i>
+          <div class="btn bg-{{item.color_primary}} text-dark p-0">
+            <i class="fas fa-angle-double-up my-0 mx-1"></i>
+          </div>
 
-        <!-- RIBBON-ABOVE-PIC -->
-        <div class="d-flex w-100 justify-content-between px-1 mx-1">
-          <div class="d-flex flex-column align-items-center">
-            <span class="badge badge-success bg-{{item.color_primary}} text-dark px-4 
-            py-0 mb-1"
-            >   
-            <i class="fas fa-angle-double-up"></i>
-            {{item.color_primary[:5]}} 
-            </span>          
-            <span class="badge badge-success bg-{{item.color_secondary}} text-dark px-4 py-0"> 
-            <i class="fas fa-angle-up"></i>
-            {{item.color_secondary[:5]}} 
-            </span>            
+          <i class="text-center mr-2">
+            {{item.color_secondary[:7]}}
+          </i>
+          <div class="btn bg-{{item.color_secondary}} text-center text-dark p-0">
+            <i class="fas fa-angle-up my-0"></i>
           </div>
-          <div class="d-flex align-items-center">
-            <a href="/filterby/manuf/{{item.manufacturer}}">
-              <i class="text-uppercase">
-                <small>
-                  <em style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                    {{item.manufacturer}}
-                  </em> 
-                </small>
-              </i>
-            </a>            
-          </div>
+        </div>
+        <div class="container-fluid text-center mb-2">
           <div class="btn-group" role="group">
-            <a 
-            type="button"
-            class="btn btn-info btn-sm" 
-            href="{{ url_for('show_item',item_id=item.id) }}" 
-            >
+            <a type="button" class="btn btn-info btn-sm px-1" href="{{ url_for('show_item',item_id=item.id) }}">
               <i class="fas fa-eye text-light"></i>
-            </a>                                    
-            <a 
-                type="button"
-                class="btn btn-success btn-sm" 
-                href="{{ url_for('edit_item',item_id=item.id) }}" 
-                >
-                  <i class="fas fa-edit"></i>
-                </a>                        
-                <a class="btn btn-danger btn-sm" 
-                type="button" 
-                data-toggle="modal" data-target="#deleteModal{{item.id}}"
-                >
-                  <i class="fas fa-trash text-light"></i>
-                </a>
+            </a>
+            <a type="button" class="btn btn-success btn-sm px-1" href="{{ url_for('edit_item',item_id=item.id) }}">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a class="btn btn-danger btn-sm px-1" type="button" data-toggle="modal" data-target="#deleteModal{{item.id}}">
+              <i class="fas fa-trash text-light"></i>
+            </a>
 
           </div>
         </div>
-
 
 
         <!-- required for responsive /image placed in a bs-card -->
-        <div class="card bg-transparent text-white border-dark my-1" style="border-width: medium;">
-        <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
-        
+        <div class="card bg-transparent text-white border-dark my-1 p-2" style="border-width: medium;">
+          <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
+
         </div>
 
         <!-- alert buttons low-inv out of stock -->
         <div class="d-flex justify-content-around mt-1  mb-0">
-          <i class="mt-2">
-            <small>
-              {{item.inv_lowinstock}}             
-            </small>
-          </i>                     
           <div class="btn-group" role="group">
-            <a 
-            type="button"
-            role="button" 
-            class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}" 
-            href="{{ url_for('mark_as_lowinv',item_id=item.id) }}" 
-            >
+            <a type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
+              href="{{ url_for('mark_as_lowinv',item_id=item.id) }}">
               <i class="fa fa-battery-quarter ml-4" aria-hidden="true"></i>
-                <small>Low</small>
+              <small>Low</small>
             </a>
-            
-            <a 
-            type="button"
-            role="button" 
-            class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}" 
-            href="{{ url_for('mark_as_outofstock',item_id=item.id) }}" 
-            >
+
+            <a type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"
+              href="{{ url_for('mark_as_outofstock',item_id=item.id) }}">
               <i class="fa fa-battery-empty mr-4" aria-hidden="true"></i>
-                <small>Out</small>
-            </a>                        
+              <small>Out</small>
+            </a>
           </div>
 
-          <i class="mt-2">
-            <small>
-              {{item.inv_outofstock}}
-            </small>
-          </i>          
         </div>
         <!-- menu dropdown props -->
-        <button id="dropdownId" type="button" class="btn bg-transparent btn-lg btn-block dropdown-toggle mt-1" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+        <button id="dropdownId" type="button" class="btn bg-transparent btn-lg btn-block dropdown-toggle mt-1"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownId">
           {% for label,property in item.display_properties().items() %}
@@ -147,7 +107,7 @@
               {{label}}
             </i>
             <i class="text-muted ml-4">
-            <span class="badge badge-pill badge-dark bg-{{property}} float-right pt-0 pb-1 px-2">
+              <span class="badge badge-pill badge-dark bg-{{property}} float-right pt-0 pb-1 px-2">
                 <small>
                   {{property}}
                 </small>
@@ -156,51 +116,53 @@
 
           </a>
           {% endfor %}
-        </div>        
-        
-                
+        </div>
+
+
 
       </div>
     </div>
-          <!-- Modal -->
-      <div class="modal fade" id="deleteModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel{{item.id}}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel{{item.id}}">Delete Item {{item.id}}, confirm?</h5>
-              
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
-                <input class="btn btn-danger" type="submit" value="Delete">
-              </form>
-            </div>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal{{item.id}}" tabindex="-1" role="dialog"
+      aria-labelledby="infoModalLabel{{item.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel{{item.id}}">Delete Item {{item.id}}, confirm?</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
           </div>
         </div>
-      </div>                            
-            <div class="modal fade" id="infoModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel{{item.id}}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="infoModalLabel{{item.id}}">Show Full Name Item {{item.id}}</h5>
-              
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body text-uppercase">
-                {{item.catalog_fullname}}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+      </div>
+    </div>
+    <div class="modal fade" id="infoModal{{item.id}}" tabindex="-1" role="dialog"
+      aria-labelledby="infoModalLabel{{item.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="infoModalLabel{{item.id}}">Show Full Name Item {{item.id}}</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-uppercase">
+            {{item.catalog_fullname}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
-      </div>                            
+      </div>
+    </div>
     {% endfor %}
   </div>
 </div>
@@ -208,4 +170,3 @@
 
 
 {% endblock %}
-

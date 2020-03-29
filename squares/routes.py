@@ -502,6 +502,12 @@ def fixfirst_units():
 @app.route('/createfirst/units')
 def createfirst_units():
     pass
+
+    items = Item.query.all()
+    list_of_ids = [
+        _item.id for _item in items
+    ]
+
     _rows = [
         'A',
         'B',
@@ -530,17 +536,18 @@ def createfirst_units():
     _tags = [
         's1'+_position for _position in _rowcols
     ]
-    
+    random.seed(42)
     units = [
         Unit(
-            square_id=1,
+            square_id=2,
             pstn_rowcol=_position,
             unique_tag=_tag,
-            mainitem_id=random.randint(1, 96),
+            mainitem_id=1,
             maininv_out='no',
-            dispitem_id  =random.randint(1, 96),
+            dispitem_id=random.choice(list_of_ids),
         ) for _position, _tag in zip(_rowcols, _tags)
     ]
+    
     db.session.add_all(units)
     db.session.commit()
 
@@ -604,9 +611,6 @@ def showsqr_byid(square_id):
     ]
     print(seq)
     display = Item.query.filter(Item.id.in_(seq)).all()
-
-    
-
 
      
     print(display)

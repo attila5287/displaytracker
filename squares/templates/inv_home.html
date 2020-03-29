@@ -3,43 +3,40 @@
 {% block content %}
 
 {% if inventory==[] %}
- 
+
 <div class="row">
   {% for item in ItemDemoList[:6] %}
-    <div class="col-sm-6">
-      <div class="item-section box-shadow border-dark px-0">
-        <div 
-        class="btn btn-dark btn-block border-dark mt-0 mx-0 pt-1" 
-        style="border-width:thick;border-radius: 16px;"
-        >
-          <div class="d-flex w-100 justify-content-around mx-0 mt-2">
-            
-            <i class="text-muted text-monospace"> 
-              <i class="fas fa-angle-right mr-2"></i>
-              {{item.manufacturer}} 
-            </i>
-            <h3 class="text-monospace text-center">
-              {{item.catalog_no}} 
-            </h3>
-          </div>
-        </div>
+  <div class="col-sm-6">
+    <div class="item-section box-shadow border-dark px-0">
+      <div class="btn btn-dark btn-block border-dark mt-0 mx-0 pt-1" style="border-width:thick;border-radius: 16px;">
+        <div class="d-flex w-100 justify-content-around mx-0 mt-2">
 
-        <div class="d-flex w-100 justify-content-around">
-          <div class="d-flex flex-column mb-1 p-1">
-            <span class="badge badge-danger text-dark"> COL_CROWN </span>
-            <i class="text-muted">ColorCrown</i>
-          </div>
-          <div class="d-flex flex-column bd-highlight mb-1 p-1">
-            <span class="badge badge-success text-dark"> COL_BILL </span>
-            <i class="text-muted">ColorBill</i>
-          </div>    
+          <i class="text-muted text-monospace">
+            <i class="fas fa-angle-right mr-2"></i>
+            {{item.manufacturer}}
+          </i>
+          <h3 class="text-monospace text-center">
+            {{item.catalog_no}}
+          </h3>
         </div>
+      </div>
 
-        <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
-          <img class="card-img" src="{{item.image_url}}" alt="{{item.image_url}}">
+      <div class="d-flex w-100 justify-content-around">
+        <div class="d-flex flex-column mb-1 p-1">
+          <span class="badge badge-danger text-dark"> COL_CROWN </span>
+          <i class="text-muted">ColorCrown</i>
         </div>
-      
-        <ul class="list-group list-group-flush mb-2">
+        <div class="d-flex flex-column bd-highlight mb-1 p-1">
+          <span class="badge badge-success text-dark"> COL_BILL </span>
+          <i class="text-muted">ColorBill</i>
+        </div>
+      </div>
+
+      <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
+        <img class="card-img" src="{{item.image_url}}" alt="{{item.image_url}}">
+      </div>
+
+      <ul class="list-group list-group-flush mb-2">
         <li class="list-group-item list-group-item flex-column align-items-start text-uppercase">
           <div class="d-flex w-100 justify-content-between">
             <i class="fas fa-angle-right mr-2"></i>
@@ -50,28 +47,28 @@
         </li>
         <li class="list-group-item list-group-item flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
-          <i class="text-muted">
-            <i class="fas fa-angle-right mr-2"></i>
-            item id 
+            <i class="text-muted">
+              <i class="fas fa-angle-right mr-2"></i>
+              item id
             </i>
-          {{item.id}} 
+            {{item.id}}
           </div>
-        </li>      
+        </li>
         <li class="list-group-item list-group-item flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
-          <i class="text-muted">
-            <i class="fas fa-angle-right mr-2"></i>
-            inventory status 
+            <i class="text-muted">
+              <i class="fas fa-angle-right mr-2"></i>
+              inventory status
             </i>
-            InStock 
+            InStock
           </div>
-        </li>      
-        </ul>
+        </li>
+      </ul>
 
-      </div>
     </div>
+  </div>
   {% endfor %}
-</div> 
+</div>
 
 {% else %}
 <!-- one two three action -->
@@ -80,16 +77,13 @@
 
 
   <div class="row">
-  {% for item in inventory %}
+    {% for item in inventory %}
     <div class="col-md-3">
       <div class="item-section box-shadow border-dark px-0">
-        <div 
-        class="btn btn-dark btn-block border-dark mt-0 mx-0 pt-1" 
-        style="border-width:thick;border-radius: 16px;"
-        >
+        <div class="btn btn-dark btn-block border-dark mt-0 mx-0 pt-1" style="border-width:thick;border-radius: 16px;">
           <div class="d-flex w-100 justify-content-around mx-0 mt-2 px-0">
             <div class="d-flex flex-column mb-1 p-1">
-              {{item.catalog_fullname}} 
+              {{item.catalog_fullname}}
             </div>
           </div>
         </div>
@@ -105,112 +99,99 @@
           </div>
 
           <div class="d-flex flex-column mb-1 p-1">
-            <span class="badge badge-primary text-dark"> {{item.color_primary}} 
+            <span class="badge badge-primary text-dark"> {{item.color_primary}}
             </span>
             <i class="text-muted"><small>ColorPrimary</small></i>
-          
+
           </div>
           <div class="d-flex flex-column mb-1 p-1">
-            <span class="badge badge-success text-dark"> 
-              {{item.color_secondary}} 
+            <span class="badge badge-success text-dark">
+              {{item.color_secondary}}
             </span>
             <i class="text-muted"><small>ColorSecondary</small></i>
-          </div>    
+          </div>
         </div>
 
         <!-- required for responsive /image placed in a bs-card -->
         <div class="card bg-transparent text-white border-dark" style="border-width: medium;">
-        <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
-        
+          <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
+
         </div>
 
         <!-- alert buttons low-inv out of stock -->
         <div class="container text-center my-2 mx-0">
           <div class="btn-group my-3" role="group">
-            <a 
-            type="button"
-            role="button" 
-            class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}" 
-            href="{{ url_for('mark_as_lowinv',item_id=item.id) }}" 
-            >
+            <a type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
+              href="{{ url_for('mark_as_lowinv',item_id=item.id) }}">
               <i class="fa fa-battery-quarter" aria-hidden="true"></i>
-                <small>LowInStock</small>
-                {{item.inv_lowinstock}}
-            </a>                        
-            <a 
-            type="button"
-            role="button" 
-            class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}" 
-            href="{{ url_for('mark_as_outofstock',item_id=item.id) }}" 
-            >
+              <small>LowInStock</small>
+              {{item.inv_lowinstock}}
+            </a>
+            <a type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"
+              href="{{ url_for('mark_as_outofstock',item_id=item.id) }}">
               <i class="fa fa-battery-empty" aria-hidden="true"></i>
-                <small>OutOfStock</small>
-                {{item.inv_outofstock}}
-            </a>                        
-            <a 
-            type="button"
-            class="btn btn-success" 
-            href="{{ url_for('edit_item',item_id=item.id) }}" 
-            >
+              <small>OutOfStock</small>
+              {{item.inv_outofstock}}
+            </a>
+            <a type="button" class="btn btn-success" href="{{ url_for('edit_item',item_id=item.id) }}">
               <i class="fas fa-edit"></i>
-                <small>EditItem</small>
-            </a>                        
-            <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+              <small>EditItem</small>
+            </a>
+            <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{item.id}}">
               <i class="fas fa-trash text-light"></i>
-                <small class="text-light">DeleteItem</small>
-              </a>
+              <small class="text-light">DeleteItem</small>
+            </a>
           </div>
         </div>
 
         <div class="row">
-        {% for label,property in item.display_properties().items() %}
-        <div class="col-sm-6">
+          {% for label,property in item.display_properties().items() %}
+          <div class="col-sm-6">
             <div class="d-flex justify-content-between m-1">
-            <i class="text-muted">
-              <i class="fas fa-angle-right ml-2 mr-0"></i>
-              <small>{{label}}</small>
+              <i class="text-muted">
+                <i class="fas fa-angle-right ml-2 mr-0"></i>
+                <small>{{label}}</small>
               </i>
               <span class="badge badge-pill badge-dark bg-{{property}}">
                 <small>
-                  {{property}} 
+                  {{property}}
                 </small>
               </span>
 
             </div>
-        </div>
-
-        
-              <!-- Modal -->
-              <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel">Delete Item, confirm?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
-                        <input class="btn btn-danger" type="submit" value="Delete">
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>                                         
-        {% endfor %}
+          </div>
+          {% endfor %}
         </div>
 
       </div>
     </div>
-  {% endfor %}
-  
-</div> 
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{item.id}}"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Item {{item.id}}, confirm?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% endfor %}
+
+  </div>
 
 </div>
 
 
 {% endif %}
 {% endblock content %}
-

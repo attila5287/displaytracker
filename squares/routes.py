@@ -1,3 +1,4 @@
+import random
 import os
 import secrets
 import csv
@@ -15,14 +16,11 @@ from squares.forms import (
     RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm
 )
 from squares.models import (
-    User, Post, ItemDemo, Item, Square
+    User, Post, ItemDemo, Item, Squar3, Square, Unit
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required
 )
-
-
-
 
 @app.route("/item/<int:item_id>/delete", methods=['GET', 'POST'])
 def delete_item(item_id):
@@ -489,23 +487,21 @@ def showonly_invout():
     )
 
 
-
-@app.route('/create/all/squares')
-def create_all_squares():
+@app.route('/fixfirst/units')
+def fixfirst_units():
     pass
-    _names = [
-        'snapback1',
-        'snapback2',
-        'snapback3',
-        'adjustable',
-        'flexfit1',
-        'flexfit2',
-        'youth',
-        'fitted1',
-        'fitted2',
-        'fitted3',
-    ]
+    units = Unit.query.filter_by(square_id=1).all()
+    for unit in units:
+        pass
+        _int = unit.mainitem_id
+        unit.dispitem_id = _int
+        db.session.commit()
+    return redirect(url_for('about'))
 
+
+@app.route('/createfirst/units')
+def createfirst_units():
+    pass
     _rows = [
         'A',
         'B',
@@ -527,26 +523,57 @@ def create_all_squares():
         '6',
     ]
 
-    _list = [
+    _rowcols = [
         row+column for row in _rows for column in _cols
     ]
 
-    square_dict = dict(zip(_list, range(1, 55)))
+    _tags = [
+        's1'+_position for _position in _rowcols
+    ]
+    
+    units = [
+        Unit(
+            square_id=1,
+            pstn_rowcol=_position,
+            unique_tag=_tag,
+            mainitem_id=random.randint(1, 96),
+            maininv_out='no',
+            dispitem_id  =random.randint(1, 96),
+        ) for _position, _tag in zip(_rowcols, _tags)
+    ]
+    db.session.add_all(units)
+    db.session.commit()
 
+    return redirect(url_for('about'))
+
+
+@app.route('/createall/squares')
+def createall_squares():
+    pass
+    _names = [
+        'snapback1',
+        'snapback2',
+        'snapback3',
+        'adjustable',
+        'flexfit1',
+        'flexfit2',
+        'youth',
+        'fitted1',
+        'fitted2',
+        'fitted3',
+    ]
 
     squares = [
-        Square(name=_name, **square_dict) for _name in _names
+        Square(name=_name, row_count=9, col_count=6) for _name in _names
     ]
     db.session.add_all(squares)
     db.session.commit()
     return redirect(url_for('square_00', square_id=1))
 
-
-
-
+# old route now squar3
 @app.route('/square/<int:square_id>')
 def square_00(square_id):
-    square = Square.query.filter_by(id=square_id).first()
+    square = Squar3.query.filter_by(id=square_id).first()
     display = []
     seq = [
         _id for _id in range(33, 87)
@@ -558,4 +585,33 @@ def square_00(square_id):
         'square_00.html',
         display=display,
         title=square.name.upper(),
+    )
+
+
+@app.route('/showbyid/square/<int:square_id>')
+def showsqr_byid(square_id):
+    pass
+
+    units = Unit.query.filter_by(square_id=square_id).all()
+
+    print(*units)
+
+    displayed_item_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    seq = [
+        _id for _id in displayed_item_ids
+    ]
+    print(seq)
+    display = Item.query.filter(Item.id.in_(seq)).all()
+
+    
+
+
+     
+    print(display)
+    return render_template(
+        'square_00.html',
+        display=display,
+        title='ShowSquareID: '+str(square_id),
     )

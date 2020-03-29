@@ -73,6 +73,13 @@ class Item(db.Model):
     imageclean_url = db.Column(db.String(256))
     product_url = db.Column(db.String(256))
 
+    __mapper_args__ = {
+        'polymorphic_identity': 'item'
+    }
+
+    def __repr__(self):
+        return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_fullname}')"
+
     def display_properties(self):
         '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN FOR INV-HOME'''
         pass
@@ -199,14 +206,20 @@ class Item(db.Model):
         print('\n\t... models.item no {}  u p d a t e d ...\n'.format(self.id))
 
 
-    def __repr__(self):
-        return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_fullname}')"
-
 
 class Square(db.Model):
     '''A SQUARE CONTAINS 6 ITEMS IN EA. ROW and 9 IN COL '''
     pass
     __tablename__ = 'square'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32))
+    row_count = db.Column(db.Integer)
+    col_count = db.Column(db.Integer)
+
+class Squar3(db.Model):
+    '''A SQUARE CONTAINS 6 ITEMS IN EA. ROW and 9 IN COL '''
+    pass
+    __tablename__ = 'squar3'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     A1 = db.Column(db.Integer)
@@ -271,3 +284,43 @@ class Square(db.Model):
     I4 = db.Column(db.Integer)
     I5 = db.Column(db.Integer)
     I6 = db.Column(db.Integer)
+
+class Unit(Item):
+    '''EA. UNIT WILL SUGGEST MAIN-ALTERNATIVE-ITEMS OR 
+    SET MANUALLY EA.SQUARE WILL HAVE 54 UNITS'''
+    pass
+    __tablename__ = 'unit'
+
+    unit_id = db.Column(db.Integer, primary_key=True)
+    square_id = db.Column(db.Integer)
+    pstn_rowcol = db.Column(db.String(32))
+    unique_tag = db.Column(db.String(32))
+    mainitem_id = db.Column(db.Integer)
+    maininv_out = db.Column(db.String(32))
+    dispitem_id = db.Column(
+        db.Integer, db.ForeignKey('item.id')
+        )
+
+
+    def __repr__(self):
+        pass
+        square_id = str(self.square_id)
+        position = self.pstn_rowcol
+        margin = ''
+        if square_id != '10':
+            margin = ' '
+
+        top = '\n┌───┐'
+        square_id_left = '│s{}{}│'.format(square_id, margin)
+        frame_lower = '│ {}│'.format(position)
+        bottom = '└───┘'
+        str_list = [
+            # t1tle,
+            # margin_top,
+            top,
+            square_id_left,
+            frame_lower,
+            bottom
+        ]
+
+        return '\n'.join(str_list)

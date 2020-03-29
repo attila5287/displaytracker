@@ -1,95 +1,208 @@
 {% extends 'layout_squares.html' %}
 {% block content %}
 
-<div class="alert alert-primary alert-dismissible fade show m-4" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    <span class="sr-only">Close</span>
-  </button>
-  <p>
-    <i class="fa fa-caret-right" aria-hidden="true"></i>
-
-    Each square has 9 rows and 6 columns totaling at 54 each. This is the demo square, so dont expect much action! 
-    <i class="fa fa-caret-right" aria-hidden="true"></i>
-    There will be total of 10 squares with this size and 10by18 <br>
-    <i class="fa fa-caret-right text-break" aria-hidden="true"></i>
-
-  </p>
-</div>
-
-
-<div class="container-fluid m-0">
+<div class="container-fluid m-0 p-0">
   <div class="row mt-2">
     {% for item in display %}
-    <div class="col-md-2">
-      <div class="square-section border-dark m-0 p-0">
-        <!-- item title at the top -->
-        <div class="btn btn-dark btn-block mb-1 p-0" 
-        style="border-radius: 12px;"
-        >
-          <div class="d-flex flex-column m-0 p-0">
-            <div class="d-flex w-100 justify-content-around mx-0 mt-0">
-              <i class="text-muted text-monospace mt-1"> 
-                <i class="fas fa-angle-right mr-2"></i>
-                {{item.manufacturer}} 
-              </i>
-              <h4 class="text-monospace text-center">
-                {{item.catalog_fullname}} 
-              </h4>
-            </div>
-          </div>      
-        </div>
+    <div class="col-lg-2">
+      <div class="square-section box-shadow border-dark">
+        <ul class="nav nav-pills nav-fill mb-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fas fa-map-pin text-success mr-2"></i>
+              Main
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <i class="fas fa-tag"></i>
+              Displayed
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Next
+              <i class="fas fa-sync-alt ml-2"></i>
+            </a>
+          </li>
+        </ul>
 
-        <!-- item image placed in a card to add responsive behaviour -->
-        <div class="card bg-transparent border-dark my-1 mx-1 p-1" style="border-width: medium;border-radius: 16px;">
-          <img
-            class="card-img p-2"
-            src="{{item.imageclean_url}}"
-            alt="{{item.imageclean_url}}"
-            >
-        </div>
-
-        <!-- item desc placed in button -->
-        <div class="btn btn-dark btn-block bg-purpseethru mb-1 p-0" 
-        style="border-radius: 12px;"
-        >
-          <p class="text-center my-1">
-            &middot; 
-            {{ item.catalog_fullname }}
+        <div class="d-flex w-100 justify-content-center mx-0 mt-0 px-0">
+          <a 
+          class="btn btn-dark border-dark mt-0 mx-0 pt-1 mb-2 text-uppercase 
+          text-light" 
+          style="border-width:thick;border-radius: 16px;"            
+          type="button" 
+          data-toggle="modal"
+          data-target="#infoModal{{item.id}}"
+          >
             &middot;
-          </p>
+              {{item.catalog_fullname[:29]}} 
+            &middot;
+            </a>
         </div>
 
-        <!-- item footer for colors -->
-        <div class="d-flex w-100 justify-content-around">
-          <div class="d-flex flex-column mb-1 p-1">
-
-            <span class="badge badge-danger text-dark"> 
-              COL_CROWN 
-            </span>
-            <i class="text-muted">
-              &middot; 
-              ColorCrown
-              &middot; 
-            </i>
-
+        <!-- RIBBON-ABOVE-PIC -->
+        <div class="d-flex w-100 justify-content-between px-1 mx-1">
+          <div class="d-flex flex-column align-items-center">
+            <span class="badge badge-success bg-{{item.color_primary}} text-dark px-4 
+            py-0 mb-1"
+            >   
+            <i class="fas fa-angle-double-up"></i>
+            {{item.color_primary[:5]}} 
+            </span>          
+            <span class="badge badge-success bg-{{item.color_secondary}} text-dark px-4 py-0"> 
+            <i class="fas fa-angle-up"></i>
+            {{item.color_secondary[:5]}} 
+            </span>            
+          </div>
+          <div class="d-flex align-items-center">
+            <a href="/filterby/manuf/{{item.manufacturer}}">
+              <i class="text-uppercase">
+                <small>
+                  <em style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                    {{item.manufacturer}}
+                  </em> 
+                </small>
+              </i>
+            </a>            
+          </div>
+          <div class="btn-group" role="group">
+            <a 
+            type="button"
+            class="btn btn-info btn-sm" 
+            href="{{ url_for('show_item',item_id=item.id) }}" 
+            >
+              <i class="fas fa-eye text-light"></i>
+            </a>                                    
+            <a 
+                type="button"
+                class="btn btn-success btn-sm" 
+                href="{{ url_for('edit_item',item_id=item.id) }}" 
+                >
+                  <i class="fas fa-edit"></i>
+                </a>                        
+                <a class="btn btn-danger btn-sm" 
+                type="button" 
+                data-toggle="modal" data-target="#deleteModal{{item.id}}"
+                >
+                  <i class="fas fa-trash text-light"></i>
+                </a>
 
           </div>
-          <div class="d-flex flex-column bd-highlight mb-1 p-1">
-            <span class="badge badge-success text-dark"> COL_BILL </span>
-            <i class="text-muted">
-              &middot; 
-              ColorBill
-              &middot; 
-            </i>
-          </div>    
         </div>
-      </div>
-      <br>
 
+
+
+        <!-- required for responsive /image placed in a bs-card -->
+        <div class="card bg-transparent text-white border-dark my-1" style="border-width: medium;">
+        <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
+        
+        </div>
+
+        <!-- alert buttons low-inv out of stock -->
+        <div class="d-flex justify-content-around mt-1  mb-0">
+          <i class="mt-2">
+            <small>
+              {{item.inv_lowinstock}}             
+            </small>
+          </i>                     
+          <div class="btn-group" role="group">
+            <a 
+            type="button"
+            role="button" 
+            class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}" 
+            href="{{ url_for('mark_as_lowinv',item_id=item.id) }}" 
+            >
+              <i class="fa fa-battery-quarter ml-4" aria-hidden="true"></i>
+                <small>Low</small>
+            </a>
+            
+            <a 
+            type="button"
+            role="button" 
+            class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}" 
+            href="{{ url_for('mark_as_outofstock',item_id=item.id) }}" 
+            >
+              <i class="fa fa-battery-empty mr-4" aria-hidden="true"></i>
+                <small>Out</small>
+            </a>                        
+          </div>
+
+          <i class="mt-2">
+            <small>
+              {{item.inv_outofstock}}
+            </small>
+          </i>          
+        </div>
+        <!-- menu dropdown props -->
+        <button id="dropdownId" type="button" class="btn bg-transparent btn-lg btn-block dropdown-toggle mt-1" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownId">
+          {% for label,property in item.display_properties().items() %}
+          <a class="dropdown-item" href="#">
+            <i class="text-muted float-left">
+              <i class="fas fa-angle-right ml-2 mr-0"></i>
+              {{label}}
+            </i>
+            <i class="text-muted ml-4">
+            <span class="badge badge-pill badge-dark bg-{{property}} float-right pt-0 pb-1 px-2">
+                <small>
+                  {{property}}
+                </small>
+              </span>
+            </i>
+
+          </a>
+          {% endfor %}
+        </div>        
+        
+                
+
+      </div>
     </div>
+          <!-- Modal -->
+      <div class="modal fade" id="deleteModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel{{item.id}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel{{item.id}}">Delete Item {{item.id}}, confirm?</h5>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>                            
+            <div class="modal fade" id="infoModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel{{item.id}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="infoModalLabel{{item.id}}">Show Full Name Item {{item.id}}</h5>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-uppercase">
+                {{item.catalog_fullname}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>                            
     {% endfor %}
-</div>
+  </div>
 </div>
 
 

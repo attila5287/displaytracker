@@ -96,16 +96,20 @@
 <td>
 
 
-<a type="button" class="btn bg-transparent" data-toggle="modal" data-target="#deleteModal">
+<a type="button" class="btn bg-transparent" data-toggle="modal" data-target="#deleteModal{{item.id}}">
   <i class="fas fa-trash-alt text-danger"></i>
   </a>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Delete Item, confirm?</h5>
+        <h5 class="modal-title" id="deleteModalLabel">
+          Delete Item
+          {{item.id}}
+          , confirm?
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

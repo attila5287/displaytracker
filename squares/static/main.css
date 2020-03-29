@@ -5,7 +5,7 @@
   background-color: black;
 }
 .bg-Red {
-  background-color: orangered;
+  background-color: firebrick;
 }
 .bg-Gold {
   background-color: goldenrod;
@@ -50,12 +50,9 @@
 }
 
 .square-section {
-  border: 3px solid ;
-  border-radius: 16px;
-  margin-top: 8px;
-  padding-right: 1px;
-  padding-left: 1px;
-  padding-top: 1px;
+  border: 8px solid ;
+  border-radius: 22px;
+  margin-bottom:4px;
 }
 
 .item-section {

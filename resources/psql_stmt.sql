@@ -1,3 +1,8 @@
+
+
+TRUNCATE TABLE public.item CASCADE
+;
+
 CREATE TABLE "square" (
 	"id" BIGSERIAL NOT NULL PRIMARY KEY,
 	"name"	VARCHAR(32),
@@ -57,13 +62,15 @@ CREATE TABLE "square" (
 	"I6"	INTEGER
 )
 
+;
+
 TRUNCATE TABLE public.post
 ;
 DROP TABLE public.item CASCADE
 ;
 
 CREATE TABLE "item" (
-"id"	BIGSERIAL NOT NULL PRIMARY KEY,
+	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
 	"manufacturer"	VARCHAR(32),
 	"catalog_no"	VARCHAR(64),
 	"catalog_fullname"	VARCHAR(256),
@@ -82,7 +89,7 @@ CREATE TABLE "item" (
 	"has_flatbill"	VARCHAR(32),
 	"inv_lowinstock"	VARCHAR(32),
 	"inv_outofstock"	VARCHAR(32)
-)
+);
 
 CREATE TABLE "proday" (
 	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
@@ -118,14 +125,11 @@ CREATE TABLE "proday" (
 	"perc_done"	SMALLINT,
 	"message_total"	VARCHAR(256),
     "user_id"	BIGINT REFERENCES public.user
-)
-
-
+);
 
 -- WORKS
 -- now drop the table try add again
 DROP TABLE public.user CASCADE;
-
 
 -- STEP I: create table in sql
 CREATE TABLE "user" (

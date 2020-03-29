@@ -16,7 +16,7 @@ from squares.forms import (
     RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm
 )
 from squares.models import (
-    User, Post, ItemDemo, Item, Squar3, Square, Unit
+    User, Post, ItemDemo, Item, Square, Unit
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required

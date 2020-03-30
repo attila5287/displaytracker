@@ -618,3 +618,15 @@ def square_byid(square_id):
         display=display,
         title='ShowSquareID: '+str(square_id),
     )
+
+
+@app.route('/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
+def findnext_byid(item_id):
+    '''
+    FIND NEXT ITEM BY PULLING THE MAIN-ITEM BY ID AND QUERY BY ITS ATTR '''
+    pass
+    item = Item.query.get_or_404(item_id)
+    print('\n {} \n test find next'.format(item))
+
+    # return redirect(url_for('about'))
+    return redirect(url_for('about'))

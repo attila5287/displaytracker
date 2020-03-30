@@ -241,6 +241,7 @@ class Unit(db.Model):
         margin = ''
         if square_id != '10':
             margin = ' '
+            
 
         top = '\n┌───┐'
         square_id_left = '│s{}{}│'.format(square_id, margin)

@@ -1,3 +1,4 @@
+import jinja2
 import random
 import os
 import secrets
@@ -361,6 +362,21 @@ def inject_LowInvButtons():
 
 
 @app.context_processor
+def inject_UnitInvOutStyler():
+    pass
+
+    def UnitInvOutStyler(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _borderStylesDict = {
+            'yes': 'warning',
+            'no': 'success',
+        }
+        return _borderStylesDict.get(yes_or_no, 'dark')
+    return dict(UnitInvOutStyler=UnitInvOutStyler)
+
+
+@app.context_processor
 def inject_OutInvButtons():
     pass
     def OutOfStckStyler(yes_or_no):
@@ -487,12 +503,32 @@ def showonly_invout():
     )
 
 
+@app.route('/fixall/uniquetags/in/<int:square_id>', methods=['GET', 'POST'])
+def fixall_uniquetags_in(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).desc(pstn_rowcol).all()
+    for unit in units:
+        pass
+        unit.unique_tag = 's'+str(square_id)+unit.pstn_rowcol
+        db.session.commit()
+    flash('all tags fixed', 'warning')
+
+    return redirect(url_for('square_byid', square_id=square_id))
+
+
 @app.route('/fixfirst/units/<int:square_id>')
 def fixfirst_units(square_id):
     pass
+    all_items = Item.query.all()
+    print(len(all_items))
+    available_ids = [
+        item.id for item in all_items
+    ]
+    print(len(available_ids))
     units = Unit.query.filter_by(square_id=square_id).all()
     for unit in units:
         pass
+        unit.mainitem_id = random.choice(available_ids)
         _int = unit.mainitem_id
         unit.dispitem_id = _int
         db.session.commit()
@@ -580,6 +616,7 @@ def createall_squares():
     return redirect(url_for('about'))
 
 
+
 # squares_all
 @app.route('/squares/all')
 def sqr_home():
@@ -594,39 +631,91 @@ def sqr_home():
         title = 'SqrHome',
     )
 
+
+@app.route('/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
+def findnext_byid(item_id=10):
+    '''FIND NEXT ITEM BY PULLING THE MAIN-ITEM BY ID AND QUERY BY ITS ATTR'''
+    pass
+
+    def redir3ct_url(default='inv_lister'):
+        pass
+        return request.referrer or \
+            request.args.get('next') or \
+            url_for(default)
+
+    item = Item.query.get_or_404(item_id)
+
+    print('\n {} \n test find next'.format(item))
+
+    only_yes = item.similar_attrs()
+
+    suggested_items = Item.query.filter_by(**only_yes).all()
+
+    next_item = random.choice(suggested_items)
+
+    print('\n next item is', next_item)
+
+    return redirect(redir3ct_url())
+
+
+@app.route('/<string:unique_tag>/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
+def unit_nextitem(unique_tag, item_id):
+    '''FIND NEXT ITEM BY PULLING THE CURRENTT-ITEM BY ID AND QUERY BY ITS ATTR'''
+    pass
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first()
+    item = Item.query.get_or_404(item_id)
+
+    print('\n {} \n test find next'.format(item))
+    only_yes = item.similar_attrs()
+    suggested_items = Item.query.filter_by(**only_yes).all()
+    next_item = random.choice(suggested_items)
+    print('\n unit next item is\n', next_item)
+
+    unit.dispitem_id = next_item.id
+    db.session.commit()
+
+    return redirect(url_for('square_byid', square_id=unit.square_id))
+
+
+
 @app.route('/square/byid/<int:square_id>')
 def square_byid(square_id):
     pass
-
     units = Unit.query.filter_by(square_id=square_id).all()
 
-    print(*units)
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
 
-    displayed_item_ids = [
+    unit_dispitem_ids = [
         unit.dispitem_id for unit in units
     ]
-    seq = [
-        _id for _id in displayed_item_ids
+    unit_itemid = dict(zip(units, unit_dispitem_ids))
+    unqtag_itemid  = dict(zip(unit_unqtags, unit_dispitem_ids))
+    result_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+    
+    result_itemids = [
+        item.id for item in result_items
     ]
-    print(seq)
-    display = Item.query.filter(Item.id.in_(seq)).all()
+    results_itemid_dict = dict(zip(result_itemids, result_items))
+    display = dict()
+    print('\ndisplay: ', display)
+    for unit, query_untdispid in unit_itemid.items():
+        pass
 
-     
+        for result_itemid, result_item in results_itemid_dict.items():
+            pass
+        
+            if int(query_untdispid) == int(result_itemid):
+                pass
+                display[unit] = result_item
+
+
+    print('\n display final')
     print(display)
+
     return render_template(
         'square_00.html',
         display=display,
         title='ShowSquareID: '+str(square_id),
     )
-
-
-@app.route('/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
-def findnext_byid(item_id):
-    '''
-    FIND NEXT ITEM BY PULLING THE MAIN-ITEM BY ID AND QUERY BY ITS ATTR '''
-    pass
-    item = Item.query.get_or_404(item_id)
-    print('\n {} \n test find next'.format(item))
-
-    # return redirect(url_for('about'))
-    return redirect(url_for('about'))

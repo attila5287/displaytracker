@@ -1,11 +1,22 @@
 {% extends 'layout_squares.html' %}
 {% block content %}
 
+<table>
+{% for row in table %}
+  <tr>
+  {% set rowcount = column %}
+  {% for cell in row %}
+    <td id="cell-{{ rowcount.index }}-{{ column.index }}">{{ cell }}</td>
+  {% endfor %}
+  </tr>
+{% endfor %}
+</table>
+
 <div class="container-fluid m-0 p-0">
   <div class="row mt-2">
-    {% for item in display %}
+    {% for unit,item in display.items() %}
     <div class="col-md-2">
-      <div class="square-section box-shadow border-dark">
+      <div class="square-section border-{{UnitInvOutStyler(unit.maininv_out)}}">
         <ul class="nav nav-pills nav-fill mb-0">
           <li class="nav-item">
             <a class="nav-link" href="#">
@@ -20,7 +31,10 @@
             </a>              
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('findnext_byid', item_id=item.id)}}">
+            <a 
+            class="nav-link" 
+            href="{{url_for('unit_nextitem', unique_tag=unit. unique_tag, item_id=item.id ) }}"
+            >
               Next
               <i class="fas fa-sync-alt ml-2"></i>
             </a>
@@ -74,9 +88,15 @@
 
         <!-- required for responsive /image placed in a bs-card -->
         <div class="card bg-transparent text-white border-dark my-1 p-2" style="border-width: medium;">
+          <p class="text-center">
+              <small>
+                {{unit.unique_tag}}
+              </small>
+          </p>
           <img class="card-img" src="{{item.imageclean_url}}" alt="{{item.clean_url}}">
 
         </div>
+
 
         <!-- alert buttons low-inv out of stock -->
         <div class="d-flex justify-content-around mt-1  mb-0">

@@ -77,9 +77,6 @@ class Item(db.Model):
         'polymorphic_identity': 'item'
     }
 
-    def __repr__(self):
-        return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_fullname}')"
-
     def display_properties(self):
         '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN FOR INV-HOME'''
         pass
@@ -205,6 +202,50 @@ class Item(db.Model):
         self.has_flatbill = form.has_flatbill.data
         print('\n\t... models.item no {}  u p d a t e d ...\n'.format(self.id))
 
+    def similar_attrs(self):
+        '''COLLECTS ALL YES ATTRS AND RETURNS A DICT FOR FUTURE QUERY'''
+        pass
+        _class_attr = [
+            'color_primary', 
+            'color_secondary', 
+            'inv_outofstock', 
+            'is_snapback', 
+            'is_adjustable', 
+            'is_flexfit', 
+            'is_youth', 
+            'is_fitted', 
+            'has_structcrwn', 
+            'has_curvedbill', 
+            'has_flatbill',
+        ]
+        _inst_values = [
+            self.color_primary,
+            self.color_secondary,
+            self.inv_outofstock,
+            self.is_snapback,
+            self.is_adjustable,
+            self.is_flexfit,
+            self.is_youth,
+            self.is_fitted,
+            self.has_structcrwn,
+            self.has_curvedbill,
+            self.has_flatbill,
+        ]
+        return {value: key for key, value in zip(_class_attr,_inst_values) if value is 'yes'}
+
+    def __repr__(self):
+        pass
+        str_list = [
+            '\n\n\t││ ║║║║║║║ │',
+            '\t││ ║║║║║║║ │',
+            '\titem id: '+str(self.id),
+            '\tmanfctr: '+str(self.manufacturer),
+            '\t' + self.catalog_fullname[:17],
+            ''
+        ]
+        return '\n'.join(str_list)
+
+
 
 
 class Square(db.Model):
@@ -216,6 +257,10 @@ class Square(db.Model):
     row_count = db.Column(db.Integer)
     col_count = db.Column(db.Integer)
 
+    def __repr__(self):
+
+        return '\n\t Square ID: {} \n\t Sqr Name: {}\n\t Row Count: {}\n\t Column Ct: {}\n\t'
+
 
 class Unit(db.Model):
     '''EA. UNIT WILL SUGGEST MAIN-ALTERNATIVE-ITEMS OR 
@@ -223,10 +268,10 @@ class Unit(db.Model):
     pass
     __tablename__ = 'unit'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     square_id = db.Column(db.Integer)
     pstn_rowcol = db.Column(db.String(32))
-    unique_tag = db.Column(db.String(32))
+    unique_tag = db.Column(db.String(32),unique=True)
     mainitem_id = db.Column(db.Integer)
     maininv_out = db.Column(db.String(32))
     dispitem_id = db.Column(
@@ -236,24 +281,19 @@ class Unit(db.Model):
 
     def __repr__(self):
         pass
-        square_id = str(self.square_id)
-        position = self.pstn_rowcol
-        margin = ''
-        if square_id != '10':
-            margin = ' '
             
-
-        top = '\n┌───┐'
-        square_id_left = '│s{}{}│'.format(square_id, margin)
-        frame_lower = '│ {}│'.format(position)
-        bottom = '└───┘'
         str_list = [
-            # t1tle,
-            # margin_top,
-            top,
-            square_id_left,
-            frame_lower,
-            bottom
+            '\n╔═════════╗\t unique tag: {}'.format(self.unique_tag), 
+            '║         ║\t square id: {}'.format(self.square_id),
+            '║ ││║║║ │ ║\t pstn rowcol: {}'.format(self.pstn_rowcol), 
+            '║ ││║║║ │ ║\t main_item id: {}'.format(self.mainitem_id),
+            '║         ║\t main_item inv out: {}'.format(self.maininv_out),
+            '╚═════════╝\t disp_item id: {}'.format(self.dispitem_id),
+            
+            
         ]
 
         return '\n'.join(str_list)
+
+
+

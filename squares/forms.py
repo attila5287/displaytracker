@@ -1,11 +1,20 @@
+from wtforms_sqlalchemy.fields import QuerySelectField
 from flask import request
 from flask_wtf import FlaskForm 
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import (
+    FileField, FileAllowed
+)
 from flask_login import current_user
-from wtforms import SelectField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from squares.models import User
-
+from wtforms import (
+    SelectField, StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+)
+from wtforms.validators import (
+    DataRequired, Length, Email, EqualTo, ValidationError
+)
+from squares.models import (
+    User, Choice
+)
+from wtforms_sqlalchemy.fields import QuerySelectField
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -115,16 +124,10 @@ class CSVReaderForm(FlaskForm):
     submit = SubmitField('Feed Inv | Read CSV')
 
 
+def choice_query():
+    return Choice.query
 
 
-# @app.route("/pie")
-# def rick():
-#     pass
-#     lyrics = get_lyrics()
-#     labels, values = zip(*lyrics.items())
-#     data = [{
-#         "labels": labels,
-#         "values": values,
-#         "type": "pie"}]
-
-#     return jsonify(data)
+class ChoiceForm(FlaskForm):
+    opts = QuerySelectField(query_factory=choice_query,
+                            allow_blank=False, get_label='name')

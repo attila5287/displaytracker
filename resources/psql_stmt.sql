@@ -1,4 +1,11 @@
---   (options: S = show system objects, + = additional detail)
+CREATE TABLE choice (
+	"id" BIGSERIAL NOT NULL PRIMARY KEY,
+	"name"	VARCHAR(50),
+	"extra"	VARCHAR(50)
+)
+;
+
+
 --   \d+                 list tables, views, and sequences
 --   \d+  NAME           describe table, view, sequence, or index
 

@@ -236,16 +236,12 @@ class Item(db.Model):
     def __repr__(self):
         pass
         str_list = [
-            '\n\n\t││ ║║║║║║║ │',
-            '\t││ ║║║║║║║ │',
-            '\titem id: '+str(self.id),
-            '\tmanfctr: '+str(self.manufacturer),
-            '\t' + self.catalog_fullname[:17],
-            ''
+            '',
+            '\t││ ║║║║║║║ │\titem id: '+str(self.id),
+            '\t││ ║║║║║║║ │\tmanfctr: '+str(self.manufacturer),
+            '    '+str(self.catalog_fullname).upper()+'\n',
         ]
         return '\n'.join(str_list)
-
-
 
 
 class Square(db.Model):
@@ -274,26 +270,32 @@ class Unit(db.Model):
     unique_tag = db.Column(db.String(32),unique=True)
     mainitem_id = db.Column(db.Integer)
     maininv_out = db.Column(db.String(32))
-    dispitem_id = db.Column(
-        db.Integer, db.ForeignKey('item.id')
-        )
+    dispitem_id = db.Column(db.Integer, db.ForeignKey('item.id'))
 
+
+    def mainitem_out(self):
+        pass
+        self.maininv_out == 'yes'
+    
+    def mainitem_restck(self):
+        pass
+        self.maininv_out = 'no'
+        
 
     def __repr__(self):
         pass
             
         str_list = [
-            '\n╔═════════╗\t unique tag: {}'.format(self.unique_tag), 
-            '║         ║\t square id: {}'.format(self.square_id),
+            '',
+            '\t unique tag: {}'.format(self.unique_tag), 
+            '╔═════════╗\t square id: {}'.format(self.square_id),
             '║ ││║║║ │ ║\t pstn rowcol: {}'.format(self.pstn_rowcol), 
             '║ ││║║║ │ ║\t main_item id: {}'.format(self.mainitem_id),
-            '║         ║\t main_item inv out: {}'.format(self.maininv_out),
-            '╚═════════╝\t disp_item id: {}'.format(self.dispitem_id),
-            
-            
+            '╚═════════╝\t main_item inv out: {}'.format(self.maininv_out),
+            '     └─ disp_item id: {}'.format(self.dispitem_id),
+            '',
         ]
 
         return '\n'.join(str_list)
-
 
 

@@ -50,9 +50,9 @@
 }
 
 .square-section {
-  border: 8px solid ;
+  border: 4px solid ;
   border-radius: 22px;
-  margin-bottom:4px;
+  margin-bottom: 16px;
 }
 
 .item-section {

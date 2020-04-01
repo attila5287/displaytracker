@@ -369,11 +369,26 @@ def inject_UnitInvOutStyler():
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
         _borderStylesDict = {
-            'yes': 'warning',
-            'no': 'success',
+            'yes': 'primary',
+            'no': 'dark',
         }
         return _borderStylesDict.get(yes_or_no, 'dark')
     return dict(UnitInvOutStyler=UnitInvOutStyler)
+
+
+@app.context_processor
+def inject_UnitInvOutIconizer():
+    pass
+
+    def UnitInvOutIconizer(yes_or_no):
+        '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
+        pass
+        _iconYesNoDict = {
+            'no': 'check text-success',
+            'yes': 'times text-primary ml-1',
+        }    
+        return _iconYesNoDict.get(yes_or_no, 'question-circle')
+    return dict(UnitInvOutIconizer=UnitInvOutIconizer)
 
 
 @app.context_processor
@@ -615,8 +630,6 @@ def createall_squares():
     flash('all squares created', 'info')
     return redirect(url_for('about'))
 
-
-
 # squares_all
 @app.route('/squares/all')
 def sqr_home():
@@ -676,12 +689,10 @@ def unit_nextitem(unique_tag, item_id):
 
     return redirect(url_for('square_byid', square_id=unit.square_id))
 
-
-
 @app.route('/square/byid/<int:square_id>')
 def square_byid(square_id):
     pass
-    units = Unit.query.filter_by(square_id=square_id).all()
+    units = Unit.query.filter_by(square_id=square_id).all()[:12]
 
     unit_unqtags = [
         unit.unique_tag for unit in units
@@ -719,3 +730,51 @@ def square_byid(square_id):
         display=display,
         title='ShowSquareID: '+str(square_id),
     )
+
+@app.route('/unit/<string:unique_tag>/update/mainitem/invout')
+def unit_update_maininvout(unique_tag):
+    pass
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first()
+    item = Item.query.get_or_404(unit.mainitem_id) 
+    unit.maininv_out = item.inv_outofstock
+    db.session.commit()
+    return redirect(url_for('square_byid', square_id=unit.square_id))
+
+
+@app.route('/unit/<string:unique_tag>/show/mainitem')
+def unit_show_mainitem(unique_tag):
+    pass
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first()
+    item = Item.query.get_or_404(unit.mainitem_id)
+    unit.dispitem_id = unit.mainitem_id
+    unit.maininv_out = item.inv_outofstock
+    db.session.commit()
+    return redirect(url_for('square_byid', square_id=unit.square_id))
+
+
+@app.route("/unit/<string:unique_tag>/markas/outofstock/<int:item_id>")
+def unit_mainitem_out(unique_tag, item_id):
+    pass
+    def redir3ct_url(default='inv_lister'):
+        pass
+        return request.referrer or \
+            request.args.get('next') or \
+            url_for(default)
+    item = Item.query.get(item_id)
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first() 
+
+    if item.inv_outofstock == 'no':
+        pass
+        item.just_ran_out()
+        unit.maininv_out = 'yes'
+        db.session.commit()
+    elif item.inv_outofstock == 'yes':
+        pass
+        item.now_restock3d()
+        unit.maininv_out = 'no'
+        db.session.commit()
+    else:
+        pass
+        print('\n\t item could not be modified check yes-no values')
+
+    return redirect(redir3ct_url())

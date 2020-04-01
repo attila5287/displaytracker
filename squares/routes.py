@@ -13,10 +13,10 @@ from squares import (
     app, db, bcrypt
 )
 from squares.forms import (
-    RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm, ChoiceForm
+    RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm, SquareForm
 )
 from squares.models import (
-    User, Post, Item, Square, Unit, Choice
+    User, Post, Item, Square, Unit
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required
@@ -541,20 +541,6 @@ def createall_squares():
     flash('all squares created', 'info')
     return redirect(url_for('about'))
 
-# squares_all
-@app.route('/squares/all')
-def sqr_home():
-    ''' SQUARE-HOME: ALL SQRS'''
-    pass
-    squares = Square.query.all()
-    
-
-    return render_template(
-        'squares_home.html',
-        squares=squares,
-        title = 'SqrHome',
-    )
-
 
 @app.route('/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
 def findnext_byid(item_id=10):
@@ -782,68 +768,28 @@ def square_byid(square_id):
         title='ShowSquareID: '+str(square_id),
     )
 
-@app.route('/test/queryselectfield', methods=['GET', 'POST'])
-def test_queryslctfld():
-    # db.create_all()
-    form = ChoiceForm()
 
-    form.opts.query = Choice.query.all()
+
+# squares_all
+@app.route('/squares/all', methods=['GET', 'POST'])
+def sqr_home():
+    ''' SQUARE-HOME: ALL SQRS'''
+    pass
+    form = SquareForm()
+    form.opts.query = Square.query.all()
+    squares = Square.query.all()
 
     if request.method == 'POST':
-        return '<html><h1>{}</h1></html>'.format(form.opts.data)
+        pass
+        # request form returns id as int thx-to square_query func in app.forms
+        userselection = request.form['opts']
+        return redirect(url_for('square_byid', square_id=userselection))
 
-    return render_template('test_queryslctfld.html', form=form)
-
-
-@app.route('/createfive/choices', methods=['GET', 'POST'])
-def create_5choices():
-    names = [
-        'whats in a name',
-        'that which',
-        'we call rose',
-        'by any_other_name',
-        'would smell as sweet',
-    ]
-
-    extras = [
-        '🌹',
-        '♣',
-        '♦',
-        '♥',
-        '♠',
-    ]
-
-    choices = [
-        Choice(name=_name, extra=_extra,) for _name, _extra in zip(names, extras)
-    ]
-    db.session.add_all(choices)
-    db.session.commit() 
-    
-    return redirect(url_for('test_queryslctfld'))
+    return render_template(
+        'squares_home.html',
+        form=form,
+        squares=squares,
+        title='SqrHome',
+    )
 
 
-@app.route('/createfive/choic3s', methods=['GET', 'POST'])
-def create_5choic3s():
-    names = [
-        'To die, to sleep—',
-        'to sleep,',
-        'maybe to dream.',
-        'Ah,',
-        'but there\'s the catch:',
-    ]
-
-    extras = [
-        '-',
-        ',',
-        '.',
-        ',',
-        ':',
-    ]
-
-    choices = [
-        Choice(name=_name, extra=_extra,) for _name, _extra in zip(names, extras)
-    ]
-    db.session.add_all(choices)
-    db.session.commit()
-
-    return redirect(url_for('test_queryslctfld'))

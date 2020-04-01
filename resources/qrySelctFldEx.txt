@@ -1,0 +1,87 @@
+
+@app.route('/test/queryselectfield', methods=['GET', 'POST'])
+def test_queryslctfld():
+    # db.create_all()
+    form = ChoiceForm()
+
+    form.opts.query = Choice.query.all()
+
+    if request.method == 'POST':
+        return '<html><h1>{}</h1></html>'.format(form.opts.data)
+
+    return render_template('test_queryslctfld.html', form=form)
+
+
+
+@app.route('/createfive/choices', methods=['GET', 'POST'])
+def create_5choices():
+    names = [
+        'whats in a name',
+        'that which',
+        'we call rose',
+        'by any_other_name',
+        'would smell as sweet',
+    ]
+
+    extras = [
+        '🌹',
+        '♣',
+        '♦',
+        '♥',
+        '♠',
+    ]
+
+    choices = [
+        Choice(name=_name, extra=_extra,) for _name, _extra in zip(names, extras)
+    ]
+    db.session.add_all(choices)
+    db.session.commit() 
+    
+    return redirect(url_for('test_queryslctfld'))
+
+
+@app.route('/createfive/choic3s', methods=['GET', 'POST'])
+def create_5choic3s():
+    names = [
+        'To die, to sleep—',
+        'to sleep,',
+        'maybe to dream.',
+        'Ah,',
+        'but there\'s the catch:',
+    ]
+
+    extras = [
+        '-',
+        ',',
+        '.',
+        ',',
+        ':',
+    ]
+
+    choices = [
+        Choice(name=_name, extra=_extra,) for _name, _extra in zip(names, extras)
+    ]
+    db.session.add_all(choices)
+    db.session.commit()
+
+    return redirect(url_for('test_queryslctfld'))
+
+
+<html>
+<head>
+    <title>Form</title>
+</head>
+<body>
+    <form action="/test/queryselectfield" method="POST">
+        {{ form.csrf_token }}
+        {{ form.opts }}
+        <ul>
+            {% for error in form.opts.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <input type="submit">
+
+    </form>
+</body>
+</html>

@@ -281,13 +281,3 @@ class Unit(db.Model):
 
         return '\n'.join(str_list)
 
-
-class Choice(db.Model):
-    __tablename__ = 'choice'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    extra = db.Column(db.String(50))
-
-    def __repr__(self):
-
-        return '[user choice was: {}]'.format(self.name)

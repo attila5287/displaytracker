@@ -12,7 +12,7 @@ from wtforms.validators import (
     DataRequired, Length, Email, EqualTo, ValidationError
 )
 from squares.models import (
-    User, Choice
+    User, Square
 )
 from wtforms_sqlalchemy.fields import QuerySelectField
 
@@ -38,14 +38,12 @@ class RegistrationForm(FlaskForm):
             raise ValidationError(
                 'That email is taken. Please choose a different one.')
 
-
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
-
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
@@ -124,10 +122,15 @@ class CSVReaderForm(FlaskForm):
     submit = SubmitField('Feed Inv | Read CSV')
 
 
-def choice_query():
-    return Choice.query
+
+# below returns ID integer
+def square_query():
+    return Square.query
 
 
-class ChoiceForm(FlaskForm):
-    opts = QuerySelectField(query_factory=choice_query,
-                            allow_blank=False, get_label='name')
+class SquareForm(FlaskForm):
+    opts = QuerySelectField(
+        query_factory=square_query,
+        allow_blank=False,
+        get_label='name'
+        )

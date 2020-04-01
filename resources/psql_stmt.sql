@@ -1,3 +1,6 @@
+DROP TABLE public.choice CASCADE
+;
+
 CREATE TABLE choice (
 	"id" BIGSERIAL NOT NULL PRIMARY KEY,
 	"name"	VARCHAR(50),

@@ -5,7 +5,6 @@ CREATE TABLE choice (
 )
 ;
 
-
 --   \d+                 list tables, views, and sequences
 --   \d+  NAME           describe table, view, sequence, or index
 

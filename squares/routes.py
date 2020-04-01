@@ -17,7 +17,7 @@ from squares.forms import (
     RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm
 )
 from squares.models import (
-    User, Post, ItemDemo, Item, Square, Unit
+    User, Post, Item, Square, Unit
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required
@@ -518,7 +518,7 @@ def showonly_invout():
     )
 
 
-@app.route('/createall/squares')
+@app.route('/createall/squaresheroher')
 def createall_squares():
     pass
     _names = [
@@ -600,48 +600,6 @@ def unit_nextitem(unique_tag, item_id):
     db.session.commit()
 
     return redirect(url_for('square_byid', square_id=unit.square_id))
-
-@app.route('/square/byid/<int:square_id>')
-def square_byid(square_id):
-    pass
-    units = Unit.query.filter_by(square_id=square_id).all()[:12]
-
-    unit_unqtags = [
-        unit.unique_tag for unit in units
-    ]
-
-    unit_dispitem_ids = [
-        unit.dispitem_id for unit in units
-    ]
-    unit_itemid = dict(zip(units, unit_dispitem_ids))
-    unqtag_itemid  = dict(zip(unit_unqtags, unit_dispitem_ids))
-    result_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
-    
-    result_itemids = [
-        item.id for item in result_items
-    ]
-    results_itemid_dict = dict(zip(result_itemids, result_items))
-    display = dict()
-    print('\ndisplay: ', display)
-    for unit, query_untdispid in unit_itemid.items():
-        pass
-
-        for result_itemid, result_item in results_itemid_dict.items():
-            pass
-        
-            if int(query_untdispid) == int(result_itemid):
-                pass
-                display[unit] = result_item
-
-
-    print('\n display final')
-    print(display)
-
-    return render_template(
-        'square_00.html',
-        display=display,
-        title='ShowSquareID: '+str(square_id),
-    )
 
 @app.route('/unit/<string:unique_tag>/update/mainitem/invout')
 def unit_update_maininvout(unique_tag):
@@ -781,3 +739,49 @@ def update_firstunits_invout():
     flash('all units main item inv status updated','info')
 
     return redirect(url_for('sqr_home'))
+
+
+
+
+
+@app.route('/square/byid/<int:square_id>')
+def square_byid(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    unit_itemid = dict(zip(units, unit_dispitem_ids))
+    unqtag_itemid = dict(zip(unit_unqtags, unit_dispitem_ids))
+    result_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+
+    result_itemids = [
+        item.id for item in result_items
+    ]
+    results_itemid_dict = dict(zip(result_itemids, result_items))
+    display = dict()
+    print('\ndisplay: ', display)
+    for unit, query_untdispid in unit_itemid.items():
+        pass
+
+        for result_itemid, result_item in results_itemid_dict.items():
+            pass
+
+            if int(query_untdispid) == int(result_itemid):
+                pass
+                display[unit] = result_item
+
+    print('\n display final')
+    print(display)
+
+    return render_template(
+        'square_00.html',
+        display=display,
+        title='ShowSquareID: '+str(square_id),
+    )

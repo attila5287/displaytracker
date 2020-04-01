@@ -1,3 +1,7 @@
+--   (options: S = show system objects, + = additional detail)
+--   \d+                 list tables, views, and sequences
+--   \d+  NAME           describe table, view, sequence, or index
+
 DROP TABLE public.item CASCADE
 ;
 
@@ -188,16 +192,16 @@ CREATE TABLE post (
 
 
 -- General
---   \copyright             show PostgreSQL usage and distribution terms
---   \crosstabview [COLUMNS] execute query and display results in crosstab
---   \errverbose            show most recent error message at maximum verbosity
---   \g [FILE] or ;         execute query (and send results to file or |pipe)
---   \gdesc                 describe result of query, without executing it
---   \gexec                 execute query, then execute each value in its result
---   \gset [PREFIX]         execute query and store results in psql variables
---   \gx [FILE]             as \g, but forces expanded output mode
---   \q                     quit psql
---   \watch [SEC]           execute query every SEC seconds
+	-- show PostgreSQL usage and distribution terms
+  -- \crosstabview [COLUMNS] execute query and display results in crosstab
+  -- \errverbose            show most recent error message at maximum verbosity
+  -- \g [FILE] or ;         execute query (and send results to file or |pipe)
+  -- \gdesc                 describe result of query, without executing it
+  -- \gexec                 execute query, then execute each value in its result
+  -- \gset [PREFIX]         execute query and store results in psql variables
+  -- \gx [FILE]             as \g, but forces expanded output mode
+  -- \q                     quit psql
+  -- \watch [SEC]           execute query every SEC seconds
 
 -- Help
 --   \? [commands]          show help on backslash commands

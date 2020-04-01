@@ -1,3 +1,24 @@
+# this go to models
+class ItemDemo():
+  pass
+
+  def __init__(self, id='9999', manufacturer='YUUPONG',
+               catalog_no='999DEMO', catalog_desc='noItemDesc',
+               image_url=''
+               ):
+      pass
+      self.id = id
+      self.manufacturer = manufacturer
+      self.image_url = image_url
+      self.catalog_no = catalog_no
+      self.catalog_desc = catalog_desc
+
+  def __repr__(self):
+      return f"Item('\n...{self.manufacturer}'\n\t '{self.catalog_no}'\n\t '{self.image_url}')"
+
+
+
+# this goes to routes
 # demo objects (no db) yupoong trns-png'ed items ~100
 @app.context_processor
 def inject_ItemDemoList():

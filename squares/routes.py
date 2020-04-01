@@ -518,94 +518,6 @@ def showonly_invout():
     )
 
 
-@app.route('/fixall/uniquetags/in/<int:square_id>', methods=['GET', 'POST'])
-def fixall_uniquetags_in(square_id):
-    pass
-    units = Unit.query.filter_by(square_id=square_id).desc(pstn_rowcol).all()
-    for unit in units:
-        pass
-        unit.unique_tag = 's'+str(square_id)+unit.pstn_rowcol
-        db.session.commit()
-    flash('all tags fixed', 'warning')
-
-    return redirect(url_for('square_byid', square_id=square_id))
-
-
-@app.route('/fixfirst/units/<int:square_id>')
-def fixfirst_units(square_id):
-    pass
-    all_items = Item.query.all()
-    print(len(all_items))
-    available_ids = [
-        item.id for item in all_items
-    ]
-    print(len(available_ids))
-    units = Unit.query.filter_by(square_id=square_id).all()
-    for unit in units:
-        pass
-        unit.mainitem_id = random.choice(available_ids)
-        _int = unit.mainitem_id
-        unit.dispitem_id = _int
-        db.session.commit()
-    flash('all units fixed', 'primary')
-    return redirect(url_for('about'))
-
-
-@app.route('/createfirst/units')
-def createfirst_units():
-    pass
-
-    items = Item.query.all()
-    list_of_ids = [
-        _item.id for _item in items
-    ]
-
-    _rows = [
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-    ]
-
-    _cols = [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-    ]
-
-    _rowcols = [
-        row+column for row in _rows for column in _cols
-    ]
-
-    _tags = [
-        's1'+_position for _position in _rowcols
-    ]
-    random.seed(42)
-    units = [
-        Unit(
-            square_id=1,
-            pstn_rowcol=_position,
-            unique_tag=_tag,
-            mainitem_id=1,
-            maininv_out='no',
-            dispitem_id=random.choice(list_of_ids),
-        ) for _position, _tag in zip(_rowcols, _tags)
-    ]
-    
-    db.session.add_all(units)
-    db.session.commit()
-    flash('all units created!', 'success')
-    return redirect(url_for('about'))
-
-
 @app.route('/createall/squares')
 def createall_squares():
     pass
@@ -778,3 +690,94 @@ def unit_mainitem_out(unique_tag, item_id):
         print('\n\t item could not be modified check yes-no values')
 
     return redirect(redir3ct_url())
+
+
+@app.route('/fixall/uniquetags/in/1', methods=['GET', 'POST'])
+def fixall_uniquetags_in():
+    pass
+    units = Unit.query.filter_by(square_id=1).all()
+    for unit in units:
+        pass
+        unit.unique_tag = 'S'+str(1)+'_'+unit.pstn_rowcol
+        db.session.commit()
+    flash('all unique tags fixed', 'danger')
+
+    return redirect(url_for('sqr_home'))
+
+
+@app.route('/fixfirst/units/mainitem')
+def fixfirst_units_main():
+    pass
+    units = Unit.query.filter_by(square_id=1).all()
+    for unit in units:
+        pass
+        _int = unit.dispitem_id
+        unit.mainitem_id = _int
+        db.session.commit()
+    flash('all units main item ids fixed', 'warning')
+    return redirect(url_for('sqr_home'))    
+
+
+@app.route('/createfirst/units')
+def createfirst_units(): 
+    pass
+    items = Item.query.all()
+    list_of_ids = [
+        _item.id for _item in items
+    ]
+    _rows = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+    ]
+    _cols = [
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+    ]
+    _rowcols = [
+        row+column for row in _rows for column in _cols
+    ]
+    _tags = [
+        'S1_'+_position for _position in _rowcols
+    ]
+    random.seed(42)
+    units = [
+        Unit(
+            square_id=1,
+            pstn_rowcol=_position,
+            unique_tag=_tag,
+            mainitem_id=1,
+            maininv_out='no',
+            dispitem_id=random.choice(list_of_ids),
+        ) for _position, _tag in zip(_rowcols, _tags)
+    ]
+    db.session.add_all(units)
+    db.session.commit()
+    flash('all units created!', 'primary')
+    return redirect(url_for('sqr_home'))
+
+
+@app.route("/unit/update/invout")
+def update_firstunits_invout():
+    pass
+    units = Unit.query.filter_by(square_id=1).all()
+
+    for unit in units:
+        pass
+        item = Item.query.get_or_404(unit.mainitem_id)
+        _updated_status = item.inv_outofstock
+        unit.maininv_out = _updated_status
+        db.session.commit()
+    flash('all units main item inv status updated','info')
+
+    return redirect(url_for('sqr_home'))

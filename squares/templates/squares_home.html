@@ -2,7 +2,56 @@
 
 {% block content %}
 
-
+<div class="row my-3">
+  <div class="col-md-3">
+    <a
+    name=""
+    id=""
+    class="btn btn-primary btn-block"
+    href="{{ url_for('createfirst_units') }}"
+    role="button">
+    <i class="fas fa-terminal float-left"></i><strong>CREATE</strong><br>
+    <i class="fas fa-th-large float-left"></i><strong>FIRST</strong><br>
+    <i class="fas fa-tags float-left"></i><strong>UNITS</strong><br>
+    </a>
+  </div>
+    <div class="col-md-3">
+    <a
+    name=""
+    id=""
+    class="btn btn-warning btn-block"
+    href="{{ url_for('fixfirst_units_main') }}"
+    role="button">
+    <i class="fas fa-terminal float-left"></i><strong>F I X</strong><br>
+    <i class="fas fa-th-large float-left"></i><strong>MAIN</strong><br>
+    <i class="fas fa-tags float-left"></i><strong>ITEM ID'S</strong><br>
+    </a>
+  </div>  
+  <div class="col-md-3">
+    <a
+    name=""
+    id=""
+    class="btn btn-danger btn-block"
+    href="{{ url_for('fixall_uniquetags_in') }}"
+    role="button">
+    <i class="fas fa-terminal float-left"></i><strong>F I X</strong><br>
+    <i class="fas fa-th-large float-left"></i><strong>UNIQUE</strong><br>
+    <i class="fas fa-tags float-left"></i><strong>TAGS</strong><br>
+    </a>
+  </div>  
+  <div class="col-md-3">
+    <a
+    name=""
+    id=""
+    class="btn btn-info btn-block"
+    href="{{ url_for('update_firstunits_invout') }}"
+    role="button">
+    <i class="fas fa-terminal float-left"></i><strong>UPDATE</strong><br>
+    <i class="fas fa-th-large float-left"></i><strong>MAIN ITEM</strong><br>
+    <i class="fas fa-tags float-left"></i><strong>INV OUT</strong><br>
+    </a>
+  </div>    
+</div>
 
 <div class="row">
 

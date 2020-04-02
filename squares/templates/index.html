@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <form method="POST">
+    {{ form.csrf_token }}
+    {{ form.state }}
+    {{ form.city }}
+    <input type="submit">
+    </form>
+    <script>
+        var state_select = document.getElementById("state");
+        var city_select = document.getElementById("city");
+
+        state_select.onchange = function()  {
+             
+            state = state_select.value;
+            
+            fetch('/city/' + state).then(function(response) {
+
+                response.json().then(function(data) {
+                    var optionHTML = '';
+
+                    for (var city of data.cities) {
+                        optionHTML += '<option value="' + city.id + '">' + city.name + '</option>';
+                    }
+
+                    city_select.innerHTML = optionHTML;
+                })
+                
+            });
+        }
+    </script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

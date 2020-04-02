@@ -34,11 +34,11 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 
-
 class Item(db.Model):
     pass
     id = db.Column(db.Integer, primary_key=True)
     manufacturer = db.Column(db.String(32))
+    catalog_no = db.Column(db.String(32))
     catalog_fullname = db.Column(db.String(256))
     color_primary = db.Column(db.String(32))
     color_secondary = db.Column(db.String(32))
@@ -49,16 +49,14 @@ class Item(db.Model):
     is_flexfit = db.Column(db.String(32))
     is_fitted = db.Column(db.String(32))
     is_youth = db.Column(db.String(32))
-    has_structcrwn = db.Column(db.String(32))
+    is_unstructured = db.Column(db.String(32))
+    has_meshback = db.Column(db.String(32))
     has_curvedbill = db.Column(db.String(32))
     has_flatbill = db.Column(db.String(32))
-    imagewhtbg_url = db.Column(db.String(256))
-    imageclean_url = db.Column(db.String(256))
+    imagegrid_url = db.Column(db.String(256))
+    imagelist_url = db.Column(db.String(256))
     product_url = db.Column(db.String(256))
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'item'
-    }
 
     def display_properties(self):
         '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN FOR INV-HOME'''
@@ -74,12 +72,13 @@ class Item(db.Model):
             'Flat Bill',
         ]
         properties = [
-            self.is_snapback, 
+            self.is_snapback,
+            self.has_meshback,
             self.is_adjustable,
             self.is_flexfit, 
             self.is_youth, 
             self.is_fitted, 
-            self.has_structcrwn, 
+            self.is_unstructured, 
             self.has_curvedbill, 
             self.has_flatbill,
         ]
@@ -94,7 +93,7 @@ class Item(db.Model):
             self.is_flexfit,
             self.is_youth,
             self.is_fitted,
-            self.has_structcrwn,
+            self.is_unstructured,
             self.has_curvedbill,
             self.has_flatbill,
         ]
@@ -134,11 +133,11 @@ class Item(db.Model):
             'is_flexfit',
             'is_youth',
             'is_fitted',
-            'has_structcrwn',
+            'is_unstructured',
             'has_curvedbill',
             'has_flatbill',
-            'imagewhtbg_url',
-            'imageclean_url',
+            'imagelist_url',
+            'imagegrid_url',
             'product_url',
 
         ]
@@ -155,11 +154,11 @@ class Item(db.Model):
             self.is_flexfit,
             self.is_youth,
             self.is_fitted,
-            self.has_structcrwn,
+            self.is_unstructured,
             self.has_curvedbill,
             self.has_flatbill,
-            self.imagewhtbg_url,
-            self.imageclean_url,
+            self.imagelist_url,
+            self.imagegrid_url,
             self.product_url,
         ]
         return dict(zip(_attrs, _values))
@@ -170,8 +169,8 @@ class Item(db.Model):
         self.catalog_fullname = form.catalog_fullname.data
         self.color_primary = form.color_primary.data
         self.color_secondary = form.color_secondary.data
-        self.imagewhtbg_url = form.imagewhtbg_url.data
-        self.imageclean_url = form.imageclean_url.data
+        self.imagelist_url = form.imagelist_url.data
+        self.imagegrid_url = form.imagegrid_url.data
         self.product_url = form.product_url.data
         self.inv_lowinstock = form.inv_lowinstock.data
         self.inv_outofstock = form.inv_outofstock.data
@@ -180,7 +179,7 @@ class Item(db.Model):
         self.is_flexfit = form.is_flexfit.data
         self.is_youth = form.is_youth.data
         self.is_fitted = form.is_fitted.data
-        self.has_structcrwn = form.has_structcrwn.data
+        self.is_unstructured = form.is_unstructured.data
         self.has_curvedbill = form.has_curvedbill.data
         self.has_flatbill = form.has_flatbill.data
         print('\n\t... models.item no {}  u p d a t e d ...\n'.format(self.id))
@@ -197,7 +196,7 @@ class Item(db.Model):
             'is_flexfit', 
             'is_youth', 
             'is_fitted', 
-            'has_structcrwn', 
+            'is_unstructured', 
             'has_curvedbill', 
             'has_flatbill',
         ]
@@ -210,7 +209,7 @@ class Item(db.Model):
             self.is_flexfit,
             self.is_youth,
             self.is_fitted,
-            self.has_structcrwn,
+            self.is_unstructured,
             self.has_curvedbill,
             self.has_flatbill,
         ]
@@ -281,3 +280,8 @@ class Unit(db.Model):
 
         return '\n'.join(str_list)
 
+
+class City(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    state = db.Column(db.String(2))
+    name = db.Column(db.String(50))

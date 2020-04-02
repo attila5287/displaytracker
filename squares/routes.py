@@ -13,10 +13,12 @@ from squares import (
     app, db, bcrypt
 )
 from squares.forms import (
-    RegistrationForm, LoginForm, UpdateAccountForm, PostForm, ItemForm, CSVReaderForm, SquareForm
+    RegistrationForm, LoginForm,
+    UpdateAccountForm, PostForm, ItemForm,
+    CSVReaderForm, SquareForm, Form
 )
 from squares.models import (
-    User, Post, Item, Square, Unit
+    User, Post, Item, Square, Unit, City
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required
@@ -59,8 +61,8 @@ def show_item(item_id):
     custom_title = 'Show ' + str(item.id) + ' ' +  item.catalog_fullname
     return render_template('show_item.html', title=custom_title, legend='Show Item ' + str(item.id), item=item)
 
+# @app.route("/")
 
-@app.route("/")
 @app.route("/inventory/list")
 def inv_lister():
     pass
@@ -474,6 +476,7 @@ def inject_OutInvIcons():
         return _iconYesNoDict.get(yes_or_no, 'fa-square')
     return dict(OutInvIconizer=OutInvIconizer)
 
+
 @app.route("/filterby/manuf/<string:item_manufacturer>")
 def filterby_manuf(item_manufacturer):
     pass
@@ -517,7 +520,7 @@ def showonly_invout():
     )
 
 
-@app.route('/createall/squaresheroher')
+@app.route('/createall/squares')
 def createall_squares():
     pass
     _names = [
@@ -793,3 +796,91 @@ def sqr_home():
     )
 
 
+# ------------DYNAMIC JS
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    # db.create_all()
+    form = Form()
+    form.city.choices = [(city.id, city.name) for city in City.query.filter_by(state='CA').all()]
+
+    if request.method == 'POST':
+        city = City.query.filter_by(id=form.city.data).first()
+        return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
+
+    return render_template('index.html', form=form)
+
+@app.route('/city/<state>')
+def city(state):
+    cities = City.query.filter_by(state=state).all()
+
+    cityArray = []
+
+    for city in cities:
+        cityObj = {}
+        cityObj['id'] = city.id
+        cityObj['name'] = city.name
+        cityArray.append(cityObj)
+
+    return jsonify({'cities' : cityArray})
+
+@app.route('/add/cities')
+def add_cities():
+    pass
+    names = [
+        'Los Angeles',
+        'San Diego',
+        'Las Vegas',
+        'Reno',
+    ]
+    states = [
+        'CA',
+        'CA',
+        'NV',
+        'NV',
+    ]
+
+    cities = [
+        City(name=_name, state=_state) for _name, _state in zip(names, states)
+    ]
+
+    db.session.add_all(cities)
+    db.session.commit()
+
+    return redirect(url_for('index'))
+
+
+@app.route('/fixall/yupo', methods=['GET', 'POST'])
+def fixall_yupo():
+    pass
+    items = Item.query.filter_by(manufacturer='YUUPONG').all()
+    for item in items:
+        pass
+        item.manufacturer = 'YUPOONG'
+        db.session.commit()
+
+    flash('all Yupoong-typo items are fixed', 'primary')
+
+    return redirect(url_for('sqr_home'))
+
+
+@app.route('/fixall/otto', methods=['GET', 'POST'])
+def fixall_otto():
+    pass
+    items = Item.query.filter_by(manufacturer='OTTO').all()
+    for item in items:
+        pass
+        img_grid = str(item.imagegrid_url)[-4:]
+        img_list = str(item.imagelist_url)[-4:]
+
+        item.imagegrid_url = img_grid + '.jpg'
+        item.imagelist_url = img_list + '.jpg'
+        db.session.commit()
+
+    flash('all Otto items -png -jpg err fixed', 'primary')
+
+    return redirect(url_for('sqr_home'))
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

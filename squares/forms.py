@@ -77,15 +77,17 @@ class ItemForm(FlaskForm):
     pass
     manufacturer = StringField(
         'Manufacturer', validators=[DataRequired()], default='Manufacturer')
+    catalog_no = StringField(
+        'Catalog No', default='Catalog No')
     catalog_fullname = StringField(
         'Catalog Name', default='Catalog Full Name')
     color_primary = StringField(
         'Primary Color', validators=[DataRequired()], default='primary')
     color_secondary = StringField(
         'Secondary Color', default='secondary')
-    imageclean_url = StringField(
+    imagegrid_url = StringField(
         'ImgURL TrsPNG',  default='http://image.trnsprnt.background')
-    imagewhtbg_url = StringField(
+    imagelist_url = StringField(
         'ImgURL WhtBg',  default='http://image.white.background')
     product_url = StringField(
         'Product', default='http://brand.product.info'
@@ -101,7 +103,7 @@ class ItemForm(FlaskForm):
                            choices=[('no', 'NO'), ('yes', 'YES')],  default='no')
     is_fitted = SelectField('Fitted',
                             choices=[('no', 'NO'), ('yes', 'YES')],  default='no')
-    has_structcrwn = SelectField('Has structured crown?',
+    is_unstructured = SelectField('Has structured crown?',
                                 choices=[('no', 'NO'), ('yes', 'YES')], default='yes')
     has_curvedbill = SelectField('Has curved bill?',
                                  choices=[('no', 'NO'), ('yes', 'YES')], default='no')
@@ -134,3 +136,9 @@ class SquareForm(FlaskForm):
         allow_blank=False,
         get_label='name'
         )
+
+
+class Form(FlaskForm):
+    state = SelectField('state', choices=[('CA', 'California'), ('NV', 'Nevada')]) 
+    city = SelectField('city', choices=[])
+

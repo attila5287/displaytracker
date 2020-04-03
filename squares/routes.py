@@ -1,3 +1,4 @@
+from collections import defaultdict
 import random
 import os
 import secrets
@@ -613,7 +614,7 @@ def unit_show_mainitem(unique_tag):
 @app.route("/unit/<string:unique_tag>/markas/outofstock/<int:item_id>")
 def unit_mainitem_out(unique_tag, item_id):
     pass
-    def redir3ct_url(default='inv_lister'):
+    def redir3ct_url(default='sqr_home'):
         pass
         return request.referrer or \
             request.args.get('next') or \
@@ -649,7 +650,6 @@ def fixall_uniquetags_in():
     flash('all unique tags fixed', 'danger')
 
     return redirect(url_for('sqr_home'))
-
 
 @app.route('/fixfirst/units/mainitem')
 def fixfirst_units_main():
@@ -772,6 +772,48 @@ def square_byid(square_id):
     )
 
 
+@app.route('/square/byid/<int:square_id>/lite')
+def square_byid_lite(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    unit_itemid = dict(zip(units, unit_dispitem_ids))
+    unqtag_itemid = dict(zip(unit_unqtags, unit_dispitem_ids))
+    result_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+
+    result_itemids = [
+        item.id for item in result_items
+    ]
+    results_itemid_dict = dict(zip(result_itemids, result_items))
+    display = dict()
+    print('\ndisplay: ', display)
+    for unit, query_untdispid in unit_itemid.items():
+        pass
+
+        for result_itemid, result_item in results_itemid_dict.items():
+            pass
+
+            if int(query_untdispid) == int(result_itemid):
+                pass
+                display[unit] = result_item
+
+    print('\n display final')
+    print(display)
+
+    return render_template(
+        'square_00_lite.html',
+        display=display,
+        title='ShowSquareID: '+str(square_id),
+    )
+
 
 # squares_all
 @app.route('/squares/all', methods=['GET', 'POST'])
@@ -795,19 +837,46 @@ def sqr_home():
         title='SqrHome',
     )
 
+@app.route('/color/finder', methods=['GET', 'POST'])
+def color_finder():
+    items = Item.query.all()
 
-# ------------DYNAMIC JS
+    primary_colors = [
+        item.color_primary for item in items
+    ]
+
+    secondary_colors = [
+        item.color_secondary for item in items
+    ]
+    
+    all_colors = primary_colors + secondary_colors
+    print(all_colors)
+
+
+    d = defaultdict(int)
+    for color in all_colors:
+        d[color] += 1
+    
+    for color, count in d.items():
+        pass
+        print(color)
+
+    return redirect(url_for('sqr_home'))
+
+# ------------dynamic-JS------------
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # db.create_all()
     form = Form()
-    form.city.choices = [(city.id, city.name) for city in City.query.filter_by(state='CA').all()]
+    form.city.choices = [(city.id, city.name)
+                         for city in City.query.filter_by(state='CA').all()]
 
     if request.method == 'POST':
         city = City.query.filter_by(id=form.city.data).first()
         return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
 
     return render_template('index.html', form=form)
+
 
 @app.route('/city/<state>')
 def city(state):
@@ -821,7 +890,8 @@ def city(state):
         cityObj['name'] = city.name
         cityArray.append(cityObj)
 
-    return jsonify({'cities' : cityArray})
+    return jsonify({'cities': cityArray})
+
 
 @app.route('/add/cities')
 def add_cities():
@@ -848,39 +918,39 @@ def add_cities():
 
     return redirect(url_for('index'))
 
+# ---------end-of-JS-implement----------------
 
-@app.route('/fixall/yupo', methods=['GET', 'POST'])
-def fixall_yupo():
+
+@app.route("/unit/<string:unique_tag>/markas/outofstock/<int:item_id>")
+def unit_mainitem_low(unique_tag, item_id):
     pass
-    items = Item.query.filter_by(manufacturer='YUUPONG').all()
-    for item in items:
+    def redir3ct_url(default='inv_lister'):
         pass
-        item.manufacturer = 'YUPOONG'
-        db.session.commit()
+        return request.referrer or \
+            request.args.get('next') or \
+            url_for(default)
 
-    flash('all Yupoong-typo items are fixed', 'primary')
+    item = Item.query.get(item_id)
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first() 
 
-    return redirect(url_for('sqr_home'))
-
-
-@app.route('/fixall/otto', methods=['GET', 'POST'])
-def fixall_otto():
-    pass
-    items = Item.query.filter_by(manufacturer='OTTO').all()
-    for item in items:
+    if item.inv_lowinstock == 'no':
         pass
-        img_grid = str(item.imagegrid_url)[-4:]
-        img_list = str(item.imagelist_url)[-4:]
-
-        item.imagegrid_url = img_grid + '.jpg'
-        item.imagelist_url = img_list + '.jpg'
+        item.running_low()
+        unit.inv_outofstock == 'no'
+        
         db.session.commit()
+    elif item.inv_lowinstock == 'yes':
+        pass
+        unit.inv_outofstock == 'no'
+        item.now_restocked()
+        db.session.commit()
+    else:
+        pass
+        print('\n\t unit or item could not be modified check again')
 
-    flash('all Otto items -png -jpg err fixed', 'primary')
-
-    return redirect(url_for('sqr_home'))
-
+    return redirect(redir3ct_url())
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+

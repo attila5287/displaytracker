@@ -1,4 +1,4 @@
-{% extends 'layout_squares.html' %}
+{% extends 'layout_squares_lite.html' %}
 {% block content %}
 
 <div class="container-fluid m-0 p-0">
@@ -111,7 +111,7 @@
           </div>
           
           <img 
-          class="card-img"  
+          class="card-img" 
           src="
           https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/grid/{{item.manufacturer}}/{{item.imagegrid_url}}
           " 
@@ -123,20 +123,11 @@
         <!-- alert buttons low-inv out of stock -->
         <div class="d-flex justify-content-around mt-1  mb-0">
           <div class="btn-group" role="group">
-
-            {% if unit.mainitem_id == unit.dispitem_id %}            
-            <a type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
-              href="{{ url_for('unit_mainitem_low',unique_tag=unit.unique_tag, item_id=item.id) }}">  
-              <i class="fa fa-battery-quarter ml-4" aria-hidden="true"></i>
-              <small>Low</small>
-            </a>
-            {% else %}
             <a type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
               href="{{ url_for('mark_as_lowinv',item_id=item.id) }}">
               <i class="fa fa-battery-quarter ml-4" aria-hidden="true"></i>
               <small>Low</small>
-            </a>            
-            {% endif %}
+            </a>
 
             {% if unit.mainitem_id == unit.dispitem_id %}
             <a type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"

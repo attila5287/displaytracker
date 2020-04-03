@@ -1,5 +1,41 @@
+.bg-Navy {
+  background-color: navy;
+}
+.bg-Natural {
+  background-color: antiquewhite;
+}
+.bg-Maroon {
+  background-color: maroon;
+}
+.bg-Brown {
+  background-color: brown;
+}
+.bg-Kelly {
+  background-color: chartreuse;
+}
+.bg-Carblue {
+  background-color: skyblue;
+}
+.bg-Heathergrey {
+  background-color: lightslategrey;
+}
+.bg-Darkgrey {
+  background-color: darkgrey;
+}
+.bg-Camo {
+  background-color: darkolivegreen;
+}
+.bg-Floral {
+  background-color: fuchsia;
+}
+.bg-Tan {
+  background-color: tan;
+}
+.bg-Tropicgrn {
+  background-color: mediumaquamarine;
+}
 .bg-White {
-  background-color: snow;
+  background-color: white;
 }
 .bg-Black {
   background-color: black;

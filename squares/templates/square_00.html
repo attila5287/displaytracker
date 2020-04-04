@@ -119,19 +119,18 @@
           >
         </div>
 
-
         <!-- alert buttons low-inv out of stock -->
         <div class="d-flex justify-content-around mt-1  mb-0">
           <div class="btn-group" role="group">
 
             {% if unit.mainitem_id == unit.dispitem_id %}            
-            <a type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
+            <a name="itemlowbtnifmain{{unique_tag}}" id="btnlow{{unique_tag}}" type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
               href="{{ url_for('unit_mainitem_low',unique_tag=unit.unique_tag, item_id=item.id) }}">  
               <i class="fa fa-battery-quarter ml-4" aria-hidden="true"></i>
               <small>Low</small>
             </a>
             {% else %}
-            <a type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
+            <a name="itemlowbtnifelse{{unit.unique_tag}}" id="btnlow{{unit.unique_tag}}" type="button" role="button" class="btn {{LowInStckStylerGrid(item.inv_lowinstock)}}"
               href="{{ url_for('mark_as_lowinv',item_id=item.id) }}">
               <i class="fa fa-battery-quarter ml-4" aria-hidden="true"></i>
               <small>Low</small>
@@ -139,13 +138,13 @@
             {% endif %}
 
             {% if unit.mainitem_id == unit.dispitem_id %}
-            <a type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"
+            <a name="itemoutbtnifmain{{unit.unique_tag}}" id="btnout{{unit.unique_tag}}" type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"
               href="{{ url_for('unit_mainitem_out', unique_tag=unit.unique_tag,item_id=item.id)}}">
               <i class="fa fa-battery-empty mr-4" aria-hidden="true"></i>
               <small>OUT</small>
             </a>
             {% else %}
-            <a type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"
+            <a name="itemoutbtnifelse{{unit.unique_tag}}" id="btnout{{unit.unique_tag}}" type="button" role="button" class="btn {{OutOfStckStylerGrid(item.inv_outofstock)}}"
               href="{{ url_for('mark_as_outofstock',item_id=item.id) }}">
               <i class="fa fa-battery-empty mr-4" aria-hidden="true"></i>
               <small>Out</small>

@@ -610,35 +610,6 @@ def unit_show_mainitem(unique_tag):
     db.session.commit()
     return redirect(url_for('square_byid', square_id=unit.square_id))
 
-
-@app.route("/unit/<string:unique_tag>/markas/outofstock/<int:item_id>")
-def unit_mainitem_out(unique_tag, item_id):
-    pass
-    def redir3ct_url(default='sqr_home'):
-        pass
-        return request.referrer or \
-            request.args.get('next') or \
-            url_for(default)
-    item = Item.query.get(item_id)
-    unit = Unit.query.filter_by(unique_tag=unique_tag).first() 
-
-    if item.inv_outofstock == 'no':
-        pass
-        item.just_ran_out()
-        unit.maininv_out = 'yes'
-        db.session.commit()
-    elif item.inv_outofstock == 'yes':
-        pass
-        item.now_restock3d()
-        unit.maininv_out = 'no'
-        db.session.commit()
-    else:
-        pass
-        print('\n\t item could not be modified check yes-no values')
-
-    return redirect(redir3ct_url())
-
-
 @app.route('/fixall/uniquetags/in/1', methods=['GET', 'POST'])
 def fixall_uniquetags_in():
     pass
@@ -920,10 +891,14 @@ def add_cities():
 
 # ---------end-of-JS-implement----------------
 
+if __name__ == '__main__':
+    app.run(debug=True)
 
-@app.route("/unit/<string:unique_tag>/markas/outofstock/<int:item_id>")
+
+@app.route("/unit/<string:unique_tag>/markas/mainlow/<int:item_id>")
 def unit_mainitem_low(unique_tag, item_id):
     pass
+
     def redir3ct_url(default='inv_lister'):
         pass
         return request.referrer or \
@@ -931,13 +906,13 @@ def unit_mainitem_low(unique_tag, item_id):
             url_for(default)
 
     item = Item.query.get(item_id)
-    unit = Unit.query.filter_by(unique_tag=unique_tag).first() 
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first()
 
     if item.inv_lowinstock == 'no':
         pass
         item.running_low()
         unit.inv_outofstock == 'no'
-        
+
         db.session.commit()
     elif item.inv_lowinstock == 'yes':
         pass
@@ -951,6 +926,30 @@ def unit_mainitem_low(unique_tag, item_id):
     return redirect(redir3ct_url())
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/unit/<string:unique_tag>/markas/mainout/<int:item_id>")
+def unit_mainitem_out(unique_tag, item_id):
+    pass
 
+    def redir3ct_url(default='sqr_home'):
+        pass
+        return request.referrer or \
+            request.args.get('next') or \
+            url_for(default)
+    item = Item.query.get(item_id)
+    unit = Unit.query.filter_by(unique_tag=unique_tag).first()
+
+    if item.inv_outofstock == 'no':
+        pass
+        item.just_ran_out()
+        unit.maininv_out = 'yes'
+        db.session.commit()
+    elif item.inv_outofstock == 'yes':
+        pass
+        item.now_restock3d()
+        unit.maininv_out = 'no'
+        db.session.commit()
+    else:
+        pass
+        print('\n\t item could not be modified check yes-no values')
+
+    return redirect(redir3ct_url())

@@ -1,3 +1,55 @@
+-- # -- #  DROP ALL CREATE ALL FOR POSTGRES -- # --
+DROP TABLE public.item CASCADE
+;
+DROP TABLE public.unit CASCADE
+;
+DROP TABLE public.square CASCADE
+;
+
+CREATE TABLE "item" (
+	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
+	"manufacturer"	VARCHAR(32),
+	"catalog_no"	VARCHAR(32),
+	"catalog_fullname"	VARCHAR(256),
+	"color_primary"	VARCHAR(32),
+	"color_secondary"	VARCHAR(32),
+	"is_snapback"	VARCHAR(32),
+	"is_adjustable"	VARCHAR(32),
+	"is_flexfit"	VARCHAR(32),
+	"is_youth"		VARCHAR(32),
+	"is_fitted"		VARCHAR(32),
+	"is_unstructured"	VARCHAR(32),
+	"has_curvedbill"	VARCHAR(32),
+	"has_flatbill"	VARCHAR(32),
+	"has_meshback"	VARCHAR(32),
+	"inv_lowinstock"	VARCHAR(32),
+	"inv_outofstock"	VARCHAR(32),
+	"imagegrid_url"	VARCHAR(256),
+	"imagelist_url"	VARCHAR(256),
+	"product_url"	VARCHAR(256)
+)
+;
+
+CREATE TABLE "unit" (
+	"id"	BIGSERIAL NOT NULL PRIMARY KEY,		
+	"square_id"	INTEGER,
+	"pstn_rowcol"	VARCHAR(32),
+	"unique_tag"	VARCHAR(32) UNIQUE,
+	"mainitem_id"	VARCHAR(32),
+	"maininv_out"	VARCHAR(32),
+	"dispitem_id"	VARCHAR(32)
+)
+;
+
+CREATE TABLE "square" (
+	"id"	BIGSERIAL NOT NULL PRIMARY KEY,	
+	"name"	VARCHAR(32) NOT NULL,
+	"row_count"	INTEGER NOT NULL,
+	"col_count"	INTEGER NOT NULL
+)
+;
+
+-- # -- # -- # -- # -- # -- # -- # -- # -- 
 CREATE TABLE city (
 	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
 	state VARCHAR(2), 
@@ -82,10 +134,6 @@ CREATE TABLE "square" (
 )
 ;
 
-TRUNCATE TABLE public.post
-;
-DROP TABLE public.item CASCADE
-;
 
 CREATE TABLE "item" (
 	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
@@ -108,7 +156,6 @@ CREATE TABLE "item" (
 	"inv_lowinstock"	VARCHAR(32),
 	"inv_outofstock"	VARCHAR(32)
 )
-
 ;
 
 

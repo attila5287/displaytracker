@@ -543,7 +543,7 @@ def createall_squares():
     db.session.add_all(squares)
     db.session.commit()
     flash('all squares created', 'info')
-    return redirect(url_for('about'))
+    return redirect(url_for('sqr_home'))
 
 
 @app.route('/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
@@ -911,12 +911,12 @@ def unit_mainitem_low(unique_tag, item_id):
     if item.inv_lowinstock == 'no':
         pass
         item.running_low()
-        unit.inv_outofstock == 'no'
+        unit.maininv_out == 'no'
 
         db.session.commit()
     elif item.inv_lowinstock == 'yes':
         pass
-        unit.inv_outofstock == 'no'
+        unit.maininv_out == 'no'
         item.now_restocked()
         db.session.commit()
     else:

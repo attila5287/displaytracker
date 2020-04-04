@@ -137,8 +137,7 @@ class SquareForm(FlaskForm):
         get_label='name'
         )
 
-
 class Form(FlaskForm):
-    state = SelectField(
-        'state', choices=[('CA', 'California'), ('NV', 'Nevada')])
-    city = SelectField('city', choices=[])
+    manufacturer = SelectField(
+        'manufacturer', choices=[('OTTO', '0TT0'), ('YUPOONG', 'YUP00NG')])
+    item = SelectField('item', choices=[])

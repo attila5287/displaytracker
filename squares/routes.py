@@ -19,7 +19,7 @@ from squares.forms import (
     CSVReaderForm, SquareForm, Form
 )
 from squares.models import (
-    User, Post, Item, Square, Unit, City
+    User, Post, Item, Square, Unit
 )
 from flask_login import (
     login_user, current_user, logout_user, login_required
@@ -53,17 +53,18 @@ def edit_item(item_id):
         item=item,
         form=form,
         title='Edit Item',
-        legend='Edit Form For Item ID: '+str(item.id) 
-        )
+        legend='Edit Form For Item ID: '+str(item.id)
+    )
 
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = Item.query.get_or_404(item_id)
-    custom_title = 'Show ' + str(item.id) + ' ' +  item.catalog_fullname
+    custom_title = 'Show ' + str(item.id) + ' ' + item.catalog_fullname
     return render_template('show_item.html', title=custom_title, legend='Show Item ' + str(item.id), item=item)
 
 # @app.route("/")
+
 
 @app.route("/inventory/list")
 def inv_lister():
@@ -82,11 +83,12 @@ def inv_lister():
 @app.route("/markas/outofstock/<int:item_id>")
 def mark_as_outofstock(item_id):
     pass
+
     def redir3ct_url(default='inv_lister'):
         pass
         return request.referrer or \
             request.args.get('next') or \
-                url_for(default)
+            url_for(default)
     item = Item.query.get(item_id)  # this is the item to edit
     print()
     print(item)
@@ -109,11 +111,12 @@ def mark_as_outofstock(item_id):
 @app.route("/markas/lowinv/<int:item_id>")
 def mark_as_lowinv(item_id):
     pass
+
     def redir3ct_url(default='inv_lister'):
         pass
         return request.referrer or \
             request.args.get('next') or \
-                url_for(default)
+            url_for(default)
     print('item to edit is....')
     item = Item.query.get(item_id)
     print(item)
@@ -155,6 +158,7 @@ def csv_feed():
         title='CSV Feed',
         form=form,
     )
+
 
 @app.route("/inventory/home")
 def inv_home():
@@ -331,7 +335,6 @@ def delete_post(post_id):
     return redirect(url_for('home'))
 
 
-
 @app.context_processor
 def inject_TableHeaders():
     ''' GENERATES A LIST OF ITEM ATTRIBUTES TO BE USED AS TABLE HEADERS '''
@@ -353,6 +356,7 @@ def inject_TableHeaders():
 @app.context_processor
 def inject_LowInvButtons():
     pass
+
     def LowInStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
@@ -389,7 +393,7 @@ def inject_UnitInvOutIconizer():
         _iconYesNoDict = {
             'no': 'check text-success',
             'yes': 'times text-primary ml-1',
-        }    
+        }
         return _iconYesNoDict.get(yes_or_no, 'question-circle')
     return dict(UnitInvOutIconizer=UnitInvOutIconizer)
 
@@ -397,6 +401,7 @@ def inject_UnitInvOutIconizer():
 @app.context_processor
 def inject_OutInvButtons():
     pass
+
     def OutOfStckStyler(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
@@ -426,6 +431,7 @@ def inject_OutInvBtns4Grid():
 @app.context_processor
 def inject_LowInvBts4Grid():
     pass
+
     def LowInStckStylerGrid(yes_or_no):
         '''DICTIONARY CONTAINS BUTTON STYLES FOR LOW-INV '''
         pass
@@ -435,6 +441,7 @@ def inject_LowInvBts4Grid():
         }
         return _btnStylesDict.get(yes_or_no, 'btn-outline-warning')
     return dict(LowInStckStylerGrid=LowInStckStylerGrid)
+
 
 @app.context_processor
 def inject_YesNoIcons():
@@ -450,6 +457,7 @@ def inject_YesNoIcons():
         return _iconYesNoDict.get(yes_or_no, 'fa-square fa-2x')
     return dict(YesNoIconizer=YesNoIconizer)
 
+
 @app.context_processor
 def inject_LowInvIcons():
     pass
@@ -463,6 +471,7 @@ def inject_LowInvIcons():
         }
         return _iconYesNoDict.get(yes_or_no, 'fa-square')
     return dict(LowInvIconizer=LowInvIconizer)
+
 
 @app.context_processor
 def inject_OutInvIcons():
@@ -494,6 +503,7 @@ def filterby_manuf(item_manufacturer):
         title='InvFilterByManuf'
     )
 
+
 @app.route("/showonly/lowinstock/yes")
 def showonly_invlow():
     pass
@@ -501,12 +511,12 @@ def showonly_invlow():
     inventory = Item.query.filter_by(inv_lowinstock='yes').order_by(
         Item.id.desc()).paginate(page=page, per_page=10)
 
-
     return render_template(
         'inv_lister.html',
         inventory=inventory,
         title='InvShowOnlyLow'
     )
+
 
 @app.route("/showonly/outofstock/yes")
 def showonly_invout():
@@ -514,7 +524,7 @@ def showonly_invout():
     page = request.args.get('page', 1, type=int)
     inventory = Item.query.filter_by(inv_outofstock='yes').order_by(
         Item.id.desc()).paginate(page=page, per_page=10)
-        
+
     return render_template(
         'inv_lister.html',
         inventory=inventory,
@@ -591,11 +601,12 @@ def unit_nextitem(unique_tag, item_id):
 
     return redirect(url_for('square_byid', square_id=unit.square_id))
 
+
 @app.route('/unit/<string:unique_tag>/update/mainitem/invout')
 def unit_update_maininvout(unique_tag):
     pass
     unit = Unit.query.filter_by(unique_tag=unique_tag).first()
-    item = Item.query.get_or_404(unit.mainitem_id) 
+    item = Item.query.get_or_404(unit.mainitem_id)
     unit.maininv_out = item.inv_outofstock
     db.session.commit()
     return redirect(url_for('square_byid', square_id=unit.square_id))
@@ -611,6 +622,7 @@ def unit_show_mainitem(unique_tag):
     db.session.commit()
     return redirect(url_for('square_byid', square_id=unit.square_id))
 
+
 @app.route('/fixall/uniquetags/in/1', methods=['GET', 'POST'])
 def fixall_uniquetags_in():
     pass
@@ -623,6 +635,7 @@ def fixall_uniquetags_in():
 
     return redirect(url_for('sqr_home'))
 
+
 @app.route('/fixfirst/units/mainitem')
 def fixfirst_units_main():
     pass
@@ -633,11 +646,11 @@ def fixfirst_units_main():
         unit.mainitem_id = _int
         db.session.commit()
     flash('all units main item ids fixed', 'warning')
-    return redirect(url_for('sqr_home'))    
+    return redirect(url_for('sqr_home'))
 
 
 @app.route('/createfirst/units')
-def createfirst_units(): 
+def createfirst_units():
     pass
     items = Item.query.all()
     list_of_ids = [
@@ -696,7 +709,7 @@ def update_firstunits_invout():
         _updated_status = item.inv_outofstock
         unit.maininv_out = _updated_status
         db.session.commit()
-    flash('all units main item inv status updated','info')
+    flash('all units main item inv status updated', 'info')
 
     return redirect(url_for('sqr_home'))
 
@@ -809,6 +822,7 @@ def sqr_home():
         title='SqrHome',
     )
 
+
 @app.route('/color/finder', methods=['GET', 'POST'])
 def color_finder():
     items = Item.query.all()
@@ -820,15 +834,14 @@ def color_finder():
     secondary_colors = [
         item.color_secondary for item in items
     ]
-    
+
     all_colors = primary_colors + secondary_colors
     print(all_colors)
-
 
     d = defaultdict(int)
     for color in all_colors:
         d[color] += 1
-    
+
     for color, count in d.items():
         pass
         print(color)
@@ -896,88 +909,39 @@ def unit_mainitem_out(unique_tag, item_id):
     return redirect(redir3ct_url())
 
 
-
 # ------------dynamic-JS------------
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = Form()
-    form.city.choices = [(city.id, city.name)
-                         for city in City.query.filter_by(state='CA').all()]
+    form.item.choices = [
+        (item.id, \
+            item.catalog_no + ' ' + item.color_primary + ' ' + item.color_secondary)
+            for item in Item.query.filter_by(manufacturer='OTTO').all()
+            ]
 
     if request.method == 'POST':
-        city = City.query.filter_by(id=form.city.data).first()
-        return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
+        item = Item.query.filter_by(id=form.item.data).first()
+        return '<h1>Manufacturer: {}, Catalog No: {}</h1>'.format(form.manufacturer.data, item.catalog_no)
 
     return render_template('index.html', form=form)
 
 
-@app.route('/city/<state>', methods=['GET', 'POST'])
-def city(state):
-    cities = City.query.filter_by(state=state).all()
-    cityArray = []
+@app.route('/manufacturer/<string:manufacturer>', methods=['GET', 'POST'])
+def fetchitems_by(manufacturer):
+    q_items = Item.query.filter_by(manufacturer=manufacturer).all()
 
-    for city in cities:
-        cityObj = {}
-        cityObj['id'] = city.id
-        cityObj['name'] = city.name
-        cityArray.append(cityObj)
-
-    return jsonify({'cities': cityArray})
-
-
-@app.route('/add/cities', methods=['GET', 'POST'])
-def add_cities():
-    pass
-    names = [
-        'Los Angeles',
-        'San Diego',
-        'Las Vegas',
-        'Reno',
-    ]
-    states = [
-        'CA',
-        'CA',
-        'NV',
-        'NV',
+    itemArray = [
+        {
+            'id': item.id,
+            'catalog_no': item.catalog_no,
+            'color_primary': item.color_primary,
+            'color_secondary': item.color_secondary
+        }
+        for item in q_items
     ]
 
-    cities = [
-        City(name=_name, state=_state) for _name, _state in zip(names, states)
-    ]
+    return jsonify({'items': itemArray})
 
-    db.session.add_all(cities)
-    db.session.commit()
-
-    return redirect(url_for('index'))
-
-
-@app.route('/add/cities/2', methods=['GET', 'POST'])
-def add_cities_2():
-    pass
-    names = [
-        'Sacramento',
-        'Oakland',
-        'Henderson',
-        'Sparks',
-    ]
-    states = [
-        'CA',
-        'CA',
-        'NV',
-        'NV',
-    ]
-
-    cities = [
-        City(name=_name, state=_state) for _name, _state in zip(names, states)
-    ]
-
-    db.session.add_all(cities)
-    db.session.commit()
-
-    return redirect(url_for('index'))
-
-
-# ---------end-of-JS-implement----------------
 
 if __name__ == '__main__':
     app.run(debug=True)

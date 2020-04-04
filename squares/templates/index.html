@@ -1,37 +1,41 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-
-
-<!-- original example from pp'ed  -->
 <div class="content-section">
     
     <form method="POST">
     {{ form.csrf_token }}
-    {{ form.state }}
-    {{ form.city }}
+    {{ form.manufacturer.label }}
+    {{ form.manufacturer }}
+    {{ form.item.label }}
+    {{ form.item }}
     <input type="submit">
     </form>
 
     <script>
-        var state_select = document.getElementById("state");
-        var city_select = document.getElementById("city");
+        var manuf_select = document.getElementById("manufacturer");
+        var item_select = document.getElementById("item");
 
-        state_select.onchange = function()  {
+        manuf_select.onchange = function()  {
              
-            state = state_select.value;
+            manufacturer = manuf_select.value;
             
-            fetch('/city/' + state).then(function(response) {
+            fetch('/manufacturer/' + manufacturer).then(function(response) {
 
                 response.json().then(function(data) {
                     var optionHTML = '';
-
-                    for (var city of data.cities) {
-                        optionHTML += '<option value="' + city.id + '">' + city.name + '</option>';
+                    for (var item of data.items) {
+                        optionHTML += 
+                        '<option value=" '
+                        + item.id 
+                        + ' ">' 
+                            + item.catalog_no +'-' 
+                            + item.color_primary +'-'
+                            + item.color_secondary 
+                        + '</option>';
                     }
 
-                    city_select.innerHTML = optionHTML;
+                    item_select.innerHTML = optionHTML;
                 })
                 
             });
@@ -42,6 +46,7 @@
 
 
 </div>
+
     
 {% endblock %}
 

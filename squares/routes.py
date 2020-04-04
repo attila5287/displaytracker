@@ -372,7 +372,7 @@ def inject_UnitInvOutStyler():
         pass
         _borderStylesDict = {
             'yes': 'primary',
-            'no': 'dark',
+            'no': '0',
         }
         return _borderStylesDict.get(yes_or_no, 'dark')
     return dict(UnitInvOutStyler=UnitInvOutStyler)
@@ -704,7 +704,7 @@ def update_firstunits_invout():
 def square_byid(square_id):
     pass
     units = Unit.query.filter_by(square_id=square_id).\
-        order_by(Unit.id.asc()).all()
+        order_by(Unit.id.asc()).all()[:18]
 
     unit_unqtags = [
         unit.unique_tag for unit in units
@@ -911,12 +911,12 @@ def unit_mainitem_low(unique_tag, item_id):
     if item.inv_lowinstock == 'no':
         pass
         item.running_low()
-        unit.maininv_out == 'no'
+        unit.mainitem_restck()
 
         db.session.commit()
     elif item.inv_lowinstock == 'yes':
         pass
-        unit.maininv_out == 'no'
+        unit.mainitem_restck()
         item.now_restocked()
         db.session.commit()
     else:
@@ -924,7 +924,6 @@ def unit_mainitem_low(unique_tag, item_id):
         print('\n\t unit or item could not be modified check again')
 
     return redirect(redir3ct_url())
-
 
 @app.route("/unit/<string:unique_tag>/markas/mainout/<int:item_id>")
 def unit_mainitem_out(unique_tag, item_id):
@@ -953,3 +952,4 @@ def unit_mainitem_out(unique_tag, item_id):
         print('\n\t item could not be modified check yes-no values')
 
     return redirect(redir3ct_url())
+

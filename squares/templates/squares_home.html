@@ -24,67 +24,87 @@
             {% endfor %}
         </div>
 
-        <button type="submit" class="btn btn-block btn-primary text-light btn-rounded btn-lg  box-shadow"
-            style="border-radius: 12px;">
-            <h3>
-              <i class="fas fa-th-large"></i>
-                GO TO SQUARE
-            </h3>
+        <button 
+        class="btn btn-block btn-primary text-light btn-rounded btn-lg  box-shadow"
+        type="submit" 
+        style="border-radius: 12px;"
+        >
+        <h3>
+          <i class="fas fa-th-large"></i>
+          GO TO SQUARE
+          </h3>
         </button>
-
     </form>    
     
   </div>
 </div>
 
-<div class="row my-3">
-  <div class="col-md-3">
+<div class="row my-2 mx-0">
+    <div class="col-md-2">
+    <a
+    name=""
+    id=""
+    class="btn btn-info btn-block"
+    href="{{ url_for('createall_squares') }}"
+    role="button">
+    <i class="fas fa-terminal float-left"></i><strong></strong><br>
+  </a>
+  <p> 
+    Create All Ten Squares
+  </p>
+  </div>
+  <div class="col-md-2">
     <a
     name=""
     id=""
     class="btn btn-primary btn-block"
     href="{{ url_for('createfirst_units') }}"
     role="button">
-    <i class="fas fa-terminal float-left"></i><strong>CREATE</strong><br>
-    <i class="fas fa-th-large float-left"></i><strong>FIRST</strong><br>
-    <i class="fas fa-tags float-left"></i><strong>UNITS</strong><br>
-    </a>
+    <i class="fas fa-terminal float-left"></i><strong></strong><br>
+  </a>
+  <p>
+    Create First Units 
+  </p>
   </div>
-    <div class="col-md-3">
-    <a
-    name=""
-    id=""
-    class="btn btn-warning btn-block"
-    href="{{ url_for('fixfirst_units_main') }}"
-    role="button">
-    <i class="fas fa-terminal float-left"></i><strong>F I X</strong><br>
-    <i class="fas fa-th-large float-left"></i><strong>MAIN</strong><br>
-    <i class="fas fa-tags float-left"></i><strong>ITEM ID'S</strong><br>
-    </a>
+    <div class="col-md-2">
+      <a
+      name=""
+      id=""
+      class="btn btn-warning btn-block"
+      href="{{ url_for('fixfirst_units_main') }}"
+      role="button">
+      <i class="fas fa-terminal float-left"></i><strong></strong><br>
+      </a>
+      <p>
+        Fix First Units' Main Item ID
+      </p>
+
   </div>  
-  <div class="col-md-3">
+  <div class="col-md-2">
     <a
     name=""
     id=""
     class="btn btn-danger btn-block"
     href="{{ url_for('fixall_uniquetags_in') }}"
     role="button">
-    <i class="fas fa-terminal float-left"></i><strong>F I X</strong><br>
-    <i class="fas fa-th-large float-left"></i><strong>UNIQUE</strong><br>
-    <i class="fas fa-tags float-left"></i><strong>TAGS</strong><br>
-    </a>
+    <i class="fas fa-terminal float-left"></i><strong></strong><br>
+  </a>
+    <p>
+      Fix First Units' Unique Tag
+    </p>
   </div>  
-  <div class="col-md-3">
+  <div class="col-md-2">
     <a
     name=""
     id=""
     class="btn btn-info btn-block"
     href="{{ url_for('update_firstunits_invout') }}"
     role="button">
-    <i class="fas fa-terminal float-left"></i><strong>UPDATE</strong><br>
-    <i class="fas fa-th-large float-left"></i><strong>MAIN ITEM</strong><br>
-    <i class="fas fa-tags float-left"></i><strong>INV OUT</strong><br>
-    </a>
+    <i class="fas fa-terminal float-left"></i><strong></strong><br>
+  </a>
+  <p>
+    Update First Units' MainItemInvOut
+  </p>
   </div>    
 </div>
 

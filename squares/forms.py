@@ -139,6 +139,6 @@ class SquareForm(FlaskForm):
 
 
 class Form(FlaskForm):
-    state = SelectField('state', choices=[('CA', 'California'), ('NV', 'Nevada')]) 
+    state = SelectField(
+        'state', choices=[('CA', 'California'), ('NV', 'Nevada')])
     city = SelectField('city', choices=[])
-

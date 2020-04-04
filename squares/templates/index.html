@@ -2,12 +2,18 @@
 
 {% block content %}
 
+
+
+<!-- original example from pp'ed  -->
+<div class="content-section">
+    
     <form method="POST">
     {{ form.csrf_token }}
     {{ form.state }}
     {{ form.city }}
     <input type="submit">
     </form>
+
     <script>
         var state_select = document.getElementById("state");
         var city_select = document.getElementById("city");
@@ -31,20 +37,12 @@
             });
         }
     </script>
+
+
+
+
+</div>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
+
+

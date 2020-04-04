@@ -49,20 +49,19 @@ CREATE TABLE "square" (
 )
 ;
 
--- # -- # -- # -- # -- # -- # -- # -- # -- 
+-- # -- # -- # -- # -- END # -- # -- # -- # -- 
+
+-- ## -- ## this is only for the JS implement ex ##-- ## 
+DROP TABLE public.city CASCADE
+;
 CREATE TABLE city (
 	"id"	BIGSERIAL NOT NULL PRIMARY KEY,
 	state VARCHAR(2), 
 	name VARCHAR(50) 
 )
 ;
+-- ## -- ## -- ## --END ## -- ## -- ## -- ## 
 
-CREATE TABLE city (
-	id INTEGER NOT NULL, 
-	state VARCHAR(2), 
-	name VARCHAR(50), 
-	PRIMARY KEY (id)
-)
 
 DROP TABLE public.item CASCADE
 ;

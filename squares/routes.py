@@ -8,7 +8,7 @@ from PIL import (
     Image
 )
 from flask import (
-    render_template, url_for, flash, redirect, request, abort,
+    render_template, url_for, flash, redirect, request, abort, jsonify
 )
 from squares import (
     app, db, bcrypt
@@ -24,6 +24,7 @@ from squares.models import (
 from flask_login import (
     login_user, current_user, logout_user, login_required
 )
+
 
 @app.route("/item/<int:item_id>/delete", methods=['GET', 'POST'])
 def delete_item(item_id):
@@ -834,66 +835,6 @@ def color_finder():
 
     return redirect(url_for('sqr_home'))
 
-# ------------dynamic-JS------------
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    # db.create_all()
-    form = Form()
-    form.city.choices = [(city.id, city.name)
-                         for city in City.query.filter_by(state='CA').all()]
-
-    if request.method == 'POST':
-        city = City.query.filter_by(id=form.city.data).first()
-        return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
-
-    return render_template('index.html', form=form)
-
-
-@app.route('/city/<state>')
-def city(state):
-    cities = City.query.filter_by(state=state).all()
-
-    cityArray = []
-
-    for city in cities:
-        cityObj = {}
-        cityObj['id'] = city.id
-        cityObj['name'] = city.name
-        cityArray.append(cityObj)
-
-    return jsonify({'cities': cityArray})
-
-
-@app.route('/add/cities')
-def add_cities():
-    pass
-    names = [
-        'Los Angeles',
-        'San Diego',
-        'Las Vegas',
-        'Reno',
-    ]
-    states = [
-        'CA',
-        'CA',
-        'NV',
-        'NV',
-    ]
-
-    cities = [
-        City(name=_name, state=_state) for _name, _state in zip(names, states)
-    ]
-
-    db.session.add_all(cities)
-    db.session.commit()
-
-    return redirect(url_for('index'))
-
-# ---------end-of-JS-implement----------------
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
 
 @app.route("/unit/<string:unique_tag>/markas/mainlow/<int:item_id>")
 def unit_mainitem_low(unique_tag, item_id):
@@ -925,6 +866,7 @@ def unit_mainitem_low(unique_tag, item_id):
 
     return redirect(redir3ct_url())
 
+
 @app.route("/unit/<string:unique_tag>/markas/mainout/<int:item_id>")
 def unit_mainitem_out(unique_tag, item_id):
     pass
@@ -953,3 +895,89 @@ def unit_mainitem_out(unique_tag, item_id):
 
     return redirect(redir3ct_url())
 
+
+
+# ------------dynamic-JS------------
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = Form()
+    form.city.choices = [(city.id, city.name)
+                         for city in City.query.filter_by(state='CA').all()]
+
+    if request.method == 'POST':
+        city = City.query.filter_by(id=form.city.data).first()
+        return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
+
+    return render_template('index.html', form=form)
+
+
+@app.route('/city/<state>', methods=['GET', 'POST'])
+def city(state):
+    cities = City.query.filter_by(state=state).all()
+    cityArray = []
+
+    for city in cities:
+        cityObj = {}
+        cityObj['id'] = city.id
+        cityObj['name'] = city.name
+        cityArray.append(cityObj)
+
+    return jsonify({'cities': cityArray})
+
+
+@app.route('/add/cities', methods=['GET', 'POST'])
+def add_cities():
+    pass
+    names = [
+        'Los Angeles',
+        'San Diego',
+        'Las Vegas',
+        'Reno',
+    ]
+    states = [
+        'CA',
+        'CA',
+        'NV',
+        'NV',
+    ]
+
+    cities = [
+        City(name=_name, state=_state) for _name, _state in zip(names, states)
+    ]
+
+    db.session.add_all(cities)
+    db.session.commit()
+
+    return redirect(url_for('index'))
+
+
+@app.route('/add/cities/2', methods=['GET', 'POST'])
+def add_cities_2():
+    pass
+    names = [
+        'Sacramento',
+        'Oakland',
+        'Henderson',
+        'Sparks',
+    ]
+    states = [
+        'CA',
+        'CA',
+        'NV',
+        'NV',
+    ]
+
+    cities = [
+        City(name=_name, state=_state) for _name, _state in zip(names, states)
+    ]
+
+    db.session.add_all(cities)
+    db.session.commit()
+
+    return redirect(url_for('index'))
+
+
+# ---------end-of-JS-implement----------------
+
+if __name__ == '__main__':
+    app.run(debug=True)

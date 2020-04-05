@@ -1,17 +1,4 @@
-{% extends 'layout.html' %}
-{% block content %}
-    <div class="content-section">
-        <form method="POST">
-        {{ form.csrf_token }}
-        {{ form.manufacturer.label }}
-        {{ form.manufacturer(class="form-control-lg m-4")}}
-        <br>
-        {{ form.item.label }}
-        {{ form.item(class="form-control-lg m-4") }}
-        <input type="submit" class="btn btn-dark btn-block">
-        </form>
-    
-        <script>
+
             var manuf_select = document.getElementById("manufacturer");
             var item_select = document.getElementById("item");
     
@@ -38,9 +25,3 @@
                     
                 });
             }
-        </script>
-    
-    </div>
-
-    
-{% endblock %}

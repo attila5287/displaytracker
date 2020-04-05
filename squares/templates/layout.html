@@ -10,18 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/solar/bootstrap.min.css" />
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ddslick_stylesheet.css') }}">
 
     <link rel="icon" type="image/x-icon" class="favicon" href="
 			https://raw.githubusercontent.com/attila5287/displaytracker_img/master/dtSquare.png" />
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
       integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous" />
-
+     
     <!-- set title on route by render_template(... ,title='test') -->
     {% if title %}
     <title>Squares - {{ title }}</title>
     {% else %}
-    <title>Squares &middot; Restock Inv EZ!</title>
+    <title>Squares&middot;Restock Inv EZ!</title>
     {% endif %}
   </head>
 
@@ -226,6 +227,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/jsmodules/ddslick/master/dist/jquery.ddslick.min.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>

@@ -281,7 +281,3 @@ class Unit(db.Model):
         return '\n'.join(str_list)
 
 
-class City(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.String(2))
-    name = db.Column(db.String(50))

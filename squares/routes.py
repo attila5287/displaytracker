@@ -943,5 +943,38 @@ def fetchitems_by(manufacturer):
     return jsonify({'items': itemArray})
 
 
+@app.route('/fetch/ddslick/<string:manufacturer>', methods=['GET', 'POST'])
+def fetch_ddslick(manufacturer):
+    q_items = Item.query.filter_by(manufacturer=manufacturer).all()
+
+    img_baseURL = 'https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/'
+
+    itemArray = [
+        {
+            'text': item.catalog_no,
+            'value': item.id,
+            'selected': False,
+            'description': item.color_primary+' '+item.color_secondary,
+            'imageSrc': img_baseURL+item.manufacturer+'/'+item.imagelist_url
+        }
+        for item in q_items
+    ]
+
+    return jsonify({'ddData': itemArray})
+
+
+@app.route('/ddslick/demo', methods=['GET', 'POST'])
+def ddslick_demo():
+    pass
+
+    return render_template('ddslick_demo.html')
+
+@app.route('/ddslick/master', methods=['GET', 'POST'])
+def ddslick_master():
+    pass
+
+    return render_template('ddslick_master.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

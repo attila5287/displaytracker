@@ -93,11 +93,46 @@
                   item_select.innerHTML = optionHTML;
                   })
               });}
-            </pre>
+             </pre>
         </article>
 
       </section>
     <section class="wrapper">
+                  <article class="half-l">
+                <h3>
+                    <span class="demo-index">5</span>
+                    onSelected callback function
+                </h3>
+                <div class="demo-content">
+                    <div class="demo-live">
+                        <div id="demoCallback">
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article class="half-r">
+                Source:
+<pre class="prettyprint">
+$("#demoCallback").ddslick({
+    data: ddData,
+    selectText: "Select your favorite social network",
+    onSelected: function(data){
+        displaySelectedData("3: Callback Function on Dropdown Selection" , data);
+    }
+});
+</pre>
+                <p>
+                    Use plugin’s <code>onSelected</code> callback function on selecting one of the drop
+                    down options. The callback data will include:
+                </p>
+                <ul>
+                    <li>selectedIndex <span class="weak">(0 based),</span></li>
+                    <li>selectedItem <span class="weak">(HTML "li" element),</span></li>
+                    <li>selectedData <span class="weak">(nested object with text, value, description, imageSrc)</span></li>
+                </ul>
+            </article>
+            <div class="clearfix">
+            </div>
         <article class="half-l">
           <h3>
             <span class="demo-index">1</span>
@@ -126,13 +161,6 @@
             });
             </pre>
         </article>
-        <div id="dd-modal">
-          <div id="dd-display-data"></div>
-          <br />
-          <button id="close-modal" class="button-basic">
-            Close
-          </button>
-        </div>
 
       </section>
     <script>
@@ -813,8 +841,6 @@
           }
         ]
 
-
-        //Demo 1---------------------
         $("#demoBasic").ddslick({
           data: ddData,
           width: 200,

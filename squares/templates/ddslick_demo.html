@@ -4,17 +4,100 @@
   <head>
     <meta charset="utf-8" />
     <title>ddSlick demos</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <!-- <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
-    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:regular,bold&amp;v1" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ddslick_stylesheet.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/solar/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ddslick_stylesheet.css') }}">
+
   </head>
 
   <body onload="prettyPrint();">
+    
+        <section class="wrapper">
+        <article class="half-l">
+          <h3>
+            <span class="demo-index">1</span>
+            Dynamic Field With JS
+          </h3>
+      <div class="container">
+        <form method="POST">
+          {{ form.csrf_token }}
+          {{ form.manufacturer.label }}
+          {{ form.manufacturer(class="form-control-lg m-4")}}
+          <br>
+        {{ form.item.label }}
+        {{ form.item(class="form-control-lg m-4") }}
+        <input type="submit" class="btn btn-dark btn-block">
+      </form>
+      </div>
+
+
+      <script>
+        var manuf_select = document.getElementById("manufacturer");
+        var item_select = document.getElementById("item");
+
+        manuf_select.onchange = function () {
+
+          manufacturer = manuf_select.value;
+
+          fetch('/manufacturer/' + manufacturer).then(function (response) {
+
+            response.json().then(function (data) {
+              var optionHTML = '';
+              for (var item of data.items) {
+                optionHTML +=
+                  '<option value=" ' +
+                  item.id + ' ">' +
+                  item.catalog_no + '-' +
+                  item.color_primary + '-' +
+                  item.color_secondary +
+                  '</option>';
+              }
+
+              item_select.innerHTML = optionHTML;
+            })
+
+          });
+        }
+
+      </script>
+
+
+
+        </article>
+        <article class="half-r">
+          Source:
+          <pre class="prettyprint">
+            var manuf_select = document.getElementById("manufacturer");
+            var item_select = document.getElementById("item");
+            manuf_select.onchange = function () {
+              manufacturer = manuf_select.value;
+              fetch('/manufacturer/' + manufacturer).then(function (response) {
+                response.json().then(function (data) {
+                  var optionHTML = '';
+                  for (var item of data.items) {
+                    optionHTML +=
+                      '<option value=" ' +
+                      item.id + ' ">' +
+                      item.catalog_no + '-' +
+                      item.color_primary + '-' +
+                      item.color_secondary +
+                      '</option>';}
+                  item_select.innerHTML = optionHTML;
+                  })
+              });}
+            </pre>
+        </article>
+
+      </section>
     <section class="wrapper">
-      <section>
         <article class="half-l">
           <h3>
             <span class="demo-index">1</span>
@@ -52,709 +135,705 @@
         </div>
 
       </section>
+    <script>
+      $(document).ready(function () {
 
-      <script>
-        $(document).ready(function () {
-          
-        var ddData= [
-              {
-                "description": "Pink", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_PINK.png", 
-                "selected": false, 
-                "text": "6006", 
-                "value": 1
-              }, 
-              {
-                "description": "Navy", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_NAVY.png", 
-                "selected": false, 
-                "text": "6006", 
-                "value": 2
-              }, 
-              {
-                "description": "Red", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_RED.png", 
-                "selected": false, 
-                "text": "6006", 
-                "value": 3
-              }, 
-              {
-                "description": "Black", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_BLACK.png", 
-                "selected": false, 
-                "text": "6006", 
-                "value": 4
-              }, 
-              {
-                "description": "Charcoal", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_CHARCOAL.png", 
-                "selected": false, 
-                "text": "6006", 
-                "value": 5
-              }, 
-              {
-                "description": "White", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_BLACK.png", 
-                "selected": false, 
-                "text": "6006", 
-                "value": 6
-              }, 
-              {
-                "description": "Black ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_BLACK.png", 
-                "selected": false, 
-                "text": "110C", 
-                "value": 7
-              }, 
-              {
-                "description": "Red ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_RED.png", 
-                "selected": false, 
-                "text": "110C", 
-                "value": 8
-              }, 
-              {
-                "description": "White ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_WHITE.png", 
-                "selected": false, 
-                "text": "110C", 
-                "value": 9
-              }, 
-              {
-                "description": "Navy ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_NAVY.png", 
-                "selected": false, 
-                "text": "110C", 
-                "value": 10
-              }, 
-              {
-                "description": "Royal ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_ROYAL.png", 
-                "selected": false, 
-                "text": "110C", 
-                "value": 11
-              }, 
-              {
-                "description": "Grey ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_GREY.png", 
-                "selected": false, 
-                "text": "110C", 
-                "value": 12
-              }, 
-              {
-                "description": "BlackGrey", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_GREY.png", 
-                "selected": false, 
-                "text": "110FT", 
-                "value": 13
-              }, 
-              {
-                "description": "BlackTeal", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_TEAL.png", 
-                "selected": false, 
-                "text": "110FT", 
-                "value": 14
-              }, 
-              {
-                "description": "NaturalBlack", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_NATURAL_BLACK.png", 
-                "selected": false, 
-                "text": "110FT", 
-                "value": 15
-              }, 
-              {
-                "description": "BlackRed", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_RED.png", 
-                "selected": false, 
-                "text": "110FT", 
-                "value": 16
-              }, 
-              {
-                "description": "BlackPurple", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_PURPLE.png", 
-                "selected": false, 
-                "text": "110FT", 
-                "value": 17
-              }, 
-              {
-                "description": "BrownWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_BROWN_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 26
-              }, 
-              {
-                "description": "RedWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_RED_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 27
-              }, 
-              {
-                "description": "BlackWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_BLACK_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 28
-              }, 
-              {
-                "description": "KellyWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_KELLY_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 29
-              }, 
-              {
-                "description": "RoyalWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_ROYAL_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 30
-              }, 
-              {
-                "description": "PinkWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_PINK_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 31
-              }, 
-              {
-                "description": "CarblueWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_CARBLUE_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 32
-              }, 
-              {
-                "description": "NavyWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_NAVY_WHITE.png", 
-                "selected": false, 
-                "text": "6006W", 
-                "value": 33
-              }, 
-              {
-                "description": "Maroon ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_MAROON.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 34
-              }, 
-              {
-                "description": "Royal ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_ROYAL.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 35
-              }, 
-              {
-                "description": "Red ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_RED.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 36
-              }, 
-              {
-                "description": "Black ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_BLACK.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 37
-              }, 
-              {
-                "description": "Heathergrey ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_HEATHERGREY.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 38
-              }, 
-              {
-                "description": "Darkgrey ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_DARKGREY.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 39
-              }, 
-              {
-                "description": "Navy ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_NAVY.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 40
-              }, 
-              {
-                "description": "White ", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_WHITE.png", 
-                "selected": false, 
-                "text": "6789M", 
-                "value": 41
-              }, 
-              {
-                "description": "Camo", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO.png", 
-                "selected": false, 
-                "text": "6089MC", 
-                "value": 42
-              }, 
-              {
-                "description": "CamoWhite", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_WHITE.png", 
-                "selected": false, 
-                "text": "6089MC", 
-                "value": 43
-              }, 
-              {
-                "description": "CamoTan", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_TAN.png", 
-                "selected": false, 
-                "text": "6089MC", 
-                "value": 44
-              }, 
-              {
-                "description": "CamoBlack", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_BLACK.png", 
-                "selected": false, 
-                "text": "6089MC", 
-                "value": 45
-              }, 
-              {
-                "description": "CamoTropicgrn", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_TROPICGRN.png", 
-                "selected": false, 
-                "text": "6089MC", 
-                "value": 46
-              }, 
-              {
-                "description": "Black", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_BLACK.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 90
-              }, 
-              {
-                "description": "Darkgrey", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_DARKGREY.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 91
-              }, 
-              {
-                "description": "Grey", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_GREY.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 92
-              }, 
-              {
-                "description": "Navy", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_NAVY.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 93
-              }, 
-              {
-                "description": "Red", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_RED.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 94
-              }, 
-              {
-                "description": "Royal", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_ROYAL.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 95
-              }, 
-              {
-                "description": "White", 
-                "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_WHITE.png", 
-                "selected": false, 
-                "text": "6007", 
-                "value": 96
-              },
+        var ddData = [{
+            "description": "Pink",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_PINK.png",
+            "selected": false,
+            "text": "6006",
+            "value": 1
+          },
+          {
+            "description": "Navy",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_NAVY.png",
+            "selected": false,
+            "text": "6006",
+            "value": 2
+          },
+          {
+            "description": "Red",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_RED.png",
+            "selected": false,
+            "text": "6006",
+            "value": 3
+          },
+          {
+            "description": "Black",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_BLACK.png",
+            "selected": false,
+            "text": "6006",
+            "value": 4
+          },
+          {
+            "description": "Charcoal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_CHARCOAL.png",
+            "selected": false,
+            "text": "6006",
+            "value": 5
+          },
+          {
+            "description": "White",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_BLACK.png",
+            "selected": false,
+            "text": "6006",
+            "value": 6
+          },
+          {
+            "description": "Black ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_BLACK.png",
+            "selected": false,
+            "text": "110C",
+            "value": 7
+          },
+          {
+            "description": "Red ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_RED.png",
+            "selected": false,
+            "text": "110C",
+            "value": 8
+          },
+          {
+            "description": "White ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_WHITE.png",
+            "selected": false,
+            "text": "110C",
+            "value": 9
+          },
+          {
+            "description": "Navy ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_NAVY.png",
+            "selected": false,
+            "text": "110C",
+            "value": 10
+          },
+          {
+            "description": "Royal ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_ROYAL.png",
+            "selected": false,
+            "text": "110C",
+            "value": 11
+          },
+          {
+            "description": "Grey ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110C_GREY.png",
+            "selected": false,
+            "text": "110C",
+            "value": 12
+          },
+          {
+            "description": "BlackGrey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_GREY.png",
+            "selected": false,
+            "text": "110FT",
+            "value": 13
+          },
+          {
+            "description": "BlackTeal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_TEAL.png",
+            "selected": false,
+            "text": "110FT",
+            "value": 14
+          },
+          {
+            "description": "NaturalBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_NATURAL_BLACK.png",
+            "selected": false,
+            "text": "110FT",
+            "value": 15
+          },
+          {
+            "description": "BlackRed",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_RED.png",
+            "selected": false,
+            "text": "110FT",
+            "value": 16
+          },
+          {
+            "description": "BlackPurple",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/110FT_BLACK_PURPLE.png",
+            "selected": false,
+            "text": "110FT",
+            "value": 17
+          },
+          {
+            "description": "BrownWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_BROWN_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 26
+          },
+          {
+            "description": "RedWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_RED_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 27
+          },
+          {
+            "description": "BlackWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_BLACK_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 28
+          },
+          {
+            "description": "KellyWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_KELLY_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 29
+          },
+          {
+            "description": "RoyalWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_ROYAL_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 30
+          },
+          {
+            "description": "PinkWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_PINK_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 31
+          },
+          {
+            "description": "CarblueWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_CARBLUE_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 32
+          },
+          {
+            "description": "NavyWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006W_NAVY_WHITE.png",
+            "selected": false,
+            "text": "6006W",
+            "value": 33
+          },
+          {
+            "description": "Maroon ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_MAROON.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 34
+          },
+          {
+            "description": "Royal ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_ROYAL.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 35
+          },
+          {
+            "description": "Red ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_RED.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 36
+          },
+          {
+            "description": "Black ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_BLACK.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 37
+          },
+          {
+            "description": "Heathergrey ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_HEATHERGREY.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 38
+          },
+          {
+            "description": "Darkgrey ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_DARKGREY.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 39
+          },
+          {
+            "description": "Navy ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_NAVY.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 40
+          },
+          {
+            "description": "White ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6789M_WHITE.png",
+            "selected": false,
+            "text": "6789M",
+            "value": 41
+          },
+          {
+            "description": "Camo",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO.png",
+            "selected": false,
+            "text": "6089MC",
+            "value": 42
+          },
+          {
+            "description": "CamoWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_WHITE.png",
+            "selected": false,
+            "text": "6089MC",
+            "value": 43
+          },
+          {
+            "description": "CamoTan",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_TAN.png",
+            "selected": false,
+            "text": "6089MC",
+            "value": 44
+          },
+          {
+            "description": "CamoBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_BLACK.png",
+            "selected": false,
+            "text": "6089MC",
+            "value": 45
+          },
+          {
+            "description": "CamoTropicgrn",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6089MC_CAMO_TROPICGRN.png",
+            "selected": false,
+            "text": "6089MC",
+            "value": 46
+          },
+          {
+            "description": "Black",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_BLACK.png",
+            "selected": false,
+            "text": "6007",
+            "value": 90
+          },
+          {
+            "description": "Darkgrey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_DARKGREY.png",
+            "selected": false,
+            "text": "6007",
+            "value": 91
+          },
+          {
+            "description": "Grey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_GREY.png",
+            "selected": false,
+            "text": "6007",
+            "value": 92
+          },
+          {
+            "description": "Navy",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_NAVY.png",
+            "selected": false,
+            "text": "6007",
+            "value": 93
+          },
+          {
+            "description": "Red",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_RED.png",
+            "selected": false,
+            "text": "6007",
+            "value": 94
+          },
+          {
+            "description": "Royal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_ROYAL.png",
+            "selected": false,
+            "text": "6007",
+            "value": 95
+          },
+          {
+            "description": "White",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6007_WHITE.png",
+            "selected": false,
+            "text": "6007",
+            "value": 96
+          },
 
-    {
-      "description": "Grey ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_GREY.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 18
-    }, 
-    {
-      "description": "Navy ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_NAVY.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 19
-    }, 
-    {
-      "description": "White ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_WHITE.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 20
-    }, 
-    {
-      "description": "Black ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 21
-    }, 
-    {
-      "description": "Maroon ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_MAROON.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 22
-    }, 
-    {
-      "description": "Charcoal ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_CHARCOAL.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 23
-    }, 
-    {
-      "description": "Red ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_RED.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 24
-    }, 
-    {
-      "description": "Royal ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_ROYAL.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 25
-    }, 
-    {
-      "description": "Royal", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_ROYAL.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 47
-    }, 
-    {
-      "description": "Black", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 48
-    }, 
-    {
-      "description": "Navy", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_NAVY.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 49
-    }, 
-    {
-      "description": "Charcoal", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_CHARCOAL.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 50
-    }, 
-    {
-      "description": "BlackRed", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_RED.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 51
-    }, 
-    {
-      "description": "BlackWhite", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_WHITE.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 52
-    }, 
-    {
-      "description": "BlackCharcoal", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_CHARCOAL.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 53
-    }, 
-    {
-      "description": "GreyBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_GREY_BLACK.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 54
-    }, 
-    {
-      "description": "CharcoalBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_CHARCOAL_BLACK.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 55
-    }, 
-    {
-      "description": "BlackGrey", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_GREY.jpg", 
-      "selected": false, 
-      "text": "166-1216", 
-      "value": 56
-    }, 
-    {
-      "description": "FloralBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-1146_FLORAL_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-1146", 
-      "value": 57
-    }, 
-    {
-      "description": "FloralWhite", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-1146_FLORAL_WHITE.jpg", 
-      "selected": false, 
-      "text": "125-1146", 
-      "value": 58
-    }, 
-    {
-      "description": "HeathergreyBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/148-1187_HEATHERGREY_BLACK.jpg", 
-      "selected": false, 
-      "text": "148-1187", 
-      "value": 59
-    }, 
-    {
-      "description": "Kelly ", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_KELLY.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 60
-    }, 
-    {
-      "description": "Purple", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 61
-    }, 
-    {
-      "description": "BlackRed", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_RED.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 62
-    }, 
-    {
-      "description": "NavyRed", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_NAVY_RED.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 63
-    }, 
-    {
-      "description": "RedBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_RED_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 64
-    }, 
-    {
-      "description": "GreyBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_GREY_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 65
-    }, 
-    {
-      "description": "WhiteBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_WHITE_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 66
-    }, 
-    {
-      "description": "CharcoalBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_CHARCOAL_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 67
-    }, 
-    {
-      "description": "GreyNavy", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_GREY_NAVY.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 68
-    }, 
-    {
-      "description": "PurpleGold", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE_GOLD.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 69
-    }, 
-    {
-      "description": "PurpleGold", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE_GOLD.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 70
-    }, 
-    {
-      "description": "PurpleBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE_BLACK.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 71
-    }, 
-    {
-      "description": "BlackGrey", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_GREY.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 72
-    }, 
-    {
-      "description": "NavyGrey", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_NAVY_GREY.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 73
-    }, 
-    {
-      "description": "BlackCharcoal", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_CHARCOAL.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 74
-    }, 
-    {
-      "description": "RoyalOrange", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_ROYAL_ORANGE.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 75
-    }, 
-    {
-      "description": "BlackOrange", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_ORANGE.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 76
-    }, 
-    {
-      "description": "BlackAqua", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_AQUA.jpg", 
-      "selected": false, 
-      "text": "125-978", 
-      "value": 77
-    }, 
-    {
-      "description": "Royal", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_ROYAL.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 78
-    }, 
-    {
-      "description": "Red", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_RED.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 79
-    }, 
-    {
-      "description": "Black", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 80
-    }, 
-    {
-      "description": "Navy", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_NAVY.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 81
-    }, 
-    {
-      "description": "White", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_WHITE.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 82
-    }, 
-    {
-      "description": "BlackRed", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK_RED.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 83
-    }, 
-    {
-      "description": "Charcoal", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_CHARCOAL_.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 84
-    }, 
-    {
-      "description": "GreyBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_GREY_BLACK.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 85
-    }, 
-    {
-      "description": "WhiteBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_WHITE_BLACK.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 86
-    }, 
-    {
-      "description": "CharcoalBlack", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_CHARCOAL_BLACK.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 87
-    }, 
-    {
-      "description": "BlackGold", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK_GOLD.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 88
-    }, 
-    {
-      "description": "BlackGrey", 
-      "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK_GREY.jpg", 
-      "selected": false, 
-      "text": "167-1198", 
-      "value": 89
-    }
-  ]
+          {
+            "description": "Grey ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_GREY.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 18
+          },
+          {
+            "description": "Navy ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_NAVY.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 19
+          },
+          {
+            "description": "White ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_WHITE.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 20
+          },
+          {
+            "description": "Black ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 21
+          },
+          {
+            "description": "Maroon ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_MAROON.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 22
+          },
+          {
+            "description": "Charcoal ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_CHARCOAL.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 23
+          },
+          {
+            "description": "Red ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_RED.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 24
+          },
+          {
+            "description": "Royal ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_ROYAL.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 25
+          },
+          {
+            "description": "Royal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_ROYAL.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 47
+          },
+          {
+            "description": "Black",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 48
+          },
+          {
+            "description": "Navy",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_NAVY.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 49
+          },
+          {
+            "description": "Charcoal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_CHARCOAL.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 50
+          },
+          {
+            "description": "BlackRed",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_RED.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 51
+          },
+          {
+            "description": "BlackWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_WHITE.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 52
+          },
+          {
+            "description": "BlackCharcoal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_CHARCOAL.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 53
+          },
+          {
+            "description": "GreyBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_GREY_BLACK.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 54
+          },
+          {
+            "description": "CharcoalBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_CHARCOAL_BLACK.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 55
+          },
+          {
+            "description": "BlackGrey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/166-1216_BLACK_GREY.jpg",
+            "selected": false,
+            "text": "166-1216",
+            "value": 56
+          },
+          {
+            "description": "FloralBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-1146_FLORAL_BLACK.jpg",
+            "selected": false,
+            "text": "125-1146",
+            "value": 57
+          },
+          {
+            "description": "FloralWhite",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-1146_FLORAL_WHITE.jpg",
+            "selected": false,
+            "text": "125-1146",
+            "value": 58
+          },
+          {
+            "description": "HeathergreyBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/148-1187_HEATHERGREY_BLACK.jpg",
+            "selected": false,
+            "text": "148-1187",
+            "value": 59
+          },
+          {
+            "description": "Kelly ",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_KELLY.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 60
+          },
+          {
+            "description": "Purple",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 61
+          },
+          {
+            "description": "BlackRed",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_RED.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 62
+          },
+          {
+            "description": "NavyRed",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_NAVY_RED.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 63
+          },
+          {
+            "description": "RedBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_RED_BLACK.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 64
+          },
+          {
+            "description": "GreyBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_GREY_BLACK.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 65
+          },
+          {
+            "description": "WhiteBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_WHITE_BLACK.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 66
+          },
+          {
+            "description": "CharcoalBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_CHARCOAL_BLACK.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 67
+          },
+          {
+            "description": "GreyNavy",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_GREY_NAVY.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 68
+          },
+          {
+            "description": "PurpleGold",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE_GOLD.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 69
+          },
+          {
+            "description": "PurpleGold",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE_GOLD.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 70
+          },
+          {
+            "description": "PurpleBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_PURPLE_BLACK.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 71
+          },
+          {
+            "description": "BlackGrey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_GREY.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 72
+          },
+          {
+            "description": "NavyGrey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_NAVY_GREY.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 73
+          },
+          {
+            "description": "BlackCharcoal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_CHARCOAL.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 74
+          },
+          {
+            "description": "RoyalOrange",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_ROYAL_ORANGE.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 75
+          },
+          {
+            "description": "BlackOrange",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_ORANGE.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 76
+          },
+          {
+            "description": "BlackAqua",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/125-978_BLACK_AQUA.jpg",
+            "selected": false,
+            "text": "125-978",
+            "value": 77
+          },
+          {
+            "description": "Royal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_ROYAL.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 78
+          },
+          {
+            "description": "Red",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_RED.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 79
+          },
+          {
+            "description": "Black",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 80
+          },
+          {
+            "description": "Navy",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_NAVY.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 81
+          },
+          {
+            "description": "White",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_WHITE.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 82
+          },
+          {
+            "description": "BlackRed",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK_RED.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 83
+          },
+          {
+            "description": "Charcoal",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_CHARCOAL_.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 84
+          },
+          {
+            "description": "GreyBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_GREY_BLACK.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 85
+          },
+          {
+            "description": "WhiteBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_WHITE_BLACK.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 86
+          },
+          {
+            "description": "CharcoalBlack",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_CHARCOAL_BLACK.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 87
+          },
+          {
+            "description": "BlackGold",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK_GOLD.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 88
+          },
+          {
+            "description": "BlackGrey",
+            "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/OTTO/167-1198_BLACK_GREY.jpg",
+            "selected": false,
+            "text": "167-1198",
+            "value": 89
+          }
+        ]
 
 
-          //Demo 1---------------------
-          $("#demoBasic").ddslick({
-            data: ddData,
-            selectText: "SmartFill Items"
-          });
-          $("#demoBasic").ddslick({
-              data: ddData,
-              width: 300,
-              imagePosition: "left",
-              selectText: "Select your favorite social network",
-              onSelected: function (data) {
-                  console.log(data);
-              }
-          });
-          
+        //Demo 1---------------------
+        $("#demoBasic").ddslick({
+          data: ddData,
+          width: 200,
+          imagePosition: "left",
+          selectText: "SmartFill Items",
+
+          onSelected: function (data) {
+            console.log(data);
+          }
         });
-      </script>
 
-      <script src="https://cdn.rawgit.com/jsmodules/ddslick/master/dist/jquery.ddslick.min.js"></script>
-      <script src="{{url_for('static', filename='ddslick/jquery.ddslick.min.js')}}
+
+      });
+
+    </script>
+
+    <script src="https://cdn.rawgit.com/jsmodules/ddslick/master/dist/jquery.ddslick.min.js"></script>
+    <script src="{{url_for('static', filename='ddslick/jquery.ddslick.min.js')}}
 "></script>
-      <!-- <script src="../jquery.ddslick.js"></script> -->
   </body>
 
 </html>

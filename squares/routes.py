@@ -966,13 +966,17 @@ def fetch_ddslick(manufacturer):
 @app.route('/ddslick/demo', methods=['GET', 'POST'])
 def ddslick_demo():
     pass
-
-    return render_template('ddslick_demo.html')
+    form = Form()
+    form.item.choices = [
+        (item.id,
+            item.catalog_no + ' ' + item.color_primary + ' ' + item.color_secondary)
+        for item in Item.query.filter_by(manufacturer='OTTO').all()
+    ]
+    return render_template('ddslick_demo.html', form= form)
 
 @app.route('/ddslick/master', methods=['GET', 'POST'])
 def ddslick_master():
     pass
-
     return render_template('ddslick_master.html')
 
 

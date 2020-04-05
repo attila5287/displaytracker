@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/solar/bootstrap.min.css" />
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ddslick_stylesheet.css') }}">
 
     <link rel="icon" type="image/x-icon" class="favicon" href="
 			https://raw.githubusercontent.com/attila5287/displaytracker_img/master/dtSquare.png" />
@@ -235,6 +234,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+          <script src="https://cdn.rawgit.com/jsmodules/ddslick/master/dist/jquery.ddslick.min.js"></script>
+      <script src="{{url_for('static', filename='ddslick/jquery.ddslick.min.js')}}
+"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
   </body>
 
 </html>

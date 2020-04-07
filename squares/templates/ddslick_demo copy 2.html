@@ -766,62 +766,9 @@
             </div>
             <script>
               $(document).ready(function () {
-              var simpsons = [
-                {
-                text: "Homer",
-                value: 1,
-                selected: false,
-                description: "",
-                imageSrc: "https://www.pngfind.com/pngs/m/200-2000653_emoticoon-de-homero-simpsons-icon-hd-png-download.png",
-                age: 45
-                }, 
-                {
-                text: "Lisa",
-                value: 2,
-                selected: false,
-                description: "",
-                imageSrc: "https://www.pngfind.com/pngs/m/62-626646_revisited-bart-simpson-coloring-pages-free-printable-lisa.png",
-                age:8
-                }, 
-                {
-                text: "Marge",
-                value: 3,
-                selected: false,
-                description: "",
-                imageSrc: "https://www.freeiconspng.com/uploads/marge-simpson-png-12.png",
-                age: 43
-                }, 
-                
-                {
-                text: "Bart",
-                value: 4,
-                selected: false,
-                description: "",
-                imageSrc: "https://toppng.com/uploads/preview/free-icons-png-bart-simpson-png-transparent-11563008961eyrsrkbt0r.png",
-                age:10
-                }, 
-                {
-                text: "Maggie",
-                value: 5,
-                selected: false,
-                description: "",
-                imageSrc: "https://www.pngfind.com/pngs/m/135-1354638_free-icons-png-lisa-simpson-png-transparent-png.png",
-                age:1
-                }
-                                                                                
-              ];
-                  function selectYounger(person) {
-                    return person.selected == false;
-                  }
-
-                  var youngSimpsons = simpsons.filter(selectYounger);
-
-                  console.log(youngSimpsons);
-
                   $('#demoSetSelected').ddslick({
-                      data: youngSimpsons,
-                      selectText: "Select your favorite social network",
-                      defaultSelectedIndex:2
+                      data: ddData,
+                      selectText: "Select your favorite social network"
                   });
                   $('#btnSetSelected').on('click', function () {
                       var i = $('#setIndex').val();

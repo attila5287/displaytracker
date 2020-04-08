@@ -1,3 +1,62 @@
+var simpsons = [{
+    text: "Homer",
+    value: 1,
+    selected: false,
+    description: "",
+    imageSrc: "https://www.pngfind.com/pngs/m/200-2000653_emoticoon-de-homero-simpsons-icon-hd-png-download.png",
+    age: 45
+  },
+  {
+    text: "Lisa",
+    value: 2,
+    selected: false,
+    description: "",
+    imageSrc: "https://www.pngfind.com/pngs/m/62-626646_revisited-bart-simpson-coloring-pages-free-printable-lisa.png",
+    age: 8
+  },
+  {
+    text: "Marge",
+    value: 3,
+    selected: false,
+    description: "",
+    imageSrc: "https://www.freeiconspng.com/uploads/marge-simpson-png-12.png",
+    age: 43
+  },
+
+  {
+    text: "Bart",
+    value: 4,
+    selected: false,
+    description: "",
+    imageSrc: "https://toppng.com/uploads/preview/free-icons-png-bart-simpson-png-transparent-11563008961eyrsrkbt0r.png",
+    age: 10
+  },
+  {
+    text: "Maggie",
+    value: 5,
+    selected: false,
+    description: "",
+    imageSrc: "https://www.pngfind.com/pngs/m/135-1354638_free-icons-png-lisa-simpson-png-transparent-png.png",
+    age: 1
+  }
+
+];
+
+var ddManuf = [{
+  "description": "manufacturer",
+  "imageSrc": "https://az2.hatstoremedia.com/hatstore/images/image-flexfit-kepsar-fran-yupoong-2017-02-21-113529870/555/555/0/flexfit-kepsar-fran-yupoong.png",
+  "selected": false,
+  "text": "YUUPONG-FlexFit",
+  "value": "YUUPONG",
+},{
+  "description": "manufacturer",
+  "imageSrc": "https://www.garudapromo.com/wp-content/uploads/2014/11/ottocaplogo.jpg",
+  "selected": false,
+  "text": "Otto Caps",
+  "value": "OTTO",
+}
+]
+
 var ddData = [{
   "description": "Pink",
   "imageSrc": "https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/YUPOONG/6006_PINK.png",
@@ -673,4 +732,3 @@ var ddData = [{
   "value": 89
 }
 ];
-

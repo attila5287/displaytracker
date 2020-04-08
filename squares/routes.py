@@ -960,7 +960,7 @@ def fetch_ddslick(manufacturer):
         for item in q_items
     ]
 
-    return jsonify({'ddData': itemArray})
+    return jsonify({'items': itemArray})
 
 
 @app.route('/ddslick/demo', methods=['GET', 'POST'])
@@ -974,10 +974,10 @@ def ddslick_demo():
     ]
     return render_template('ddslick_demo.html', form= form)
 
-@app.route('/ddslick/master', methods=['GET', 'POST'])
+@app.route('/ddslick/simple', methods=['GET', 'POST'])
 def ddslick_master():
     pass
-    return render_template('ddslick_master.html')
+    return render_template('ddslick_simple.html')
 
 
 if __name__ == '__main__':

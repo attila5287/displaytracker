@@ -1,0 +1,82 @@
+{% extends 'layout_squares.html' %}
+
+{% block content %}
+<!-- try example (4) -->
+<div class="container">
+  <div id="manufSelect">
+  </div>
+  <div id="itemSelect">
+  </div>
+</div>
+
+
+<!-- DATA TO BE PRE-LOADED: SHOW MANUFACTURERS -->
+<script>
+  var ddManuf = [{
+    "description": "FlexFit, Classic Snapback, Trucker, 110, 210",
+    "imageSrc": "https://raw.githubusercontent.com/attila5287/displaytracker_img/master/img/manuf/yupoong.png",
+    "selected": false,
+    "text": "Yuupong>FlexFit",
+    "value": "YUPOONG",
+  }, {
+    "description": "Otto Caps",
+    "imageSrc": "https://raw.githubusercontent.com/attila5287/displaytracker_img/master/img/manuf/otto.jpg",
+    "selected": false,
+    "text": "Otto Caps",
+    "value": "OTTO",
+  }];
+</script>
+<!-- CODE FOR CHAINED SELECT FIELDS DYNAMICALLY FETCHING DATA FROM DB-->
+<script>
+  $(document).ready(function () {
+    var manuf_select = document.getElementById("manufacturer");
+    var item_select = document.getElementById("item");
+
+    $('#manufSelect').ddslick({
+      data: ddManuf,
+      width: 300,
+      imagePosition: "left",
+      selectText: "Select your favorite social network",
+      defaultSelectedIndex: 0,
+      onSelected: function (data) {
+        console.log(data);
+        console.log('-------------- FETCH ddSlick --------------')
+        var jsondata;
+        var jsonItems = []
+        manufacturer = data.selectedData.value;
+        // modified, try with dynamic data (3) 
+        var url = '/fetch/ddslick/' + manufacturer;
+        console.log('url to fetch data for dynamic field \n' + url)
+        fetch(url).then(
+          function (u) {
+            return u.json();
+          }
+        ).then(
+          function (json) {
+            jsondata = json;
+            jsonItems = jsondata.items;
+            console.log('jsondata.items')
+            console.log(jsonItems)
+
+            $('#itemSelect').ddslick('destroy');
+            $('#itemSelect').ddslick({
+              data: jsonItems,
+              width: 200,
+              height: 128,
+              onSelected: function (data) {
+                console.log(data)
+              }
+            });
+          }
+        )
+      }
+    });
+
+    // this is for the page not to refresh etc. never delete      
+  });
+</script>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,16 @@
+
+.dd-selected {
+  color: #000000;
+}
+
+#dd-display-data {
+  height: 230px;
+  overflow: auto;
+}
+
+}
+
+#top-share {
+  float: right;
+}
+

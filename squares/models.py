@@ -62,25 +62,26 @@ class Item(db.Model):
         '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN FOR INV-HOME'''
         pass
         labels = [
-            'Snap Back',
-            'Adjustable', 
-            'FlexFit', 
-            'Youth', 
-            'Fitted', 
-            'Structured',
-            'Curved Bill',
-            'Flat Bill',
+            'is_snapback',
+            'has_flatbill',
+            'has_meshback',
+            'is_flexfit',
+            'is_adjustable',
+            'is_youth',
+            'is_fitted',
+            'has_curvedbill',
+            'is_unstructured',
         ]
         properties = [
             self.is_snapback,
+            self.has_flatbill,
             self.has_meshback,
-            self.is_adjustable,
             self.is_flexfit, 
+            self.is_adjustable,
             self.is_youth, 
             self.is_fitted, 
-            self.is_unstructured, 
             self.has_curvedbill, 
-            self.has_flatbill,
+            self.is_unstructured, 
         ]
         return dict(zip(labels, properties))
 

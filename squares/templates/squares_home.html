@@ -2,148 +2,366 @@
 
 {% block content %}
 
-<div class="row my-3">
-  <div class="col-md-8 offset-2">
-  <form method="POST" action="">
-        
-        {{ form.csrf_token }}
+<div class="row">
+  <div class="col-md-12">
+    <div id="main-available-gauge"></div>
+    <div id="myDiv"></div>
+  </div>
+</div>
+<script>
+  Plotly.d3.json(`/main/avlb/1`, function (error, percAvlb) {
+    console.log(percAvlb)
+    var data = [
+      {
+        type: "indicator",
+        mode: "gauge+number+delta",
+        value: percAvlb,
+        title: { text: "Main Items Avlbty Perc %", font: { size: 24 } },
+        delta: { reference: 50, increasing: { color: "rgb(0, 43, 54)" } },
+        gauge: {
+          axis: { range: [null, 100], tickwidth: 1, tickcolor: "#B58900" },
+          bar: { color: "#6610f2",
+          line: { color: "#002B36", width: 4 },
+         },
 
-        <div class="row">
-            {% for field in form %}
-            <div class="col-md-4 text-center">
-                <div class="form-group" style="font-size: 7px;">
-                        <div class="d-flex flex-column">
-                            <div class="d-flex w-100 justify-content-center">
-                                <i class="fas fa-edit text-muted"></i>
-                                {{field.label(class="text-muted mb-1", style="font-size:6px;")}}
-                            </div>
-                            {{field(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 8px;")}}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+          bgcolor: "#002B36",
+          borderwidth: 2,
+          bordercolor: "#B58900",
+          steps: [
+            { range: [0, 30], color: "#6f42c1" },
+            { range: [30, 50], color: "#CB4B16" }
+          ],
+          threshold: {
+            line: { color: "#B58900", width: 4 },
+            thickness: 0.75,
+            value: 100
+          }
+        }
+      }
+    ];
+
+    var layout = {
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      responsive: true,
+      margin: { t: 25, r: 25, l: 25, b: 25 },
+      font: { color: "#B58900", family: "monospace" }
+    };
+
+
+    Plotly.newPlot('myDiv', data, layout);
+  });
+</script>
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="manuf-pie"></div>
+  </div>
+</div>
+<!-- manuf  -->
+<script>
+  Plotly.d3.json('/manuf/pie/1', function (error, data) {
+    if (error) return console.warn(error); 
+      var trace1 = {
+        labels: data[0]["labels"],
+        values: data[0]["values"],
+        type: "pie",
+        marker: {
+          colors: [
+            '#268BD2',
+            '#6f42c1',
+            '#D33682',
+            '#2AA198',
+            '#CB4B16',
+            '#FDF6E3',
+            '#073642',
+          ],
+          opacity: 0.99,
+          line: {
+            color: '#002B36',
+            width: 8
+          }
+        }
+      }
+    var layout = {
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      responsive: true,
+      legend: {
+        font: {
+          color: '#B58900',
+        },
+      }
+    }
+
+    var data = [trace1];
+    var $pie = document.getElementById('manuf-pie');
+    Plotly.plot($pie, data, layout);
+
+
+  });
+</script>
+<div class="row">
+  <div class="col-md-12">
+    <div id="item-bubble"></div>
+  </div>
+</div>
+<!-- bubble chart -->
+<script>
+  Plotly.d3.json('/itemattr/histogram/1', function (error, data) {
+    if (error) return console.warn(error);
+
+    // Create the Trace
+
+    var trace1 = {
+      x: data[0]["x"],
+      y: data[0]["y"],
+      mode: 'markers',
+      marker: {
+        size: data[0]["y"],
+        sizemode: 'diameter',
+        color: 'rgba(190, 47, 195, 0.631);',
+        opacity: 0.99,
+        sizeref: 0.8,
+        line: {
+          color: '#268BD2',
+          width: 2
+        }
+      }
+    };
+    var layout = {
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      showlegend: false,
+      responsive: true,
+      margin: {
+        t: 12
+      },
+      padding: 1,
+      type: "bar",
+      responsive: true,
+      xaxis: {
+        tickfont: {
+          size: 10,
+          color: '#B58900',
+        },
+        showgrid: true,
+        zeroline: false,
+        showline: false,
+        mirror: 'ticks',
+        gridcolor: '#B58900',
+        gridwidth: 0.05,
+        zerolinecolor: '#002B36',
+        zerolinewidth: 0.25,
+        linecolor: '#B58900',
+        linewidth: 0.25,
+      },
+      yaxis: {
+        tickfont: {
+          size: 10,
+          color: '#B58900',
+        },
+        showgrid: true,
+        zeroline: false,
+        showline: false,
+        mirror: 'ticks',
+        gridcolor: '#B58900',
+        gridwidth: 0.05,
+        zerolinecolor: '#002B36',
+        zerolinewidth: 0.25,
+        linecolor: '#B58900',
+        linewidth: 0.25,
+      },
+    };
+
+    var data = [trace1];
+    var $bubble = document.getElementById('item-bubble');
+    Plotly.newPlot($bubble, data, layout)
+  });
+</script>
+<div class="row">
+  <div class="col-md-12">
+    <div id="histogram-bar-chart"></div>
+  </div>
+</div>
+<!-- histogram bar chart -->
+<script>
+  Plotly.d3.json('/itemattr/histogram/1', function (error, data) {
+    if (error) return console.warn(error);
+    // Create the Trace
+    var trace1 = {
+      x: data[0]["x"],
+      y: data[0]["y"],
+      type: "bar",
+      marker: {
+        color: '#B58900',
+        opacity: 0.99,
+        line: {
+          color: '#002B36',
+          width: 8
+        }
+      }
+    };
+    // Create the data array for the plot
+    var data = [trace1];
+    var layout = {
+      margin: {
+        t: 12
+      },
+      padding: 1,
+      type: "bar",
+      responsive: true,
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      xaxis: {
+        tickfont: {
+          size: 10,
+          color: '#B58900',
+        },
+        showgrid: true,
+        zeroline: false,
+        showline: false,
+        mirror: 'ticks',
+        gridcolor: '#B58900',
+        gridwidth: 0.05,
+        zerolinecolor: '#002B36',
+        zerolinewidth: 0.25,
+        linecolor: '#B58900',
+        linewidth: 0.25,
+      },
+      yaxis: {
+        tickfont: {
+          size: 10,
+          color: '#B58900',
+        },
+        showgrid: true,
+        zeroline: false,
+        showline: false,
+        mirror: 'ticks',
+        gridcolor: '#B58900',
+        gridwidth: 0.05,
+        zerolinecolor: '#002B36',
+        zerolinewidth: 0.25,
+        linecolor: '#B58900',
+        linewidth: 0.25,
+      },
+    };
+
+    var $histogram = document.getElementById('histogram-bar-chart');
+    Plotly.newPlot($histogram, data, layout)
+  });
+</script>
+<div class="row mb-2">
+  <div class="col-md-8 offset-2">
+    <form method="POST" action="">
+
+      {{ form.csrf_token }}
+
+      <div class="row">
+        {% for field in form %}
+        <div class="col-md-4 text-center">
+          <div class="form-group" style="font-size: 7px;">
+            <div class="d-flex flex-column">
+              <div class="d-flex w-100 justify-content-center">
+                <i class="fas fa-edit text-muted"></i>
+                {{field.label(class="text-muted mb-1", style="font-size:6px;")}}
+              </div>
+              {{field(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 8px;")}}
+            </div>
+          </div>
         </div>
 
-        <button 
-        class="btn btn-block btn-primary text-light btn-rounded btn-lg  box-shadow"
-        type="submit" 
-        style="border-radius: 12px;"
-        >
+        {% endfor %}
+      </div>
+
+      <button class="btn btn-block btn-primary text-light btn-rounded btn-lg  box-shadow" type="submit"
+        style="border-radius: 12px;">
         <h3>
           <i class="fas fa-th-large"></i>
           GO TO SQUARE
-          </h3>
-        </button>
-    </form>    
-    
+        </h3>
+      </button>
+    </form>
   </div>
 </div>
 
 <div class="row my-2 mx-0">
-    <div class="col-md-2">
-    <a
-    name=""
-    id=""
-    class="btn btn-info btn-block"
-    href="{{ url_for('createall_squares') }}"
-    role="button">
-    <i class="fas fa-terminal float-left"></i><strong></strong><br>
-  </a>
-  <p> 
-    Create All Ten Squares
-  </p>
-  </div>
   <div class="col-md-2">
-    <a
-    name=""
-    id=""
-    class="btn btn-primary btn-block"
-    href="{{ url_for('createfirst_units') }}"
-    role="button">
-    <i class="fas fa-terminal float-left"></i><strong></strong><br>
-  </a>
-  <p>
-    Create First Units 
-  </p>
-  </div>
-    <div class="col-md-2">
-      <a
-      name=""
-      id=""
-      class="btn btn-warning btn-block"
-      href="{{ url_for('fixfirst_units_main') }}"
-      role="button">
+    <a name="" id="" class="btn btn-info btn-block" href="{{ url_for('createall_squares') }}" role="button">
       <i class="fas fa-terminal float-left"></i><strong></strong><br>
-      </a>
-      <p>
-        Fix First Units' Main Item ID
-      </p>
-
-  </div>  
+    </a>
+    <p>
+      Create All Ten Squares
+    </p>
+  </div>
   <div class="col-md-2">
-    <a
-    name=""
-    id=""
-    class="btn btn-danger btn-block"
-    href="{{ url_for('fixall_uniquetags_in') }}"
-    role="button">
-    <i class="fas fa-terminal float-left"></i><strong></strong><br>
-  </a>
+    <a name="" id="" class="btn btn-primary btn-block" href="{{ url_for('createfirst_units') }}" role="button">
+      <i class="fas fa-terminal float-left"></i><strong></strong><br>
+    </a>
+    <p>
+      Create First Units
+    </p>
+  </div>
+  <div class="col-md-2">
+    <a name="" id="" class="btn btn-warning btn-block" href="{{ url_for('fixfirst_units_main') }}" role="button">
+      <i class="fas fa-terminal float-left"></i><strong></strong><br>
+    </a>
+    <p>
+      Fix First Units' Main Item ID
+    </p>
+
+  </div>
+  <div class="col-md-2">
+    <a name="" id="" class="btn btn-danger btn-block" href="{{ url_for('fixall_uniquetags_in') }}" role="button">
+      <i class="fas fa-terminal float-left"></i><strong></strong><br>
+    </a>
     <p>
       Fix First Units' Unique Tag
     </p>
-  </div>  
+  </div>
   <div class="col-md-2">
-    <a
-    name=""
-    id=""
-    class="btn btn-info btn-block"
-    href="{{ url_for('update_firstunits_invout') }}"
-    role="button">
-    <i class="fas fa-terminal float-left"></i><strong></strong><br>
-  </a>
-  <p>
-    Update First Units' MainItemInvOut
-  </p>
-  </div>    
+    <a name="" id="" class="btn btn-info btn-block" href="{{ url_for('update_firstunits_invout') }}" role="button">
+      <i class="fas fa-terminal float-left"></i><strong></strong><br>
+    </a>
+    <p>
+      Update First Units' MainItemInvOut
+    </p>
+  </div>
 </div>
 
 <div class="row">
-
   {% for square in squares[:-3] %}
   <div class="col-md-3 offset-md-7 text-left">
-    
     <div class="d-flex flex-column">
       <i class="text-uppercase text-monospace">
         <i class="fa fa-th-large mr-2" aria-hidden="true">
         </i>
-        {{square.name }} 
-        
-    </i>
+        {{square.name }}
+
+      </i>
       <i class="fas fa-arrows-alt-h"> <small>{{square.col_count}}</small></i>
       <i class="fas fa-arrows-alt-v"> <small>{{square.row_count}}</small></i>
     </div>
   </div>
 
   <div class="col-md-2">
-
     <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg btn-rounded py-5 mb-1"
-    href="{{ url_for('square_byid', square_id=square.id) }}" 
-    role="button"
+      href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
       style="border-radius: 1rem; border-width: medium;">
       <i class="fas fa-grip-vertical fa-2x text-secondary">
       </i>
     </a>
   </div>
   {% endfor %}
+
+  <!-- bottom row -->
   <div class="d-flex w-100 flex-column-reverse pr-4">
     <div class="row">
       {% for square in squares[-3:] %}
       <div class="col-md-4">
         <div class="row">
           <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg px-4 py-1 mx-1"
-          href="{{ url_for('square_byid', square_id=square.id) }}" 
-          role="button"
+            href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
             style="border-radius: 1rem; border-width: medium;">
             <i class="fas fa-grip-horizontal text-secondary fa-2x"></i>
           </a>
@@ -152,17 +370,17 @@
         <div class="row text-center">
           <div class="d-flex flex-column">
             <i class="text-uppercase text-monospace">
-              <i class="fa fa-th-large mr-2" aria-hidden="true"> 
+              <i class="fa fa-th-large mr-2" aria-hidden="true">
               </i>
-                {{square.name }} 
+              {{square.name }}
             </i>
-            <i class="fas fa-arrows-alt-h text-muted"> 
+            <i class="fas fa-arrows-alt-h text-muted">
               <small>
                 {{square.col_count}}
               </small>
 
             </i>
-            <i class="fas fa-arrows-alt-v text-muted"> 
+            <i class="fas fa-arrows-alt-v text-muted">
               <small>
                 {{square.row_count}}
               </small>

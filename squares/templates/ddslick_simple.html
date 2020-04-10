@@ -1,25 +1,43 @@
-{% extends 'layout_squares.html' %}
+{% extends 'layout_ddslick.html' %}
 
 {% block content %}
-<!-- try example (4) -->
 <div class="container">
-  <div id="manufSelect">
-  </div>
-  <div id="itemSelect">
-  </div>
+      <div id="line"></div>
+    <script>
+        Plotly.d3.json('/line', function(error, data){
+            if (error) return console.warn(error);
+
+            var layout = { margin: { t: 0 } }
+            var LINE = document.getElementById('line');
+            Plotly.plot(LINE, data)
+        });
+    </script>
 </div>
 
+<!-- try example (4) -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div id="manufSelect">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div id="itemSelect">
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- DATA TO BE PRE-LOADED: SHOW MANUFACTURERS -->
 <script>
   var ddManuf = [{
-    "description": "FlexFit, Classic Snapback, Trucker, 110, 210",
+    "description": "FlexFit, 5-Panels, Snapback, 110, 210, Fitted",
     "imageSrc": "https://raw.githubusercontent.com/attila5287/displaytracker_img/master/img/manuf/yupoong.png",
     "selected": false,
     "text": "Yuupong>FlexFit",
     "value": "YUPOONG",
   }, {
-    "description": "Otto Caps",
+    "description": "Otto Snapbacks, 5-Panels, Fitted",
     "imageSrc": "https://raw.githubusercontent.com/attila5287/displaytracker_img/master/img/manuf/otto.jpg",
     "selected": false,
     "text": "Otto Caps",
@@ -34,6 +52,7 @@
 
     $('#manufSelect').ddslick({
       data: ddManuf,
+      defaultSelectedIndex:2,
       width: 300,
       imagePosition: "left",
       selectText: "Select your favorite social network",
@@ -61,8 +80,8 @@
             $('#itemSelect').ddslick('destroy');
             $('#itemSelect').ddslick({
               data: jsonItems,
-              width: 200,
-              height: 128,
+              width: 300,
+              height: 200,
               onSelected: function (data) {
                 console.log(data)
               }

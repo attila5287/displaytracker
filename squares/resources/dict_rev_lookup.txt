@@ -35,4 +35,4 @@ my_inverted_dict = dict()
 for key, value in my_dict.items():
     my_inverted_dict.setdefault(value, list()).append(key)
 my_inverted_dict[value_to_find]
-"""s
+"""

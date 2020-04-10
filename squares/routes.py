@@ -909,21 +909,11 @@ def unit_mainitem_out(unique_tag, item_id):
     return redirect(redir3ct_url())
 
 
-# ------------dynamic-JS------------
 @app.route('/', methods=['GET', 'POST'])
-def index():
-    form = Form()
-    form.item.choices = [
-        (item.id, \
-            item.catalog_no + ' ' + item.color_primary + ' ' + item.color_secondary)
-            for item in Item.query.filter_by(manufacturer='OTTO').all()
-            ]
-
-    if request.method == 'POST':
-        item = Item.query.filter_by(id=form.item.data).first()
-        return '<h1>Manufacturer: {}, Catalog No: {}</h1>'.format(form.manufacturer.data, item.catalog_no)
-
-    return render_template('index.html', form=form)
+@app.route('/ddslick/simple', methods=['GET', 'POST'])
+def ddslick_master():
+    pass
+    return render_template('ddslick_simple.html')
 
 
 @app.route('/manufacturer/<string:manufacturer>', methods=['GET', 'POST'])
@@ -962,22 +952,142 @@ def fetch_ddslick(manufacturer):
 
     return jsonify({'items': itemArray})
 
+@app.route("/line", methods=['GET', 'POST'])
+def test():
+    data = [{
+        "x": [1, 2, 3, 4, 5],
+        "y": [1, 2, 4, 8, 16]}]
 
-@app.route('/ddslick/demo', methods=['GET', 'POST'])
-def ddslick_demo():
+    return jsonify(data)
+
+@app.route("/itemattr/histogram/<int:square_id>", methods=['GET', 'POST'])
+def fetch_itemattrs_bysqr(square_id):
     pass
-    form = Form()
-    form.item.choices = [
-        (item.id,
-            item.catalog_no + ' ' + item.color_primary + ' ' + item.color_secondary)
-        for item in Item.query.filter_by(manufacturer='OTTO').all()
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
     ]
-    return render_template('ddslick_demo.html', form= form)
 
-@app.route('/ddslick/simple', methods=['GET', 'POST'])
-def ddslick_master():
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+    print(items)
+
+    dictOfLists = defaultdict(list)
+    print('dictOfLists init')
+    print(dictOfLists)
+
+    for item in items:
+        pass
+        _dict = item.display_properties()
+
+        for key, value in _dict.items():
+            pass
+            dictOfLists.setdefault(key, list()).append(value)
+            
+
+    print('dictOfLists final')
+    print(dictOfLists)
+    
+    histogram = defaultdict(int)
+    print(' --------- histogram init---------')
+    print(histogram)
+    for key, _list in dictOfLists.items():
+        pass
+        for item_attr in _list:
+            pass
+            if item_attr == 'yes':
+                pass
+                histogram[key] += 1
+            else:
+                pass
+                histogram[key] += 0
+            
+    print('--------- histogram final ---------')
+    print(histogram)
+    print(histogram.keys())
+    print(histogram.values())
+
+
+    data = [{
+        "title":'Histogram',
+        "x": list(histogram.keys()),
+        "y": list(histogram.values())
+        }
+        ]
+
+
+    return jsonify(data)
+
+
+@app.route("/manuf/pie/<int:square_id>", methods=['GET', 'POST'])
+def fetch_manuf_bysqr(square_id):
     pass
-    return render_template('ddslick_simple.html')
+    ''' RETURNS ITEM CT PER MNF '''
+    units = Unit.query.filter_by(square_id=1).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+    print(items)
+
+
+    manuf_dict = defaultdict(int)
+    print(' --------- histogram init---------')
+    print(manuf_dict)
+
+    for item in items:
+        pass
+        manuf_dict[item.manufacturer] += 1
+
+    print('--------- histogram final ---------')
+    print(manuf_dict)
+    print(manuf_dict.keys())
+    print(manuf_dict.values())
+    
+    data = [{
+        "title": 'Manufacturers',
+        "labels": [key for key in manuf_dict.keys()],
+        "values": [value for value in manuf_dict.values()]
+        }
+    ]
+
+    return jsonify(data)
+
+@app.route("/main/avlb/<int:square_id>", methods=['GET', 'POST'])
+def fetch_mainavlb_bysqr(square_id):
+    ''' RETURNS INTEGER OF MAIN AVAILABLE ITEMS PRCT '''
+    pass
+    square = Square.query.filter_by(id=square_id).first()
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    square_size = square.row_count * square.col_count
+    counterAvlb = square_size
+    print(counterAvlb)
+
+    
+    for unit in units:
+        pass
+        if str(unit.maininv_out) == 'yes':
+            pass
+            counterAvlb-=1
+        else:
+            pass
+
+
+    
+    return jsonify(round(counterAvlb/square_size*100))
+
 
 
 if __name__ == '__main__':

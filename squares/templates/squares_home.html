@@ -1,118 +1,407 @@
-{% extends 'layout.html' %}
+{% extends 'layout_dash.html' %}
 
 {% block content %}
+<!-- prettyprint -->
+<style>
+  /* Pretty printing styles. Used with prettify.js. */
+/* Vim sunburst theme by David Leibovic */
 
-<div class="row">
-  <div class="col-md-12">
-    <div id="main-available-gauge"></div>
-    <div id="myDiv"></div>
-  </div>
+pre .str,
+code .str {
+  color: #65B042;
+}
+
+/* string  - green */
+pre .kwd,
+code .kwd {
+  color: #E28964;
+}
+
+/* keyword - dark pink */
+pre .com,
+code .com {
+  color: #AEAEAE;
+  font-style: italic;
+}
+
+/* comment - gray */
+pre .typ,
+code .typ {
+  color: #89bdff;
+}
+
+/* type - light blue */
+pre .lit,
+code .lit {
+  color: #3387CC;
+}
+
+/* literal - blue */
+pre .pun,
+code .pun {
+  color: #fff;
+}
+
+/* punctuation - white */
+pre .pln,
+code .pln {
+  color: #fff;
+}
+
+/* plaintext - white */
+pre .tag,
+code .tag {
+  color: #89bdff;
+}
+
+/* html/xml tag    - light blue */
+pre .atn,
+code .atn {
+  color: #bdb76b;
+}
+
+/* html/xml attribute name  - khaki */
+pre .atv,
+code .atv {
+  color: #65B042;
+}
+
+/* html/xml attribute value - green */
+pre .dec,
+code .dec {
+  color: #3387CC;
+}
+
+/* decimal - blue */
+
+pre.prettyprint,
+code.prettyprint {
+  background-color: #444;
+  text-shadow: none;
+  font-size: 1rem;
+  line-height: 1.6em;
+  border-radius: 3px;
+}
+
+pre.prettyprint {
+  width: 95%;
+  margin: 16px auto;
+  padding: 1em;
+  white-space: pre-wrap;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #AEAEAE;
+}
+
+/* IE indents via margin-left */
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8 {
+  list-style-type: none;
+}
+
+/* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 {}
+
+@media print {
+
+  pre .str,
+  code .str {
+    color: #060;
+  }
+
+  pre .kwd,
+  code .kwd {
+    color: #006;
+    font-weight: bold;
+  }
+
+  pre .com,
+  code .com {
+    color: #600;
+    font-style: italic;
+  }
+
+  pre .typ,
+  code .typ {
+    color: #404;
+    font-weight: bold;
+  }
+
+  pre .lit,
+  code .lit {
+    color: #044;
+  }
+
+  pre .pun,
+  code .pun {
+    color: #440;
+  }
+
+  pre .pln,
+  code .pln {
+    color: #000;
+  }
+
+  pre .tag,
+  code .tag {
+    color: #006;
+    font-weight: bold;
+  }
+
+  pre .atn,
+  code .atn {
+    color: #404;
+  }
+
+  pre .atv,
+  code .atv {
+    color: #060;
+  }
+}
+
+</style>
+<!-- styling dash elements borders etc-->
+<style>
+  .dash-section {
+    border: 4px solid;
+    border-color: #073642;
+    border-radius: 22px;
+    margin-bottom: 8px;
+    padding: 4px;
+  }
+</style>
+<!-- dropdown squares -->
+<div class="container-fluid">
+  <div class="row mt-2">
+    <div class="col-lg-10">
+      <div class="row">
+        <!-- -----------------DASH-START-------- -->
+        <div class="col-lg-3 text-center">
+            <div class="dash-section">
+            <!-- GAUGE -->
+              <div id="avlb-gauge"></div>
+            </div>
+        </div>
+        <!-- BUBBLE CHART -->
+        <div class="col-lg-5 text-center">
+          <div class="dash-section">
+            <div id="item-bubble"></div>
+          </div>
+        </div>
+        <!-- INFOBOARD -->
+        <div class="col-lg-4 text-center">
+          <div class="dash-section">
+            <pre class="prettyprint">
+              
+              <ul id="info-board" style="list-style-type: square;"></ul>
+            </pre>
+          </div>
+        </div>
+        <!-- PIE CHART -->
+        <div class="col-lg-4 text-center">
+          <div class="dash-section">        
+            <div id="manuf-pie"></div>
+          </div>        
+        </div>          
+        <!-- HISTOGRAM -->
+        <div class="col-lg-8 text-center">
+          <div class="dash-section">
+            <div id="histogram-bar-chart"></div>
+          </div>
+        </div>
+
+        <!-- -------------DASH-END------------ -->
+      </div>
+    </div>
+    <!-- sidebar -->
+    <div class="col-lg-2">
+      <div class="sidebar-section px-1">
+        <div class="text-centersidebar-section  py-0 mt-0">
+          <img class="img-fluid mt-0 mb-1" alt="sidebar top img"
+            src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_denver_realPhoto.png"
+            style="height: 8rem;">
+        </div>
+        <!-- $squareSelect is the opts field of form -->
+        <form method="POST" action="">
+
+          <div class="form-group">
+            {{ form.csrf_token }}
+            <i class="fas fa-edit text-muted"></i>
+            {{form.opts.label(class="text-muted mb-1", style="font-size:6px;")}}
+            {{form.opts(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
+          </div>
+
+          <button type="button" class="btn btn-danger btn-lg btn-block  sidebar-section border-success py-1 mb-0 mt-1"
+            type="submit" style="font-size:1rem;">
+            <i class="fa fa-th-large" aria-hidden="true"></i>
+            GO TO SQUARE
+          </button>
+          
+        </form>
+        <div class="list-group sidebar-section text-center mt-1 mb-0" style="border-radius: 4px;">
+          <a href="/register" class="list-group-item list-group-item-action">
+            <i class="fas fa-registered    "></i>
+            Register
+          </a>
+          <a href="/login" class="list-group-item list-group-item-action">
+            <i class="fas fa-sign-in-alt"></i>
+            Login
+          </a>
+          <a href="/about" class="list-group-item list-group-item-action">
+            <i class="fas fa-info-circle"></i>
+            About
+          </a>
+        </div>
+        <div class="text-center py-0">
+          <img class="img-fluid mb-2 mt-0" alt="sidebar bottom img"
+            src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_bottom_waves05.png"
+            style="height: 7rem;">
+        </div>
+      </div>
+      <!-- BUTTONS FOR RE-START ALL SYSTEM -->
+      <div class="row my-2 mx-0">
+        <a name="" id="" class="btn btn-info btn-block" href="" role="button">
+          <i class="fas fa-terminal float-left"></i><strong></strong><br>
+        </a>
+        <p>
+          Create All Ten Squares
+        </p>
+        <a name="" id="" class="btn btn-primary btn-block" href="" role="button">
+          <i class="fas fa-terminal float-left"></i><strong></strong><br>
+        </a>
+        <p>
+          Create First Units
+        </p>
+        <a name="" id="" class="btn btn-warning btn-block" href="" role="button">
+          <i class="fas fa-terminal float-left"></i><strong></strong><br>
+        </a>
+        <p>
+          Fix First Units' Main Item ID
+        </p>
+        <a name="" id="" class="btn btn-info btn-block" href="" role="button">
+          <i class="fas fa-terminal float-left"></i><strong></strong><br>
+        </a>
+        <p>
+          Update First Units' MainItemInvOut
+        </p>
+      </div>
 </div>
+
+
+
+
+
+
+<!-- gauge top left -->
 <script>
-  Plotly.d3.json(`/main/avlb/1`, function (error, percAvlb) {
-    console.log(percAvlb)
-    var data = [
-      {
-        type: "indicator",
-        mode: "gauge+number+delta",
-        value: percAvlb,
-        title: { text: "Main Items Avlbty Perc %", font: { size: 24 } },
-        delta: { reference: 50, increasing: { color: "rgb(0, 43, 54)" } },
-        gauge: {
-          axis: { range: [null, 100], tickwidth: 1, tickcolor: "#B58900" },
-          bar: { color: "#6610f2",
-          line: { color: "#002B36", width: 4 },
-         },
+  gaugeMeUp(1);
+  bubbleMeup(1);
+  pieMeUp(1);  
+  histogramMeUp(1);
+  var $squareSelect = document.getElementById("opts");
 
-          bgcolor: "#002B36",
-          borderwidth: 2,
-          bordercolor: "#B58900",
-          steps: [
-            { range: [0, 30], color: "#6f42c1" },
-            { range: [30, 50], color: "#CB4B16" }
-          ],
-          threshold: {
-            line: { color: "#B58900", width: 4 },
-            thickness: 0.75,
-            value: 100
+  $squareSelect.onchange = function () {
+    dropdownSelected = $squareSelect.value;
+    gaugeMeUp(dropdownSelected);
+    bubbleMeup(dropdownSelected);
+    pieMeUp(dropdownSelected);
+    histogramMeUp(dropdownSelected);
+  }
+
+  function gaugeMeUp(square) {
+      Plotly.d3.json(`/fetch/main/avlb/` + square, function (error, percAvlb) {
+        console.log(percAvlb)
+        var data = [{
+          type: "indicator",
+          mode: "gauge+number+delta",
+          value: percAvlb,
+          title: {
+            text: "Main-Item-Avlbty-%",
+            font: {
+              size: 16
+            }
+          },
+          delta: {
+            reference: 50,
+            increasing: {
+              color: "rgb(0, 43, 54)"
+            }
+          },
+          gauge: {
+            axis: {
+              range: [null, 100],
+              tickwidth: 1,
+              tickcolor: "#B58900"
+            },
+            bar: {
+              color: "#6610f2",
+              line: {
+                color: "#002B36",
+                width: 4
+              },
+            },
+            bgcolor: "#002B36",
+            borderwidth: 3,
+            bordercolor: "#B58900",
+            steps: [{
+              range: [0, 30],
+              color: "#6f42c1"
+            },
+            {
+              range: [30, 50],
+              color: "#268BD2"
+            }
+            ],
+            threshold: {
+              line: {
+                color: "#B58900",
+                width: 8
+              },
+              thickness: 0.75,
+              value: 100
+            }
           }
-        }
-      }
-    ];
-
-    var layout = {
-      plot_bgcolor: "#002B36",
-      paper_bgcolor: "#002B36",
-      responsive: true,
-      margin: { t: 25, r: 25, l: 25, b: 25 },
-      font: { color: "#B58900", family: "monospace" }
-    };
-
-
-    Plotly.newPlot('myDiv', data, layout);
-  });
-</script>
-
-<div class="row">
-  <div class="col-md-12">
-    <div id="manuf-pie"></div>
-  </div>
-</div>
-<!-- manuf  -->
-<script>
-  Plotly.d3.json('/manuf/pie/1', function (error, data) {
-    if (error) return console.warn(error); 
-      var trace1 = {
-        labels: data[0]["labels"],
-        values: data[0]["values"],
-        type: "pie",
-        marker: {
-          colors: [
-            '#268BD2',
-            '#6f42c1',
-            '#D33682',
-            '#2AA198',
-            '#CB4B16',
-            '#FDF6E3',
-            '#073642',
-          ],
-          opacity: 0.99,
-          line: {
-            color: '#002B36',
-            width: 8
+        }];
+        var layout = {
+          plot_bgcolor: "#002B36",
+          paper_bgcolor: "#002B36",
+          responsive: true,
+          margin: {
+            t: 25,
+            r: 25,
+            l: 25,
+            b: 25
+          },
+          font: {
+            color: "#B58900",
+            family: "monospace"
           }
-        }
-      }
-    var layout = {
-      plot_bgcolor: "#002B36",
-      paper_bgcolor: "#002B36",
-      responsive: true,
-      legend: {
-        font: {
-          color: '#B58900',
-        },
-      }
+        };
+        $gauge = document.getElementById('avlb-gauge');
+        Plotly.newPlot($gauge, data, layout);
+      });
     }
+  
 
-    var data = [trace1];
-    var $pie = document.getElementById('manuf-pie');
-    Plotly.plot($pie, data, layout);
-
-
-  });
-</script>
-<div class="row">
-  <div class="col-md-12">
-    <div id="item-bubble"></div>
-  </div>
-</div>
-<!-- bubble chart -->
-<script>
-  Plotly.d3.json('/itemattr/histogram/1', function (error, data) {
-    if (error) return console.warn(error);
-
+  function bubbleMeup(square) {
+  Plotly.d3.json('/itemattr/bubble/'+square, function (error, data) {
+    if (error)
+      return console.warn(error);
     // Create the Trace
-
     var trace1 = {
       x: data[0]["x"],
       y: data[0]["y"],
@@ -149,7 +438,7 @@
         zeroline: false,
         showline: false,
         mirror: 'ticks',
-        gridcolor: '#B58900',
+        gridcolor: '#073642',
         gridwidth: 0.05,
         zerolinecolor: '#002B36',
         zerolinewidth: 0.25,
@@ -165,7 +454,7 @@
         zeroline: false,
         showline: false,
         mirror: 'ticks',
-        gridcolor: '#B58900',
+        gridcolor: '#073642',
         gridwidth: 0.05,
         zerolinecolor: '#002B36',
         zerolinewidth: 0.25,
@@ -173,28 +462,31 @@
         linewidth: 0.25,
       },
     };
-
     var data = [trace1];
     var $bubble = document.getElementById('item-bubble');
-    Plotly.newPlot($bubble, data, layout)
+    Plotly.newPlot($bubble, data, layout);
   });
-</script>
-<div class="row">
-  <div class="col-md-12">
-    <div id="histogram-bar-chart"></div>
-  </div>
-</div>
-<!-- histogram bar chart -->
-<script>
-  Plotly.d3.json('/itemattr/histogram/1', function (error, data) {
-    if (error) return console.warn(error);
-    // Create the Trace
-    var trace1 = {
-      x: data[0]["x"],
-      y: data[0]["y"],
-      type: "bar",
+}
+
+
+  function pieMeUp(square) {
+    Plotly.d3.json('/manuf/pie/' + square, function (error, data) {
+      if (error)
+      return console.warn(error);
+      var trace1 = {
+      labels: data[0]["labels"],
+      values: data[0]["values"],
+      type: "pie",
       marker: {
-        color: '#B58900',
+        colors: [
+          '#268BD2',
+          '#6f42c1',
+          '#D33682',
+          '#2AA198',
+          '#CB4B16',
+          '#FDF6E3',
+          '#073642',
+        ],
         opacity: 0.99,
         line: {
           color: '#002B36',
@@ -202,11 +494,46 @@
         }
       }
     };
+      var layout = {
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      responsive: true,
+      showgrid: true,
+      legend: {
+        font: {
+          color: '#B58900',
+        },
+      }
+    };
+      var data = [trace1];
+      var $pie = document.getElementById('manuf-pie');
+      Plotly.plot($pie, data, layout);
+  });
+}
+  
+  function histogramMeUp(square) {
+  Plotly.d3.json('/itemattr/histogram/'+square, function (error, data) {
+    if (error)
+      return console.warn(error);
+    // Create the Trace
+    var trace1 = {
+      x: data[0]["x"],
+      y: data[0]["y"],
+      type: "bar",
+      marker: {
+        color: '#6610f2',
+        opacity: 0.99,
+        line: {
+          color: '#002B36',
+          width: 3
+        }
+      }
+    };
     // Create the data array for the plot
     var data = [trace1];
     var layout = {
       margin: {
-        t: 12
+        t: 4
       },
       padding: 1,
       type: "bar",
@@ -222,7 +549,7 @@
         zeroline: false,
         showline: false,
         mirror: 'ticks',
-        gridcolor: '#B58900',
+        gridcolor: '#073642',
         gridwidth: 0.05,
         zerolinecolor: '#002B36',
         zerolinewidth: 0.25,
@@ -238,7 +565,7 @@
         zeroline: false,
         showline: false,
         mirror: 'ticks',
-        gridcolor: '#B58900',
+        gridcolor: '#073642',
         gridwidth: 0.05,
         zerolinecolor: '#002B36',
         zerolinewidth: 0.25,
@@ -246,89 +573,16 @@
         linewidth: 0.25,
       },
     };
-
     var $histogram = document.getElementById('histogram-bar-chart');
-    Plotly.newPlot($histogram, data, layout)
+    Plotly.newPlot($histogram, data, layout);
   });
+}
+
+
 </script>
-<div class="row mb-2">
-  <div class="col-md-8 offset-2">
-    <form method="POST" action="">
 
-      {{ form.csrf_token }}
 
-      <div class="row">
-        {% for field in form %}
-        <div class="col-md-4 text-center">
-          <div class="form-group" style="font-size: 7px;">
-            <div class="d-flex flex-column">
-              <div class="d-flex w-100 justify-content-center">
-                <i class="fas fa-edit text-muted"></i>
-                {{field.label(class="text-muted mb-1", style="font-size:6px;")}}
-              </div>
-              {{field(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 8px;")}}
-            </div>
-          </div>
-        </div>
-
-        {% endfor %}
-      </div>
-
-      <button class="btn btn-block btn-primary text-light btn-rounded btn-lg  box-shadow" type="submit"
-        style="border-radius: 12px;">
-        <h3>
-          <i class="fas fa-th-large"></i>
-          GO TO SQUARE
-        </h3>
-      </button>
-    </form>
-  </div>
-</div>
-
-<div class="row my-2 mx-0">
-  <div class="col-md-2">
-    <a name="" id="" class="btn btn-info btn-block" href="{{ url_for('createall_squares') }}" role="button">
-      <i class="fas fa-terminal float-left"></i><strong></strong><br>
-    </a>
-    <p>
-      Create All Ten Squares
-    </p>
-  </div>
-  <div class="col-md-2">
-    <a name="" id="" class="btn btn-primary btn-block" href="{{ url_for('createfirst_units') }}" role="button">
-      <i class="fas fa-terminal float-left"></i><strong></strong><br>
-    </a>
-    <p>
-      Create First Units
-    </p>
-  </div>
-  <div class="col-md-2">
-    <a name="" id="" class="btn btn-warning btn-block" href="{{ url_for('fixfirst_units_main') }}" role="button">
-      <i class="fas fa-terminal float-left"></i><strong></strong><br>
-    </a>
-    <p>
-      Fix First Units' Main Item ID
-    </p>
-
-  </div>
-  <div class="col-md-2">
-    <a name="" id="" class="btn btn-danger btn-block" href="{{ url_for('fixall_uniquetags_in') }}" role="button">
-      <i class="fas fa-terminal float-left"></i><strong></strong><br>
-    </a>
-    <p>
-      Fix First Units' Unique Tag
-    </p>
-  </div>
-  <div class="col-md-2">
-    <a name="" id="" class="btn btn-info btn-block" href="{{ url_for('update_firstunits_invout') }}" role="button">
-      <i class="fas fa-terminal float-left"></i><strong></strong><br>
-    </a>
-    <p>
-      Update First Units' MainItemInvOut
-    </p>
-  </div>
-</div>
-
+<!-- SQUARE LAYOUT AS BUTTONS -->
 <div class="row">
   {% for square in squares[:-3] %}
   <div class="col-md-3 offset-md-7 text-left">
@@ -395,6 +649,5 @@
   </div>
 
 </div>
-
 
 {% endblock %}

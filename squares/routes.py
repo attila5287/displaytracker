@@ -532,31 +532,6 @@ def showonly_invout():
     )
 
 
-@app.route('/createall/squares')
-def createall_squares():
-    pass
-    _names = [
-        'snapback1',
-        'snapback2',
-        'snapback3',
-        'adjustable',
-        'flexfit1',
-        'flexfit2',
-        'youth',
-        'fitted1',
-        'fitted2',
-        'fitted3',
-    ]
-
-    squares = [
-        Square(name=_name, row_count=9, col_count=6) for _name in _names
-    ]
-    db.session.add_all(squares)
-    db.session.commit()
-    flash('all squares created', 'info')
-    return redirect(url_for('sqr_home'))
-
-
 @app.route('/findnext/byid/<int:item_id>', methods=['GET', 'POST'])
 def findnext_byid(item_id=10):
     '''FIND NEXT ITEM BY PULLING THE MAIN-ITEM BY ID AND QUERY BY ITS ATTR'''
@@ -623,96 +598,6 @@ def unit_show_mainitem(unique_tag):
     return redirect(url_for('square_byid', square_id=unit.square_id))
 
 
-@app.route('/fixall/uniquetags/in/1', methods=['GET', 'POST'])
-def fixall_uniquetags_in():
-    pass
-    units = Unit.query.filter_by(square_id=1).all()
-    for unit in units:
-        pass
-        unit.unique_tag = 'S'+str(1)+'_'+unit.pstn_rowcol
-        db.session.commit()
-    flash('all unique tags fixed', 'danger')
-
-    return redirect(url_for('sqr_home'))
-
-
-@app.route('/fixfirst/units/mainitem')
-def fixfirst_units_main():
-    pass
-    units = Unit.query.filter_by(square_id=1).all()
-    for unit in units:
-        pass
-        _int = unit.dispitem_id
-        unit.mainitem_id = _int
-        db.session.commit()
-    flash('all units main item ids fixed', 'warning')
-    return redirect(url_for('sqr_home'))
-
-
-@app.route('/createfirst/units')
-def createfirst_units():
-    pass
-    items = Item.query.all()
-    list_of_ids = [
-        _item.id for _item in items
-    ]
-    _rows = [
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-    ]
-    _cols = [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-    ]
-    _rowcols = [
-        row+column for row in _rows for column in _cols
-    ]
-    _tags = [
-        'S1_'+_position for _position in _rowcols
-    ]
-    random.seed(42)
-    units = [
-        Unit(
-            square_id=1,
-            pstn_rowcol=_position,
-            unique_tag=_tag,
-            mainitem_id=1,
-            maininv_out='no',
-            dispitem_id=random.choice(list_of_ids),
-        ) for _position, _tag in zip(_rowcols, _tags)
-    ]
-    db.session.add_all(units)
-    db.session.commit()
-    flash('all units created!', 'primary')
-    return redirect(url_for('sqr_home'))
-
-
-@app.route("/unit/update/invout")
-def update_firstunits_invout():
-    pass
-    units = Unit.query.filter_by(square_id=1).all()
-
-    for unit in units:
-        pass
-        item = Item.query.get_or_404(unit.mainitem_id)
-        _updated_status = item.inv_outofstock
-        unit.maininv_out = _updated_status
-        db.session.commit()
-    flash('all units main item inv status updated', 'info')
-
-    return redirect(url_for('sqr_home'))
-
 
 @app.route('/square/byid/<int:square_id>')
 def square_byid(square_id):
@@ -736,7 +621,7 @@ def square_byid(square_id):
     ]
     results_itemid_dict = dict(zip(result_itemids, result_items))
     display = dict()
-    print('\ndisplay: ', display)
+    print('\n display: ', display)
     for unit, query_untdispid in unit_itemid.items():
         pass
 
@@ -797,29 +682,6 @@ def square_byid_lite(square_id):
         'square_00_lite.html',
         display=display,
         title='ShowSquareID: '+str(square_id),
-    )
-
-
-# squares_all
-@app.route('/squares/all', methods=['GET', 'POST'])
-def sqr_home():
-    ''' SQUARE-HOME: ALL SQRS'''
-    pass
-    form = SquareForm()
-    form.opts.query = Square.query.all()
-    squares = Square.query.all()
-
-    if request.method == 'POST':
-        pass
-        # request form returns id as int thx-to square_query func in app.forms
-        userselection = request.form['opts']
-        return redirect(url_for('square_byid', square_id=userselection))
-
-    return render_template(
-        'squares_home.html',
-        form=form,
-        squares=squares,
-        title='SqrHome',
     )
 
 
@@ -1027,7 +889,7 @@ def fetch_itemattrs_bysqr(square_id):
 def fetch_manuf_bysqr(square_id):
     pass
     ''' RETURNS ITEM CT PER MNF '''
-    units = Unit.query.filter_by(square_id=1).\
+    units = Unit.query.filter_by(square_id=square_id).\
         order_by(Unit.id.asc()).all()
 
     unit_unqtags = [
@@ -1063,7 +925,7 @@ def fetch_manuf_bysqr(square_id):
 
     return jsonify(data)
 
-@app.route("/main/avlb/<int:square_id>", methods=['GET', 'POST'])
+@app.route("/fetch/main/avlb/<int:square_id>", methods=['GET', 'POST'])
 def fetch_mainavlb_bysqr(square_id):
     ''' RETURNS INTEGER OF MAIN AVAILABLE ITEMS PRCT '''
     pass
@@ -1088,6 +950,241 @@ def fetch_mainavlb_bysqr(square_id):
     
     return jsonify(round(counterAvlb/square_size*100))
 
+# bubble
+@app.route("/itemattr/bubble/<int:square_id>", methods=['GET', 'POST'])
+def fetch_items4bubble_bysqr(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+    print(items)
+
+
+    histogram = defaultdict(int)
+    for item in items:
+        pass
+        _dict = item.display_properties()
+
+        for key, value in _dict.items():
+            pass
+            if value == 'yes':
+                pass
+                histogram[key] += 1
+
+
+    print('--------- histogram final ---------')
+    print(histogram)
+    print(histogram.keys())
+    print(histogram.values())
+
+    data = [{
+        "title": 'Histogram',
+        "x": list(histogram.keys()),
+        "y": list(histogram.values())
+    }
+    ]
+
+    return jsonify(data)
+
+# squares for dynamic field
+@app.route('/fetch/squares', methods=['GET', 'POST'])
+def fetch_squares():
+    ''' RETURNS JSONIFIED DATA FOR SQUARES-HOME SELECT ELEMENT'''
+    pass
+
+    squares = Square.query.all()
+
+    squaresArray = [
+        {
+            'id': square.id,
+            'name': square.name,
+            'row_count': square.row_count,
+            'col_count': square.col_count,
+        }
+        for square in squares
+    ]
+    return jsonify({'data': squaresArray})
+
+
+# squares_all
+@app.route('/squares/all', methods=['GET', 'POST'])
+def sqr_home():
+    ''' SQUARE-HOME: ALL SQRS'''
+    pass
+    form = SquareForm()
+    squares = Square.query.all()
+
+    if request.method == 'POST':
+        pass
+        # request form returns id as int thx-to square_query func in app.forms
+        selectedSquare = request.form['opts']
+        return redirect(url_for('square_byid', square_id=selectedSquare))
+
+    return render_template(
+        'squares_home.html',
+        form=form,
+        squares=squares,
+        title='SqrHome',
+    )
+
+
+@app.route('/createall/squares')
+def createall_squares():
+    pass
+    _names = [
+        'snapback1',
+        'snapback2',
+        'snapback3',
+        'adjustable',
+        'flexfit1',
+        'flexfit2',
+        'youth',
+        'fitted1',
+        'fitted2',
+        'fitted3',
+    ]
+
+    squares = [
+        Square(name=_name, row_count=9, col_count=6) for _name in _names
+    ]
+    db.session.add_all(squares)
+    db.session.commit()
+    flash('all squares created', 'info')
+    return redirect(url_for('sqr_home'))
+
+
+
+@app.route('/random/populate/<int:square_id>')
+def random_populate(square_id):
+    pass
+    square = Square.query.get_or_404(square_id)
+    squareName = square.name
+    squareRowCount = int(square.row_count)
+    squareColCount = int(square.col_count)
+    
+    items = Item.query.all()
+    list_of_ids = [
+        _item.id for _item in items
+    ]
+    _rows = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+    ]
+    _cols = [
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17',
+        '18',
+        '19',
+        '20',
+        '21',
+        '22',
+        '23',
+        '24',
+        '25',
+    ]
+
+
+    _rowcols = [
+        row+column for row in _rows[0:squareRowCount] for column in _cols[0:squareColCount]
+    ]
+    _tags = [
+        'S'+str(square_id)+'_'+_position for _position in _rowcols
+    ]
+    units = [
+        Unit(
+            square_id=square_id,
+            pstn_rowcol=_position,
+            unique_tag=_tag,
+            mainitem_id=random.choice(list_of_ids),
+            maininv_out='no',
+            dispitem_id=1,
+        ) for _position, _tag in zip(_rowcols, _tags)
+    ]
+    db.session.add_all(units)
+    db.session.commit()
+    flash('all units populated with random items! square name: '+squareName.upper(), 'primary')
+    return redirect(url_for('sqr_home'))
+
+
+@app.route('/display/mainitem/<int:square_id>')
+def display_mainitem(square_id):
+    pass
+    square = Square.query.get_or_404(square_id)
+    squareName = square.name
+    units = Unit.query.filter_by(square_id=square_id).all()
+    for unit in units:
+        pass
+        _int = unit.mainitem_id
+        unit.dispitem_id = _int
+        db.session.commit()
+
+    flash('all units now displaying main items! square name: '+squareName.upper(), 'warning')
+    return redirect(url_for('sqr_home'))
+
+
+@app.route("/update/invstatus/<int:square_id>")
+def update_invstatus(square_id):
+    pass
+    square = Square.query.get_or_404(square_id)
+    squareName = square.name
+    units = Unit.query.filter_by(square_id=square_id).all()
+
+    for unit in units:
+        pass
+        item = Item.query.get_or_404(unit.mainitem_id)
+        _updated_status = item.inv_outofstock
+        unit.maininv_out = _updated_status
+        db.session.commit()
+    flash('all units main item inv status updated! Square Name: '+squareName.upper(), 'info')
+
+    return redirect(url_for('sqr_home'))
 
 
 if __name__ == '__main__':

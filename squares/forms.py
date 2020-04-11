@@ -134,7 +134,7 @@ class SquareForm(FlaskForm):
     opts = QuerySelectField(
         query_factory=square_query,
         allow_blank=False,
-        get_label='name'
+        get_label='name',
         )
 
 class Form(FlaskForm):

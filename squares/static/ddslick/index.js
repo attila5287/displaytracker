@@ -1,4 +1,5 @@
-      $(document).ready(function () {
+$(document).ready(function () {
+        
         var manuf_select = document.getElementById("manufacturer");
         var item_select = document.getElementById("item");
         var $listAvailable = document.getElementById("available-items-list");
@@ -174,10 +175,86 @@
             }
           )
         });
+        // test part####################################################
 
 
 
 
-        // this is for the page not to refresh etc. never delete      
-      });
+  
     
+
+        // this is for the page not to refresh etc. never delete
+        //####################################################
+      });
+      
+function bubbleMeUp() {
+  Plotly.d3.json('/itemattr/bubble/1', function (error, data) {
+    if (error)
+      return console.warn(error);
+    // Create the Trace
+    var trace1 = {
+      x: data[0]["x"],
+      y: data[0]["y"],
+      mode: 'markers',
+      marker: {
+        size: data[0]["y"],
+        sizemode: 'diameter',
+        color: 'rgba(190, 47, 195, 0.631);',
+        opacity: 0.99,
+        sizeref: 0.8,
+        line: {
+          color: '#268BD2',
+          width: 2
+        }
+      }
+    };
+    var layout = {
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      showlegend: false,
+      responsive: true,
+      margin: {
+        t: 12
+      },
+      padding: 1,
+      type: "bar",
+      responsive: true,
+      xaxis: {
+        tickfont: {
+          size: 10,
+          color: '#B58900',
+        },
+        showgrid: true,
+        zeroline: false,
+        showline: false,
+        mirror: 'ticks',
+        gridcolor: '#073642',
+        gridwidth: 0.05,
+        zerolinecolor: '#002B36',
+        zerolinewidth: 0.25,
+        linecolor: '#B58900',
+        linewidth: 0.25,
+      },
+      yaxis: {
+        tickfont: {
+          size: 10,
+          color: '#B58900',
+        },
+        showgrid: true,
+        zeroline: false,
+        showline: false,
+        mirror: 'ticks',
+        gridcolor: '#073642',
+        gridwidth: 0.05,
+        zerolinecolor: '#002B36',
+        zerolinewidth: 0.25,
+        linecolor: '#B58900',
+        linewidth: 0.25,
+      },
+    };
+    var data = [trace1];
+    var $bubble = document.getElementById('item-bubble');
+    Plotly.newPlot($bubble, data, layout);
+  });
+}
+

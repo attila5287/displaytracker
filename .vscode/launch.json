@@ -16,8 +16,8 @@
       "type": "firefox",
       "request": "launch",
       "reAttach": true,
-      "url": "http://localhost/index.html",
-      "webRoot": "${workspaceFolder}"
+      "url": "http://127.0.0.1:5000/",
+      "webRoot": "${workspaceFolder}/squares/templates/h"
     },
     {
       "name": "Attach",

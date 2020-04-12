@@ -919,17 +919,6 @@
             .then(function (response) {
 
               response.json().then(function (data) {
-                var optionHTML = '';
-                for (var item of data.items) {
-                  optionHTML +=
-                    '<option value=" ' +
-                    item.value + ' ">' +
-                    item.text + '-' +
-                    item.description + '-' +
-                    '</option>';
-                }
-
-                item_select.innerHTML = optionHTML;
               })
 
             });

@@ -773,7 +773,7 @@ def unit_mainitem_out(unique_tag, item_id):
     return redirect(redir3ct_url())
 
 
-@app.route('/', methods=['GET', 'POST'])
+
 @app.route('/ddslick/simple', methods=['GET', 'POST'])
 def ddslick_master():
     pass
@@ -1026,6 +1026,8 @@ def fetch_square_info(square_id):
 
 
 # squares_all
+
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/squares/all', methods=['GET', 'POST'])
 def sqr_home():
     ''' SQUARE-HOME: ALL SQRS'''

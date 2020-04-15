@@ -15,66 +15,6 @@
 }
 
 
-html,
-body {
-  font-family: sans-serif;
-  font-size: 14px;
-}
-
-body {
-}
-
-input,
-textarea,
-select,
-button {
-  font-size: 1rem;
-}
-
-section,
-article {
-  display: block;
-}
-
-section {
-  padding: 15px 0;
-  line-height: 1.6em;
-  text-shadow: 0 1px 0.5px #fff;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-family: "PT Sans Narrow", sans-serif;
-}
-
-h1 {
-  font-size: 60px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 34px;
-}
-
-h3 {
-  font-size: 28px;
-}
-
-code {
-  background: #CCDCE6;
-  padding: 1px;
-}
-
-small {
-  color: #777;
-}
-
-a {
-  color: #2A9933;
-}
 
 #showSampleData,
 #showSampleSelectList {

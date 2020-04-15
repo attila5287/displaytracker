@@ -1,132 +1,81 @@
 {% extends 'layout_dash.html' %}
 
 {% block content %}
-<!-- styling dash elements borders etc-->
-<style>
-  .info-section {
-    border: 4px solid;
-    border-color: #073642;
-    border-radius: 22px;
-    margin-bottom: 8px;
-    padding: 4px;
-  }
-</style>
-<!-- dropdown squares -->
-<div class="container-fluid">
-  <div class="row mt-2">
-    <div class="col-lg-10">
-      <div class="row">
-        <div class="col-lg-3 text-center">
-          GAUGE
-        </div>
 
-        <!-- BUBBLE CHART -->
-        <div class="col-lg-5 text-center">
-          <div class="dash-section" id="bubbleZone">
-            BUBBLE CHART HERE
-          </div>
-        </div>
-
-        <!-- INFOBOARD -->
-        <div class="col-lg-4 text-center">
-          <div class="info-section">
-            <ul id="info-board" style="list-style-type: square;"></ul>
-            <div class="list-group">
-              <a id="infoBoardBubble">
-                test
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-braille" aria-hidden="true"></i>
-                  </h6>
-                  <small>
-                    Most Common Attributes
-                  </small>
-                </div>
-                <p class="mb-0"> Displaying:
-                  <em id="dispMostCommon" class="text-primary"></em>
-                </p>
-                <p class="mb-1"> Main/Pref:
-                  <em id="mainMostCommon" class="text-primary"></em>
-                </p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 text-center">
-          PIE CHART
-        </div>
-        <div class="col-lg-8 text-center">
-          HISTOGRAM
-        </div>
+<!-- try example (4) -->
+      <div id="manufSelect">
       </div>
-    </div>
-    <!-- sidebar -->
-    <div class="col-lg-2">
-      <div class="sidebar-section px-1">
-        <div class="text-center sidebar-section  py-0 mt-0">
-          <img class="img-fluid mt-0 mb-1" alt="sidebar top img"
-            src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_denver_realPhoto.png"
-            style="height: 8rem;">
-        </div>
-        <!-- $squareSelect is the opts field of form -->
-        <form method="POST" action="">
-
-          <div class="form-group">
-            {{ form.csrf_token }}
-            <i class="fas fa-edit text-muted"></i>
-            {{form.opts.label(class="text-muted mb-1", style="font-size:6px;")}}
-            {{form.opts(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
-          </div>
-
-          <button type="button" class="btn btn-danger btn-lg btn-block  sidebar-section border-success py-1 mb-0 mt-1"
-            type="submit" style="font-size:1rem;">
-            <i class="fa fa-th-large" aria-hidden="true"></i>
-            GO TO SQUARE
-          </button>
-
-        </form>
-        <script>
-          // bubbleZone
-          d3.select('#infoBoardBubble')
-            .on("mouseenter", flash('#bubbleZone', 'secondary'))
-            .on("mouseover", flash('#bubbleZone', 'primary'))
-            .on("mouseout", flash('#bubbleZone', 'secondary'))
-            .on("mouseleave", flash('#bubbleZone', 'dark'));
-
-          function flash(elementID, style) {
-            return function () {
-              console.log('test');
-              d3.select(elementID).attr('class', 'dash-section border-' + style);
-            };
-          }
-        </script>
-        <script src="{{ url_for('static', filename='infoboard.js') }}"></script>
-
-
-
+      <div id="itemSelect">
       </div>
-    </div>
-    </div>
-    </div>
 
+<!-- DATA TO BE PRE-LOADED: SHOW MANUFACTURERS -->
 <script>
-  d3.select('#infoBoardBubble')
-  .on("mouseenter", flash('#bubbleZone', 'secondary'))
-  .on("mouseover", flash('#bubbleZone', 'primary'))
-  .on("mouseout", flash('#bubbleZone', 'secondary'))
-  .on("mouseleave", flash('#bubbleZone', 'dark'));
+  var ddManuf = [{
+    "description": "FlexFit, 5-Panels, Snapback, 110, 210, Fitted",
+    "imageSrc": "https://raw.githubusercontent.com/attila5287/displaytracker_img/master/img/manuf/yupoong.png",
+    "selected": false,
+    "text": "Yuupong>FlexFit",
+    "value": "YUPOONG",
+  }, {
+    "description": "Otto Snapbacks, 5-Panels, Fitted",
+    "imageSrc": "https://raw.githubusercontent.com/attila5287/displaytracker_img/master/img/manuf/otto.jpg",
+    "selected": false,
+    "text": "Otto Caps",
+    "value": "OTTO",
+  }];
+</script>
+<!-- CODE FOR CHAINED SELECT FIELDS DYNAMICALLY FETCHING DATA FROM DB-->
+<script>
+  $(document).ready(function () {
+    var manuf_select = document.getElementById("manufacturer");
+    var item_select = document.getElementById("item");
 
-function flash(elementID, style) {
-  return function () {
-    console.log('test');
+    $('#manufSelect').ddslick({
+      data: ddManuf,
+      defaultSelectedIndex:2,
+      width: 300,
+      imagePosition: "left",
+      selectText: "Select your favorite social network",
+      defaultSelectedIndex: 0,
+      onSelected: function (data) {
+        console.log(data);
+        console.log('-------------- FETCH ddSlick --------------')
+        var jsondata;
+        var jsonItems = []
+        manufacturer = data.selectedData.value;
+        // modified, try with dynamic data (3) 
+        var url = '/fetch/ddslick/' + manufacturer;
+        console.log('url to fetch data for dynamic field \n' + url)
+        fetch(url).then(
+          function (u) {
+            return u.json();
+          }
+        ).then(
+          function (json) {
+            jsondata = json;
+            jsonItems = jsondata.items;
+            console.log('jsondata.items')
+            console.log(jsonItems)
 
-    d3.select(elementID).attr('class', 'dash-section border-' + style);
-    
-  };
-}
+            $('#itemSelect').ddslick('destroy');
+            $('#itemSelect').ddslick({
+              data: jsonItems,
+              width: 300,
+              height: 200,
+              onSelected: function (data) {
+                console.log(data)
+              }
+            });
+          }
+        )
+      }
+    });
 
+    // this is for the page not to refresh etc. never delete      
+  });
 </script>
 
-    {% endblock %}
+
+{% endblock %}
+
+

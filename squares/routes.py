@@ -1,9 +1,11 @@
+from squares.utils import percEmUp
 from collections import defaultdict
 import random
 import os
 import secrets
 import csv
 import codecs
+import json
 from PIL import (
     Image
 )
@@ -982,10 +984,6 @@ def fetch_items4bubble_bysqr(square_id):
     units = Unit.query.filter_by(square_id=square_id).\
         order_by(Unit.id.asc()).all()
 
-    unit_unqtags = [
-        unit.unique_tag for unit in units
-    ]
-
     unit_dispitem_ids = [
         unit.dispitem_id for unit in units
     ]
@@ -1351,6 +1349,107 @@ def test_info_board():
     )
 
 
+@app.route("/fetch/manuf/info/<int:square_id>", methods=['GET', 'POST'])
+def fetch_manuf_info(square_id):
+    pass
+    ''' RETURNS ITEM CT PER MNF '''
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+
+    unit_mainitem_ids = [
+        unit.mainitem_id for unit in units
+    ]
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    main_items = Item.query.filter(Item.id.in_(unit_mainitem_ids)).all()
+    _data_main = defaultdict(int)
+    for item in main_items:
+        pass
+        _data_main[item.manufacturer] += 1
+
+
+
+    mainJSONArray = [
+        {'manufacturer': key, 'percentage': value, } for key, value in zip(_data_main.keys(), percEmUp(_data_main.values()))
+    ]
+
+    displayed_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+    _data_disp = defaultdict(int)
+    for item in displayed_items:
+        pass
+        _data_disp[item.manufacturer] += 1
+
+
+    dispJSONArray = [
+        {'manufacturer': key, 'percentage': value, } for key, value in zip(_data_disp.keys(), percEmUp(_data_disp.values()))
+]
+    data = {
+        'main': mainJSONArray,
+        'disp': dispJSONArray, 
+        
+    }
+
+
+    return jsonify(data)
+
+
+# info board Most Common Attr
+@app.route("/itemattr/mostcommon/<int:square_id>", methods=['GET', 'POST'])
+def fetch_mostcommon_attr(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+
+
+    disp_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+
+    dispAttrCounter = defaultdict(int)
+
+    for item in disp_items:
+        pass
+        _dict = item.describe_attrs()
+
+        for key, value in _dict.items():
+            pass
+            if value == 'yes':
+                pass
+                dispAttrCounter[key] += 1
+
+    dispArray = [
+        {'attribute': key, 'count': value, } for key, value in zip(dispAttrCounter.keys(), dispAttrCounter.values())
+    ]
+    unit_mainitem_ids = [
+        unit.mainitem_id for unit in units
+    ]
+    main_items = Item.query.filter(Item.id.in_(unit_mainitem_ids)).all()
+    mainAttrCounter = defaultdict(int)
+
+    for item in main_items:
+        pass
+        _dict = item.describe_attrs()
+
+        for key, value in _dict.items():
+            pass
+            if value == 'yes':
+                pass
+                mainAttrCounter[key] += 1
+
+    mainArray = [
+        {'attribute': key, 'count': value, } for key, value in zip(mainAttrCounter.keys(), mainAttrCounter.values())
+    ]
+    data = {
+        "disp": dispArray[:2],
+        "main": mainArray[:2],
+    }
+    
+
+    return jsonify(data)
 
 
 if __name__ == '__main__':

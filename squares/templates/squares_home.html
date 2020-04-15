@@ -1,256 +1,59 @@
 {% extends 'layout_dash.html' %}
 
 {% block content %}
-<!-- prettyprint -->
-<style>
-  /* Pretty printing styles. Used with prettify.js. */
-  /* Vim sunburst theme by David Leibovic */
-
-  pre .str,
-  code .str {
-    color: #65B042;
-  }
-
-  /* string  - green */
-  pre .kwd,
-  code .kwd {
-    color: #E28964;
-  }
-
-  /* keyword - dark pink */
-  pre .com,
-  code .com {
-    color: #AEAEAE;
-    font-style: italic;
-  }
-
-  /* comment - gray */
-  pre .typ,
-  code .typ {
-    color: #89bdff;
-  }
-
-  /* type - light blue */
-  pre .lit,
-  code .lit {
-    color: #3387CC;
-  }
-
-  /* literal - blue */
-  pre .pun,
-  code .pun {
-    color: #fff;
-  }
-
-  /* punctuation - white */
-  pre .pln,
-  code .pln {
-    color: #fff;
-  }
-
-  /* plaintext - white */
-  pre .tag,
-  code .tag {
-    color: #89bdff;
-  }
-
-  /* html/xml tag    - light blue */
-  pre .atn,
-  code .atn {
-    color: #bdb76b;
-  }
-
-  /* html/xml attribute name  - khaki */
-  pre .atv,
-  code .atv {
-    color: #65B042;
-  }
-
-  /* html/xml attribute value - green */
-  pre .dec,
-  code .dec {
-    color: #3387CC;
-  }
-
-  /* decimal - blue */
-
-  pre.prettyprint,
-  code.prettyprint {
-    background-color: #444;
-    text-shadow: none;
-    font-size: 1rem;
-    line-height: 1.6em;
-    border-radius: 3px;
-  }
-
-  pre.prettyprint {
-    width: 95%;
-    margin: 16px auto;
-    padding: 1em;
-    white-space: pre-wrap;
-  }
-
-  /* Specify class=linenums on a pre to get line numbering */
-  ol.linenums {
-    margin-top: 0;
-    margin-bottom: 0;
-    color: #AEAEAE;
-  }
-
-  /* IE indents via margin-left */
-  li.L0,
-  li.L1,
-  li.L2,
-  li.L3,
-  li.L5,
-  li.L6,
-  li.L7,
-  li.L8 {
-    list-style-type: none;
-  }
-
-  /* Alternate shading for lines */
-  li.L1,
-  li.L3,
-  li.L5,
-  li.L7,
-  li.L9 {}
-
-  @media print {
-
-    pre .str,
-    code .str {
-      color: #060;
-    }
-
-    pre .kwd,
-    code .kwd {
-      color: #006;
-      font-weight: bold;
-    }
-
-    pre .com,
-    code .com {
-      color: #600;
-      font-style: italic;
-    }
-
-    pre .typ,
-    code .typ {
-      color: #404;
-      font-weight: bold;
-    }
-
-    pre .lit,
-    code .lit {
-      color: #044;
-    }
-
-    pre .pun,
-    code .pun {
-      color: #440;
-    }
-
-    pre .pln,
-    code .pln {
-      color: #000;
-    }
-
-    pre .tag,
-    code .tag {
-      color: #006;
-      font-weight: bold;
-    }
-
-    pre .atn,
-    code .atn {
-      color: #404;
-    }
-
-    pre .atv,
-    code .atv {
-      color: #060;
-    }
-  }
-</style>
 <!-- styling dash elements borders etc-->
-<style>
-  .dash-section {
-    border: 4px solid;
-    border-color: #073642;
-    border-radius: 22px;
-    margin-bottom: 8px;
-    padding: 4px;
-  }
-
-  .info-section {
-    border: 4px solid;
-    border-color: #073642;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    padding: 4px;
-  }
-</style>
-<!-- dropdown squares -->
-<div class="container-fluid">
-  <div class="row mt-2">
+<div class="container-fluid mt-2">
+  <div class="row">
     <div class="col-lg-10">
-      <div class="row">
+      <div class="row mb-4">
         <!-- -----------------DASH-START-------- -->
         <div class="col-lg-3 text-center">
-          <div class="dash-section">
-            <!-- GAUGE -->
-            <div id="avlb-gauge"></div>
+          <div class="card bg-transparent shadow-before" id="gaugeZone" style="border-radius: 10px;">
+            <div class="dash-section">
+              <!-- GAUGE -->
+              <div id="avlb-gauge"></div>
+            </div>
           </div>
         </div>
         <!-- BUBBLE CHART -->
         <div class="col-lg-5 text-center">
-          <div class="dash-section">
-            <div id="item-bubble"></div>
+          <div class="card bg-transparent shadow-before" id="bubbleZone" style="border-radius: 10px;">
+            <div class="dash-section">
+              <div id="item-bubble"></div>
+            </div>
           </div>
         </div>
+
         <!-- INFOBOARD -->
         <div class="col-lg-4 text-center">
           <div class="info-section">
-            <button class="btn btn-dark btn-block" type="button">
-              <i id="squareName"></i>
-            </button>
-            <div class="d-flex flex-row justify-content-around">
-            </div>
-            <div class="d-flex flex-row justify-content-around">
-              <i id="squareID"></i>
-              <i id="rowCount"></i>
-              <i id="colCount"></i>
-              <p>
-                <i id="squareArea"></i>
-              </p>
-            </div>
-            <div class="list-group">
-
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-th-large" aria-hidden="true"></i>
-                  </h6>
-                  <small>
-                    square id:
-                  </small>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="d-flex flex-column">
+                  <p>id: <i id="squareID"></i></p>
+                  <p>Capacity: <i id="squareArea"></i></p>
                 </div>
-                <p class="mb-1">
-                  <em>
-                    has
 
-                    rows
-                    columns
-                  </em>
-                </p>
-                <small>
-                  Displaying total of
-                  items
+              </div>
+              <div class="col-md-4">
+                <a id="infoSunburst" class="btn btn-dark border-dark mt-2 mx-0 pt-1 px-4 mb-2 text-uppercase 
+            text-light" style="border-width:thick;border-radius: 22px;">
+                  <i>
+                    <i id="squareName"></i>
+                  </i>
+                </a>
 
-                </small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              </div>
+              <div class="col-md-4">
+                <div class="d-flex flex-column">
+                  <p>Rows: <i id="rowCount"></i></p>
+                  <p>Columns: <i id="colCount"></i></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="list-group">
+              <a id="infoGauge" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h6 class="mb-1">
                     <i class="fa fa-tachometer-alt" aria-hidden="true"></i>
@@ -263,10 +66,10 @@
                   main/preferred
                   <i id="avlbItemsCount"></i>
                   items on display
-                  <i id="avlbItemsPerc"></i>
+                  <i id="avlbItemsPerc" class="text-primary"></i>
                 </small>
               </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <a id="infoPie" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h6 class="mb-1">
                     <i class="fa fa-pie-chart" aria-hidden="true"></i>
@@ -275,16 +78,21 @@
                     Manufacturer
                   </small>
                 </div>
+
+
                 <small>
-                  Displayed Items: % OTTO and % YUPOONG
-                </small><br>
+                  Displayed Items:
+                  <em id="manufDisp" class="text-primary"></em>
+                </small>
+                <br>
                 <small>
-                  <em>
-                    Main Items: % OTTO and % YUPOONG
+                  Main Items:
+                  <em id="manufMain" class="text-primary">
                   </em>
                 </small>
               </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+
+              <a id="infoBubble" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h6 class="mb-1">
                     <i class="fa fa-braille" aria-hidden="true"></i>
@@ -293,11 +101,15 @@
                     Most In Common
                   </small>
                 </div>
-                <p class="mb-1">
-                  Most common attributes
+                <p class="mb-0"> Displaying:
+                  <em id="dispMostCommon" class="text-primary"></em>
                 </p>
+                <p class="mb-1"> Main/Pref:
+                  <em id="mainMostCommon" class="text-primary"></em>
+                </p>
+
               </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <a id="infoHist" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h6 class="mb-1">
                     <i class="fa fa-bar-chart" aria-hidden="true"></i>
@@ -314,21 +126,31 @@
             </div>
           </div>
         </div>
-
+      </div>
+      <div class="row mt-2">
         <!-- PIE CHART -->
         <div class="col-lg-4 text-center">
-          <div class="dash-section">
-            <div id="manuf-pie"></div>
+          <div class="card bg-transparent shadow-before" id="pieZone" style="border-radius: 10px;">
+            <div class="dash-section">
+              <div id="manuf-pie"></div>
+            </div>
           </div>
+
         </div>
         <!-- HISTOGRAM -->
         <div class="col-lg-4 text-center">
-          <div class="dash-section">
-            <div id="histogram-bar-chart"></div>
+          <div class="card bg-transparent shadow-before" id="histZone" style="border-radius: 10px;">
+            <div class="dash-section">
+              <div id="histogram-bar-chart"></div>
+            </div>
           </div>
         </div>
         <div class="col-lg-4 text-center">
-          <div id="models-sunburst">
+          <div class="card bg-transparent shadow-before" id="sunburstZone" style="border-radius: 10px;">
+            <div class="dash-section">
+              <div id="models-sunburst">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -338,7 +160,7 @@
     <!-- sidebar -->
     <div class="col-lg-2">
       <div class="sidebar-section px-1">
-        <div class="text-centersidebar-section  py-0 mt-0">
+        <div class="text-center py-0 mt-0">
           <img class="img-fluid mt-0 mb-1" alt="sidebar top img"
             src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_denver_realPhoto.png"
             style="height: 8rem;">
@@ -349,18 +171,18 @@
           <div class="form-group">
             {{ form.csrf_token }}
             <i class="fas fa-edit text-muted"></i>
-            {{form.opts.label(class="text-muted mb-1", style="font-size:6px;")}}
-            {{form.opts(class="form-control border-primary text-center mb-2 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
+            {{form.opts.label(class="text-muted mb-0", style="font-size:6px;")}}
+            {{form.opts(class="custom-select border-primary text-center mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
           </div>
 
-          <button type="button" class="btn btn-danger btn-lg btn-block  sidebar-section border-success py-1 mb-0 mt-1"
+          <button type="button" class="btn btn-dark btn-block sidebar-section text-secondary py-1 mb-0 mt-1"
             type="submit" style="font-size:1rem;">
             <i class="fa fa-th-large" aria-hidden="true"></i>
             GO TO SQUARE
           </button>
 
         </form>
-        <script src="{{url_for('static', filename='dashboard.js') }}"></script>
+
         <div class="list-group sidebar-section text-center mt-1 mb-0" style="border-radius: 4px;">
           <a href="/register" class="list-group-item list-group-item-action">
             <i class="fas fa-registered    "></i>
@@ -381,405 +203,13 @@
             style="height: 7rem;">
         </div>
       </div>
-
-      <!-- BUTTONS FOR RE-START ALL SYSTEM -->
-      <div class="row my-2 mx-0">
-        <a name="" id="" class="btn btn-info btn-block" href="" role="button">
-          <i class="fas fa-terminal float-left"></i><strong></strong><br>
-        </a>
-        <p>
-          Create All Ten Squares
-        </p>
-        <a name="" id="" class="btn btn-primary btn-block" href="" role="button">
-          <i class="fas fa-terminal float-left"></i><strong></strong><br>
-        </a>
-        <p>
-          Create First Units
-        </p>
-        <a name="" id="" class="btn btn-warning btn-block" href="" role="button">
-          <i class="fas fa-terminal float-left"></i><strong></strong><br>
-        </a>
-        <p>
-          Fix First Units' Main Item ID
-        </p>
-        <a name="" id="" class="btn btn-info btn-block" href="" role="button">
-          <i class="fas fa-terminal float-left"></i><strong></strong><br>
-        </a>
-        <p>
-          Update First Units' MainItemInvOut
-        </p>
-      </div>
     </div>
 
 
 
-    <!-- gauge top left -->
-    <script>
-      gaugeMeUp(1);
-      bubbleMeup(1);
-      pieMeUp(1);
-      histogramMeUp(1);
-      infoBoardSquare(1);
-      infoBoardAvlbCount(1);
-      infoBoardAvlbPerc(1);
-      sunBurnMeUp();
 
-
-
-      var $squareSelect = document.getElementById("opts");
-
-      $squareSelect.onchange = function () {
-        chosenSquare = $squareSelect.value;
-        gaugeMeUp(chosenSquare);
-        bubbleMeup(chosenSquare);
-        pieMeUp(chosenSquare);
-        histogramMeUp(chosenSquare);
-        infoBoardSquare(chosenSquare);
-        infoBoardAvlbCount(chosenSquare);
-        infoBoardAvlbPerc(chosenSquare);
-
-      }
-
-      function gaugeMeUp(square) {
-        Plotly.d3.json(`/fetch/main/avlb/` + square, function (error, percAvlb) {
-          console.log(percAvlb)
-          var data = [{
-            type: "indicator",
-            mode: "gauge+number+delta",
-            value: percAvlb,
-            title: {
-              text: "Main-Item-Avlbty-%",
-              font: {
-                size: 16
-              }
-            },
-            delta: {
-              reference: 50,
-              increasing: {
-                color: "rgb(0, 43, 54)"
-              }
-            },
-            gauge: {
-              axis: {
-                range: [null, 100],
-                tickwidth: 1,
-                tickcolor: "#B58900"
-              },
-              bar: {
-                color: "#6610f2",
-                line: {
-                  color: "#002B36",
-                  width: 4
-                },
-              },
-              bgcolor: "#002B36",
-              borderwidth: 3,
-              bordercolor: "#B58900",
-              steps: [{
-                  range: [0, 30],
-                  color: "#6f42c1"
-                },
-                {
-                  range: [30, 50],
-                  color: "#268BD2"
-                }
-              ],
-              threshold: {
-                line: {
-                  color: "#B58900",
-                  width: 8
-                },
-                thickness: 0.75,
-                value: 100
-              }
-            }
-          }];
-          var layout = {
-            plot_bgcolor: "#002B36",
-            paper_bgcolor: "#002B36",
-            responsive: true,
-            margin: {
-              t: 25,
-              r: 25,
-              l: 25,
-              b: 25
-            },
-            font: {
-              color: "#B58900",
-              family: "monospace"
-            }
-          };
-          $gauge = document.getElementById('avlb-gauge');
-          Plotly.newPlot($gauge, data, layout);
-
-        });
-      }
-
-      function bubbleMeup(square) {
-        Plotly.d3.json('/itemattr/bubble/' + square, function (error, data) {
-          if (error)
-            return console.warn(error);
-          // Create the Trace
-          var trace1 = {
-            x: data[0]["x"],
-            y: data[0]["y"],
-            mode: 'markers',
-            marker: {
-              size: data[0]["y"],
-              sizemode: 'diameter',
-              color: 'rgba(190, 47, 195, 0.631);',
-              opacity: 0.99,
-              sizeref: 0.8,
-              line: {
-                color: '#268BD2',
-                width: 2
-              }
-            }
-          };
-          var layout = {
-            plot_bgcolor: "#002B36",
-            paper_bgcolor: "#002B36",
-            showlegend: false,
-            responsive: true,
-            margin: {
-              t: 12
-            },
-            padding: 1,
-            type: "bar",
-            responsive: true,
-            xaxis: {
-              tickfont: {
-                size: 10,
-                color: '#B58900',
-              },
-              showgrid: true,
-              zeroline: false,
-              showline: false,
-              mirror: 'ticks',
-              gridcolor: '#073642',
-              gridwidth: 0.05,
-              zerolinecolor: '#002B36',
-              zerolinewidth: 0.25,
-              linecolor: '#B58900',
-              linewidth: 0.25,
-            },
-            yaxis: {
-              tickfont: {
-                size: 10,
-                color: '#B58900',
-              },
-              showgrid: true,
-              zeroline: false,
-              showline: false,
-              mirror: 'ticks',
-              gridcolor: '#073642',
-              gridwidth: 0.05,
-              zerolinecolor: '#002B36',
-              zerolinewidth: 0.25,
-              linecolor: '#B58900',
-              linewidth: 0.25,
-            },
-          };
-          var data = [trace1];
-          var $bubble = document.getElementById('item-bubble');
-          Plotly.newPlot($bubble, data, layout);
-        });
-      }
-
-      function pieMeUp(square) {
-        Plotly.d3.json('/manuf/pie/' + square, function (error, data) {
-          if (error)
-            return console.warn(error);
-          var trace1 = {
-            labels: data[0]["labels"],
-            values: data[0]["values"],
-            type: "pie",
-            marker: {
-              colors: [
-                '#268BD2',
-                '#6f42c1',
-                '#D33682',
-                '#2AA198',
-                '#CB4B16',
-                '#FDF6E3',
-                '#073642',
-              ],
-              opacity: 0.99,
-              line: {
-                color: '#002B36',
-                width: 8
-              }
-            }
-          };
-          var layout = {
-            plot_bgcolor: "#002B36",
-            paper_bgcolor: "#002B36",
-            responsive: true,
-            showgrid: true,
-            legend: {
-              font: {
-                color: '#B58900',
-              },
-            }
-          };
-          var data = [trace1];
-          var $pie = document.getElementById('manuf-pie');
-          Plotly.plot($pie, data, layout);
-        });
-      }
-
-      function histogramMeUp(square) {
-        Plotly.d3.json('/itemattr/histogram/' + square, function (error, data) {
-          if (error)
-            return console.warn(error);
-          // Create the Trace
-          var trace1 = {
-            x: data[0]["x"],
-            y: data[0]["y"],
-            type: "bar",
-            marker: {
-              color: '#6610f2',
-              opacity: 0.99,
-              line: {
-                color: '#002B36',
-                width: 1
-              }
-            }
-          };
-          // Create the data array for the plot
-          var data = [trace1];
-          var layout = {
-            margin: {
-              t: 4
-            },
-            padding: 1,
-            type: "bar",
-            responsive: true,
-            plot_bgcolor: "#002B36",
-            paper_bgcolor: "#002B36",
-            xaxis: {
-              tickfont: {
-                size: 10,
-                color: '#B58900',
-              },
-              showgrid: true,
-              zeroline: false,
-              showline: false,
-              mirror: 'ticks',
-              gridcolor: '#073642',
-              gridwidth: 0.05,
-              zerolinecolor: '#002B36',
-              zerolinewidth: 0.25,
-              linecolor: '#B58900',
-              linewidth: 0.25,
-            },
-            yaxis: {
-              tickfont: {
-                size: 10,
-                color: '#B58900',
-              },
-              showgrid: true,
-              zeroline: false,
-              showline: false,
-              mirror: 'ticks',
-              gridcolor: '#073642',
-              gridwidth: 0.05,
-              zerolinecolor: '#002B36',
-              zerolinewidth: 0.25,
-              linecolor: '#B58900',
-              linewidth: 0.25,
-            },
-          };
-          var $histogram = document.getElementById('histogram-bar-chart');
-          Plotly.newPlot($histogram, data, layout);
-        });
-      }
-
-      function infoBoardSquare(square) {
-        var queryURL = "/fetch/square/info/" + square;
-        d3.json(queryURL, function (error, response) {
-          if (error)
-            return console.warn(error);
-          console.log(response);
-          console.log("type", typeof (response));
-          var square = response.data[0];
-          d3.select('#squareID').text(square.id).attr("class", "text-primary").style("font-size", "1rem");
-          d3.select('#squareName').text(square.name).attr("class", "text-primary");
-          d3.select('#rowCount').text(square.row_count).attr("class", "text-primary").style("font-size", "1rem");
-          d3.select('#colCount').text(square.col_count).attr("class", "text-primary").style("font-size", "1rem");
-          var squareArea = square.row_count * square.col_count;
-          d3.select('#squareArea').text(squareArea).attr("class", "text-primary").style("font-size", "1rem");
-        });
-      }
-
-      function infoBoardAvlbCount(square) {
-        var queryURL = "/fetch/main/avlb/count/" + square;
-        d3.json(queryURL, function (error, response) {
-          if (error)
-            return console.warn(error);
-          console.log(response);
-          console.log("type", typeof (response));
-          d3.select('#avlbItemsCount').text(response).attr("class", "text-primary").style("font-size", "1rem");
-        });
-      }
-
-      function infoBoardAvlbPerc(square) {
-        var queryURL = "/fetch/main/avlb/perc/" + square;
-        d3.json(queryURL, function (error, response) {
-          if (error)
-            return console.warn(error);
-
-          console.log(response);
-
-          console.log("type", typeof (response));
-
-          d3.select('#avlbItemsPerc').text(response + "%").attr("class", "text-muted").style("font-size", "1rem");
-        });
-      }
-
-      
-
-      function sunBurnMeUp() {
-        var labels = ['square', 'unit', 'item-Main', 'item-Disply', 'item', 'item'];
-        var parents = ['', 'square', 'unit', 'unit', 'item-Main', 'item-Disply'];
-        var data = [{
-          type: "sunburst",
-          labels: labels,
-          parents: parents,
-          values: [54, 24, 12, 12, 6, 6],
-          outsidetextfont: {
-            size: 14,
-            color: "#377eb8"
-          },
-          leaf: {
-            opacity: 0.4
-          },
-          marker: {
-            line: {
-              width: 2
-            }
-          },
-        }];
-        var layout = {
-          plot_bgcolor: "#002B36",
-          paper_bgcolor: "#002B36",
-          responsive: true,
-          margin: {
-            l: 0,
-            r: 0,
-            b: 0,
-            t: 0
-          },  sunburstcolorway:[
-          "#00cc9",'#B58900',"#636efa","#EF553B",
-  '#6610f2', '#6f42c1'
-  ],   extendsunburstcolorway: true
-        };
-        Plotly.newPlot('models-sunburst', data, layout);
-      }
-    </script>
-
-
-    <!-- SQUARE LAYOUT AS BUTTONS -->
+    <div class="container">
+      <!-- SQUARE LAYOUT AS BUTTONS -->
     <div class="row">
       {% for square in squares[:-3] %}
       <div class="col-md-3 offset-md-7 text-left">
@@ -796,7 +226,7 @@
       </div>
 
       <div class="col-md-2">
-        <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg btn-rounded py-5 mb-1"
+        <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg btn-rounded py-5 px-0 mb-1"
           href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
           style="border-radius: 1rem; border-width: medium;">
           <i class="fas fa-grip-vertical fa-2x text-secondary">
@@ -846,5 +276,8 @@
       </div>
 
     </div>
+    </div>
 
+
+    <script src="{{url_for('static', filename='dashboard.js') }}"></script>
     {% endblock %}

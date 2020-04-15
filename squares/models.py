@@ -216,6 +216,36 @@ class Item(db.Model):
         ]
         return {value: key for key, value in zip(_class_attr,_inst_values) if value is 'yes'}
 
+    def describe_attrs(self):
+        '''GENERATES A DICT OF ITEM PHYSICAL PROPERTIES FOR EASE OF FRONT END DESIGN FOR INV-HOME'''
+        pass
+        labels = [
+            'Is Snap Back',
+            'Has Flat Bill',
+            'Has Mesh Back',
+            'Is Flex Fit',
+            'Is Adjustable',
+            'Is Youth Size',
+            'Is Fitted',
+            'Has Curved Bill',
+            'Is Unstructured',
+        ]
+        properties = [
+            self.is_snapback,
+            self.has_flatbill,
+            self.has_meshback,
+            self.is_flexfit,
+            self.is_adjustable,
+            self.is_youth,
+            self.is_fitted,
+            self.has_curvedbill,
+            self.is_unstructured,
+        ]
+        return dict(zip(labels, properties))
+
+
+
+
     def __repr__(self):
         pass
         str_list = [
@@ -262,8 +292,9 @@ class Unit(db.Model):
     
     def mainitem_restck(self):
         pass
+
         self.maininv_out = 'no'
-        
+
 
     def __repr__(self):
         pass
@@ -280,5 +311,7 @@ class Unit(db.Model):
         ]
 
         return '\n'.join(str_list)
+
+
 
 

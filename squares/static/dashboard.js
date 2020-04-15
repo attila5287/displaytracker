@@ -1,103 +1,128 @@
-  gaugeMeUp(1);
-  bubbleMeup(1);
-  pieMeUp(1);  
-  histogramMeUp(1);
-  var $squareSelect = document.getElementById("opts");
+startWearingPurpleNow();
+gaugeMeUp(1);
+bubbleMeup(1);
+pieMeUp(1);
+histogramMeUp(1);
+infoBoardSquare(1);
+infoBoardAvlbCount(1);
+infoBoardAvlbPerc(1);
+sunBurnMeUp();
+infoBoardManuf(1);
+infoBoardMostCommon(1);
 
+var $squareSelect = document.getElementById("opts");
+
+dashboardUpdateAll();
+
+function dashboardUpdateAll() {
   $squareSelect.onchange = function () {
-    dropdownSelected = $squareSelect.value;
-    gaugeMeUp(dropdownSelected);
-    bubbleMeup(dropdownSelected);
-    pieMeUp(dropdownSelected);
-    histogramMeUp(dropdownSelected);
-    fetch('/fetch/square/info/'+dropdownSelected)
-                .then((response) => {
-                  return response.json();
-                })
-      .then((data) => {
-                  console.log('data');
-                  console.log(data);
-                });
+    chosenSquare = $squareSelect.value;
+    gaugeMeUp(chosenSquare);
+    bubbleMeup(chosenSquare);
+    pieMeUp(chosenSquare);
+    histogramMeUp(chosenSquare);
+    infoBoardSquare(chosenSquare);
+    infoBoardAvlbCount(chosenSquare);
+    infoBoardAvlbPerc(chosenSquare);
+    infoBoardManuf(chosenSquare);
+  };
+}
 
-  }
+function startWearingPurpleNow() {
+  d3.select('#infoBubble')
+    .on("mouseenter", flashEmUp('#bubbleZone'))
+    .on("mouseleave", flashEmDown('#bubbleZone'));
+  d3.select('#infoGauge')
+    .on("mouseenter", flashEmUp('#gaugeZone'))
+    .on("mouseleave", flashEmDown('#gaugeZone'));
+  d3.select('#infoPie')
+    .on("mouseenter", flashEmUp('#pieZone'))
+    .on("mouseleave", flashEmDown('#pieZone'));
+  d3.select('#infoHist')
+    .on("mouseenter", flashEmUp('#histZone'))
+    .on("mouseleave", flashEmDown('#histZone'));
+  d3.select('#infoSunburst')
+    .on("mouseenter", flashEmUp('#sunburstZone'))
+    .on("mouseleave", flashEmDown('#sunburstZone'));  
+}
 
-  function gaugeMeUp(square) {
-      Plotly.d3.json(`/fetch/main/avlb/` + square, function (error, percAvlb) {
-        console.log(percAvlb)
-        var data = [{
-          type: "indicator",
-          mode: "gauge+number+delta",
-          value: percAvlb,
-          title: {
-            text: "Main-Item-Avlbty-%",
-            font: {
-              size: 16
-            }
+function gaugeMeUp(square) {
+  Plotly.d3.json(`/fetch/main/avlb/` + square, function (error, percAvlb) {
+    console.log(percAvlb)
+    var data = [{
+      type: "indicator",
+      mode: "gauge+number+delta",
+      value: percAvlb,
+      title: {
+        text: "Main-Item-Avlbty-%",
+        font: {
+          size: 16
+        }
+      },
+      delta: {
+        reference: 50,
+        increasing: {
+          color: "rgb(0, 43, 54)"
+        }
+      },
+      gauge: {
+        axis: {
+          range: [null, 100],
+          tickwidth: 1,
+          tickcolor: "#B58900"
+        },
+        bar: {
+          color: "#6610f2",
+          line: {
+            color: "#002B36",
+            width: 4
           },
-          delta: {
-            reference: 50,
-            increasing: {
-              color: "rgb(0, 43, 54)"
-            }
+        },
+        bgcolor: "#002B36",
+        borderwidth: 3,
+        bordercolor: "#B58900",
+        steps: [{
+            range: [0, 30],
+            color: "#6f42c1"
           },
-          gauge: {
-            axis: {
-              range: [null, 100],
-              tickwidth: 1,
-              tickcolor: "#B58900"
-            },
-            bar: {
-              color: "#6610f2",
-              line: {
-                color: "#002B36",
-                width: 4
-              },
-            },
-            bgcolor: "#002B36",
-            borderwidth: 3,
-            bordercolor: "#B58900",
-            steps: [{
-              range: [0, 30],
-              color: "#6f42c1"
-            },
-            {
-              range: [30, 50],
-              color: "#268BD2"
-            }
-            ],
-            threshold: {
-              line: {
-                color: "#B58900",
-                width: 8
-              },
-              thickness: 0.75,
-              value: 100
-            }
+          {
+            range: [30, 50],
+            color: "#268BD2"
           }
-        }];
-        var layout = {
-          plot_bgcolor: "#002B36",
-          paper_bgcolor: "#002B36",
-          responsive: true,
-          margin: {
-            t: 25,
-            r: 25,
-            l: 25,
-            b: 25
-          },
-          font: {
+        ],
+        threshold: {
+          line: {
             color: "#B58900",
-            family: "monospace"
-          }
-        };
-        $gauge = document.getElementById('avlb-gauge');
-        Plotly.newPlot($gauge, data, layout);
-      });
-    }
-  
+            width: 8
+          },
+          thickness: 0.75,
+          value: 100
+        }
+      }
+    }];
+    var layout = {
+      plot_bgcolor: "#002B36",
+      paper_bgcolor: "#002B36",
+      responsive: true,
+      margin: {
+        t: 25,
+        r: 25,
+        l: 25,
+        b: 25
+      },
+      font: {
+        color: "#B58900",
+        family: "monospace"
+      }
+    };
+    $gauge = document.getElementById('avlb-gauge');
+    Plotly.newPlot($gauge, data, layout);
 
-  function bubbleMeup(square) {
-  Plotly.d3.json('/itemattr/bubble/'+square, function (error, data) {
+  });
+}
+
+function bubbleMeup(square) {
+  Plotly.d3.json('/itemattr/bubble/' + square, function (error, data) {
     if (error)
       return console.warn(error);
     // Create the Trace
@@ -110,7 +135,7 @@
         sizemode: 'diameter',
         color: 'rgba(190, 47, 195, 0.631);',
         opacity: 0.99,
-        sizeref: 0.8,
+        sizeref: 0.5,
         line: {
           color: '#268BD2',
           width: 2
@@ -167,12 +192,11 @@
   });
 }
 
-
-  function pieMeUp(square) {
-    Plotly.d3.json('/manuf/pie/' + square, function (error, data) {
-      if (error)
+function pieMeUp(square) {
+  Plotly.d3.json('/manuf/pie/' + square, function (error, data) {
+    if (error)
       return console.warn(error);
-      var trace1 = {
+    var trace1 = {
       labels: data[0]["labels"],
       values: data[0]["values"],
       type: "pie",
@@ -193,7 +217,7 @@
         }
       }
     };
-      var layout = {
+    var layout = {
       plot_bgcolor: "#002B36",
       paper_bgcolor: "#002B36",
       responsive: true,
@@ -204,14 +228,14 @@
         },
       }
     };
-      var data = [trace1];
-      var $pie = document.getElementById('manuf-pie');
-      Plotly.plot($pie, data, layout);
+    var data = [trace1];
+    var $pie = document.getElementById('manuf-pie');
+    Plotly.plot($pie, data, layout);
   });
 }
-  
-  function histogramMeUp(square) {
-  Plotly.d3.json('/itemattr/histogram/'+square, function (error, data) {
+
+function histogramMeUp(square) {
+  Plotly.d3.json('/itemattr/histogram/' + square, function (error, data) {
     if (error)
       return console.warn(error);
     // Create the Trace
@@ -224,7 +248,7 @@
         opacity: 0.99,
         line: {
           color: '#002B36',
-          width: 3
+          width: 1
         }
       }
     };
@@ -275,5 +299,151 @@
     var $histogram = document.getElementById('histogram-bar-chart');
     Plotly.newPlot($histogram, data, layout);
   });
+}
+
+function infoBoardSquare(square) {
+  var queryURL = "/fetch/square/info/" + square;
+  d3.json(queryURL, function (error, response) {
+    if (error)
+      return console.warn(error);
+    console.log(response);
+    console.log("type", typeof (response));
+    var square = response.data[0];
+    d3.select('#squareID').text(square.id).attr("class", "text-primary").style("font-size", "1rem");
+    d3.select('#squareName').text(square.name).attr("class", "text-light");
+    d3.select('#rowCount').text(square.row_count).attr("class", "text-primary").style("font-size", "1rem");
+    d3.select('#colCount').text(square.col_count).attr("class", "text-primary").style("font-size", "1rem");
+    var squareArea = square.row_count * square.col_count;
+    d3.select('#squareArea').text(squareArea).attr("class", "text-primary").style("font-size", "1rem");
+  });
+}
+
+function infoBoardAvlbCount(square) {
+  var queryURL = "/fetch/main/avlb/count/" + square;
+  d3.json(queryURL, function (error, response) {
+    if (error)
+      return console.warn(error);
+    console.log(response);
+    console.log("type", typeof (response));
+    d3.select('#avlbItemsCount').text(response).attr("class", "text-primary").style("font-size", "1rem");
+  });
+}
+
+function infoBoardAvlbPerc(square) {
+  var queryURL = "/fetch/main/avlb/perc/" + square;
+  d3.json(queryURL, function (error, response) {
+    if (error)
+      return console.warn(error);
+
+    console.log(response);
+
+    console.log("type", typeof (response));
+
+    d3.select('#avlbItemsPerc').text(response + "%").style("font-size", "1rem");
+  });
+}
+
+function sunBurnMeUp() {
+  var labels = ['square', 'unit', 'item-Main', 'item-Disply', 'item', 'item'];
+  var parents = ['', 'square', 'unit', 'unit', 'item-Main', 'item-Disply'];
+  var data = [{
+    type: "sunburst",
+    labels: labels,
+    parents: parents,
+    values: [54, 24, 12, 12, 6, 6],
+    outsidetextfont: {
+      size: 14,
+      color: "#377eb8"
+    },
+    leaf: {
+      opacity: 0.4
+    },
+    marker: {
+      line: {
+        width: 2
+      }
+    },
+  }];
+  var layout = {
+    plot_bgcolor: "#002B36",
+    paper_bgcolor: "#002B36",
+    responsive: true,
+    margin: {
+      l: 0,
+      r: 0,
+      b: 0,
+      t: 0
+    },
+    sunburstcolorway: [
+      "#00cc9", '#B58900', "#636efa", "#EF553B",
+      '#6610f2', '#6f42c1'
+    ],
+    extendsunburstcolorway: true
+  };
+  Plotly.newPlot('models-sunburst', data, layout);
+}
+
+function infoBoardManuf(square) {
+  var queryURL = "/fetch/manuf/info/" + square;
+  d3.json(queryURL, function (error, response) {
+    if (error)
+      return console.warn(error);
+    console.log(response);
+    console.log("type", typeof (response));
+    var mainArray = response["main"];
+    var dispArray = response["disp"];
+    innerMain = '';
+    for (let i = 0; i < mainArray.length; i++) {
+      const pairJSON = mainArray[i];
+      innerMain += pairJSON.manufacturer + ': ' + pairJSON.percentage + '%  ';
+    }
+    d3.select('#manufMain').text(innerMain);
+    innerDisp = '';
+    for (let i = 0; i < dispArray.length; i++) {
+      const pairJSON = dispArray[i];
+      innerDisp += pairJSON.manufacturer + ': ' + pairJSON.percentage + '%  ';
+    }
+    d3.select('#manufDisp').text(innerDisp);
+
+  });
+}
+
+function infoBoardMostCommon(square) {
+  var queryURL = "/itemattr/mostcommon/" + square;
+  d3.json(queryURL, function (error, response) {
+    if (error)
+      return console.warn(error);
+    console.log(response);
+    console.log("type", typeof (response));
+    var dispArray = response.disp;
+    var mainArray = response.main;
+    innerDisp = '';
+    for (let i = 0; i < dispArray.length; i++) {
+      const pairJSON = dispArray[i];
+      innerDisp += pairJSON.count + " " + pairJSON.attribute + "; ";
+    }
+    d3.select('#dispMostCommon').text(innerDisp);
+    innerMain = '';
+    for (let i = 0; i < mainArray.length; i++) {
+      const pairJSON = mainArray[i];
+      console.log(pairJSON);
+      innerMain += pairJSON.count + " " + pairJSON.attribute + "; ";
+    }
+    d3.select('#mainMostCommon').text(innerMain);
+  });
+}
+
+function flashEmUp(elementID) {
+  return function () {
+    d3.select(elementID)
+      .attr('class', 'card shadow-after');
+  };
+}
+
+function flashEmDown(elementID) {
+  return function () {
+    d3.select(elementID)
+      .attr('class', 'card bg-transparent shadow-before');
+  };
 }
 

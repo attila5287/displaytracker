@@ -1,3 +1,25 @@
+  .dash-section {
+    padding: 12px;
+  }
+
+  .shadow-before {
+    -webkit-box-shadow: 0 0.125rem 0.25rem rgba(190, 47, 195, 0.231) !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(190, 47, 195, 0.231) !important;
+  }
+
+  .shadow-after {
+    -webkit-box-shadow: 0 1rem 2rem rgba(190, 47, 195, 0.371) !important;
+    box-shadow: 0 1rem 2rem rgba(190, 47, 195, 0.371) !important;
+  }
+
+  .info-section {
+    border: 4px solid;
+    border-color: #073642;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding: 4px;
+  }
+
 .bg-Navy {
   background-color: navy;
 }

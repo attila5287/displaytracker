@@ -6,7 +6,6 @@
   .info-section {
     border: 4px solid;
     border-color: #073642;
-    background-color: ;
     border-radius: 22px;
     margin-bottom: 8px;
     padding: 4px;
@@ -21,121 +20,52 @@
           GAUGE
         </div>
 
+        <!-- BUBBLE CHART -->
         <div class="col-lg-5 text-center">
-          BUBBLE CHART
+          <div class="dash-section" id="bubbleZone">
+            BUBBLE CHART HERE
+          </div>
         </div>
+
         <!-- INFOBOARD -->
         <div class="col-lg-4 text-center">
           <div class="info-section">
             <ul id="info-board" style="list-style-type: square;"></ul>
             <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-th-large" aria-hidden="true"></i>
-                    <i id="squareName"></i>
-                  </h6>
-                  <small>
-                    square id: 
-                    <i id="squareID">
-                    </i>
-                  </small>
-                </div>
-                <p class="mb-1">
-                  <em>
-                  has
-                  <i id="rowCount"></i>
-                  rows
-                  <i id="colCount"></i>
-                  columns
-                  </em>
-                </p>
-                <small>
-                  Displaying total of 
-                  <i id="squareArea"></i> 
-                  items
-
-                </small>
+              <a id="infoBoardBubble">
+                test
               </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-tachometer-alt" aria-hidden="true"></i>
-                  </h6>
-                  <small>
-                    InventoryStatus
-                  </small>
-                </div>
-                <small>
-                  main/preferred 
-                  <i id="avlbItemsCount"></i> 
-                   items on display
-                   <i id="avlbItemsPerc" class="text-muted"></i>% 
-                  
-                </small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                  </h6>
-                  <small>
-                    Manufacturer
-                  </small>
-                </div>
-                <small>
-                  Displayed Items: % OTTO and % YUPOONG
-                </small><br>
-                <small>
-                  <em>
-                    Main Items: % OTTO and % YUPOONG
-                  </em>
-                </small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h6 class="mb-1">
                     <i class="fa fa-braille" aria-hidden="true"></i>
                   </h6>
                   <small>
-                    Most In Common
+                    Most Common Attributes
                   </small>
                 </div>
-                <p class="mb-1">
-                  Most common attributes
+                <p class="mb-0"> Displaying:
+                  <em id="dispMostCommon" class="text-primary"></em>
                 </p>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                    Overall Histogram &middot;
-                  </h6>
-                  <small>
-                    bar
-                  </small>
-                </div>
-                <small>
-                  List all attributes regardless
-                </small>
+                <p class="mb-1"> Main/Pref:
+                  <em id="mainMostCommon" class="text-primary"></em>
+                </p>
               </a>
             </div>
           </div>
         </div>
-
         <div class="col-lg-4 text-center">
           PIE CHART
         </div>
         <div class="col-lg-8 text-center">
           HISTOGRAM
         </div>
-
       </div>
     </div>
     <!-- sidebar -->
     <div class="col-lg-2">
       <div class="sidebar-section px-1">
-        <div class="text-centersidebar-section  py-0 mt-0">
+        <div class="text-center sidebar-section  py-0 mt-0">
           <img class="img-fluid mt-0 mb-1" alt="sidebar top img"
             src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_denver_realPhoto.png"
             style="height: 8rem;">
@@ -157,52 +87,46 @@
           </button>
 
         </form>
-
         <script>
-          var $squareSelect = document.getElementById("opts");
-          $squareSelect.onchange = function () {
-            selectedSqrId = $squareSelect.value;
+          // bubbleZone
+          d3.select('#infoBoardBubble')
+            .on("mouseenter", flash('#bubbleZone', 'secondary'))
+            .on("mouseover", flash('#bubbleZone', 'primary'))
+            .on("mouseout", flash('#bubbleZone', 'secondary'))
+            .on("mouseleave", flash('#bubbleZone', 'dark'));
 
-            var queryURL = "/fetch/main/avlb/count/" + selectedSqrId;
-            d3.json(queryURL, function (error, response) {
-              if (error) return console.warn(error);
-              console.log(response);
-              console.log("type", typeof (response));
-              d3.select('#avlbItemsCount').text(response).attr("class", "text-primary").style("font-size", "1rem");              
-
-              d3.select('#avlbItemsPerc').text(percentage.round()).attr("class", "text-primary").style("font-size", "1rem");              
-               
-              
-            });
-
+          function flash(elementID, style) {
+            return function () {
+              console.log('test');
+              d3.select(elementID).attr('class', 'dash-section border-' + style);
+            };
           }
-          
         </script>
+        <script src="{{ url_for('static', filename='infoboard.js') }}"></script>
 
 
 
-        <!-- <script src="{{url_for('static', filename='infoboard.js') }}"></script> -->
-        <div class="list-group sidebar-section text-center mt-1 mb-0" style="border-radius: 4px;">
-          <a href="/register" class="list-group-item list-group-item-action">
-            <i class="fas fa-registered    "></i>
-            Register
-          </a>
-          <a href="/login" class="list-group-item list-group-item-action">
-            <i class="fas fa-sign-in-alt"></i>
-            Login
-          </a>
-          <a href="/about" class="list-group-item list-group-item-action">
-            <i class="fas fa-info-circle"></i>
-            About
-          </a>
-        </div>
-        <div class="text-center py-0">
-          <img class="img-fluid mb-2 mt-0" alt="sidebar bottom img"
-            src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_bottom_waves05.png"
-            style="height: 7rem;">
-        </div>
       </div>
     </div>
+    </div>
+    </div>
 
+<script>
+  d3.select('#infoBoardBubble')
+  .on("mouseenter", flash('#bubbleZone', 'secondary'))
+  .on("mouseover", flash('#bubbleZone', 'primary'))
+  .on("mouseout", flash('#bubbleZone', 'secondary'))
+  .on("mouseleave", flash('#bubbleZone', 'dark'));
+
+function flash(elementID, style) {
+  return function () {
+    console.log('test');
+
+    d3.select(elementID).attr('class', 'dash-section border-' + style);
+    
+  };
+}
+
+</script>
 
     {% endblock %}

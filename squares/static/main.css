@@ -1,104 +1,141 @@
-  .dash-section {
-    padding: 12px;
-  }
+.i {
+  font-size: 6px;
+}
 
-  .shadow-before {
-    -webkit-box-shadow: 0 0.125rem 0.25rem rgba(190, 47, 195, 0.231) !important;
-    box-shadow: 0 0.125rem 0.25rem rgba(190, 47, 195, 0.231) !important;
-  }
+.dash-section {
+  padding: 12px;
+}
 
-  .shadow-after {
-    -webkit-box-shadow: 0 1rem 2rem rgba(190, 47, 195, 0.371) !important;
-    box-shadow: 0 1rem 2rem rgba(190, 47, 195, 0.371) !important;
-  }
+.shadow-gold {
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(190, 170, 147, 0.271) !important;
+  box-shadow: 0 0.5rem 1rem rgba(190, 170, 147, 0.271) !important;
+}
 
-  .info-section {
-    border: 4px solid;
-    border-color: #073642;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    padding: 4px;
-  }
+.shadow-before {
+  -webkit-box-shadow: 0 0.125rem 0.25rem rgba(190, 47, 195, 0.231) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(190, 47, 195, 0.231) !important;
+}
+
+.shadow-after {
+  -webkit-box-shadow: 0 1rem 2rem rgba(190, 47, 195, 0.371) !important;
+  box-shadow: 0 1rem 2rem rgba(190, 47, 195, 0.371) !important;
+}
+
+.info-section {
+  border-radius: 4px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  margin-right: 4px;
+  margin-left: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-bottom: 8px;
+}
 
 .bg-Navy {
   background-color: navy;
 }
+
 .bg-Natural {
   background-color: antiquewhite;
 }
+
 .bg-Maroon {
   background-color: maroon;
 }
+
 .bg-Brown {
   background-color: brown;
 }
+
 .bg-Kelly {
   background-color: chartreuse;
 }
+
 .bg-Carblue {
   background-color: skyblue;
 }
+
 .bg-Heathergrey {
   background-color: lightslategrey;
 }
+
 .bg-Darkgrey {
   background-color: darkgrey;
 }
+
 .bg-Camo {
   background-color: darkolivegreen;
 }
+
 .bg-Floral {
   background-color: fuchsia;
 }
+
 .bg-Tan {
   background-color: tan;
 }
+
 .bg-Tropicgrn {
   background-color: mediumaquamarine;
 }
+
 .bg-White {
   background-color: white;
 }
+
 .bg-Black {
   background-color: black;
 }
+
 .bg-Red {
   background-color: firebrick;
 }
+
 .bg-Gold {
   background-color: goldenrod;
 }
+
 .bg-Orange {
   background-color: peru;
 }
+
 .bg-Silver {
   background-color: silver;
 }
+
 .bg-Charcoal {
   background-color: darkgray;
 }
+
 .bg-Royal {
   background-color: royalblue;
 }
+
 .bg-Teal {
   background-color: teal;
 }
+
 .bg-Purple {
   background-color: purple;
 }
+
 .bg-Pink {
-  background-color:  hotpink;
+  background-color: hotpink;
 }
+
 .bg-Green {
   background-color: green;
 }
 
 .rotated-text {
-    -webkit-transform: rotate(-60deg);
-    -ms-transform: rotate(-60deg);
-    transform: rotate(-60deg);
-    font-size: larger;
+  -webkit-transform: rotate(-60deg);
+  -ms-transform: rotate(-60deg);
+  transform: rotate(-60deg);
+  font-size: larger;
 }
+
 .bg-yes {
   background-color: rgba(102, 205, 171, 0.781);
 }
@@ -108,13 +145,13 @@
 }
 
 .square-section {
-  border: 4px solid ;
+  border: 4px solid;
   border-radius: 22px;
   margin-bottom: 16px;
 }
 
 .item-section {
-  border: 5px solid ;
+  border: 5px solid;
   border-radius: 22px;
   margin-bottom: 12px;
   margin-top: 8px;
@@ -127,6 +164,7 @@
 html {
   font-size: 10px;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -140,8 +178,9 @@ html {
 .sidebar-h5 {
   font-family: initial;
 }
+
 .sidebar-section {
-  border: 4px solid ;
+  border: 4px solid;
   border-color: rgb(53, 108, 128);
   border-radius: 10px;
   margin-bottom: 20px;
@@ -152,12 +191,16 @@ html {
 .text-aquaseethru {
   color: rgba(0, 229, 255, 0.731);
 }
-.bg-orgseethru {  
+
+.bg-orgseethru {
   background-color: #f6873db7;
 }
-.bg-purpseethru {  
+
+.bg-purpseethru {
   background-color: rgba(190, 47, 195, 0.631);
-}w
+}
+
+w
 
 /* ----- default for boilerplate from corey's----- */
 body {
@@ -166,7 +209,12 @@ body {
   margin-top: 3rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   /* color: #444444; */
 }
 
@@ -190,14 +238,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .content-section {
   padding: 10px 20px;
-  border: 2px solid ;
+  border: 2px solid;
   border-radius: 12px;
   margin-bottom: 20px;
   margin-top: 10px;
 }
 
-.article-title {
-}
+.article-title {}
+
 /* color: #c5b8b8; */
 
 a.article-title:hover {

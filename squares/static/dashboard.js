@@ -30,20 +30,20 @@ function dashboardUpdateAll() {
 
 function startWearingPurpleNow() {
   d3.select('#infoBubble')
-    .on("mouseenter", flashEmUp('#bubbleZone'))
-    .on("mouseleave", flashEmDown('#bubbleZone'));
+    .on("mouseenter", flashEmUp('#bubbleZone','#bubbleDesc'))
+    .on("mouseleave", flashEmDown('#bubbleZone','#bubbleDesc'));
   d3.select('#infoGauge')
-    .on("mouseenter", flashEmUp('#gaugeZone'))
-    .on("mouseleave", flashEmDown('#gaugeZone'));
+    .on("mouseenter", flashEmUp('#gaugeZone','#gaugeDesc'))
+    .on("mouseleave", flashEmDown('#gaugeZone','#gaugeDesc'));
   d3.select('#infoPie')
-    .on("mouseenter", flashEmUp('#pieZone'))
-    .on("mouseleave", flashEmDown('#pieZone'));
+    .on("mouseenter", flashEmUp('#pieZone','#pieDesc'))
+    .on("mouseleave", flashEmDown('#pieZone','#pieDesc'));
   d3.select('#infoHist')
-    .on("mouseenter", flashEmUp('#histZone'))
-    .on("mouseleave", flashEmDown('#histZone'));
+    .on("mouseenter", flashEmUp('#histZone','#histDesc'))
+    .on("mouseleave", flashEmDown('#histZone','#histDesc'));
   d3.select('#infoSunburst')
-    .on("mouseenter", flashEmUp('#sunburstZone'))
-    .on("mouseleave", flashEmDown('#sunburstZone'));  
+    .on("mouseenter", flashEmUp('#sunburstZone','#sunburstDesc'))
+    .on("mouseleave", flashEmDown('#sunburstZone','#sunburstDesc'));  
 }
 
 function gaugeMeUp(square) {
@@ -243,6 +243,7 @@ function histogramMeUp(square) {
       x: data[0]["x"],
       y: data[0]["y"],
       type: "bar",
+      orientation: "h",
       marker: {
         color: '#6610f2',
         opacity: 0.99,
@@ -254,12 +255,11 @@ function histogramMeUp(square) {
     };
     // Create the data array for the plot
     var data = [trace1];
-    var layout = {
+    var layout = {      
       margin: {
         t: 4
       },
       padding: 1,
-      type: "bar",
       responsive: true,
       plot_bgcolor: "#002B36",
       paper_bgcolor: "#002B36",
@@ -271,7 +271,6 @@ function histogramMeUp(square) {
         showgrid: true,
         zeroline: false,
         showline: false,
-        mirror: 'ticks',
         gridcolor: '#073642',
         gridwidth: 0.05,
         zerolinecolor: '#002B36',
@@ -280,20 +279,20 @@ function histogramMeUp(square) {
         linewidth: 0.25,
       },
       yaxis: {
+        autorange:"reversed",
         tickfont: {
           size: 10,
           color: '#B58900',
+          showgrid: true,
+          zeroline: false,
+          showline: false,
+          gridcolor: '#073642',
+          gridwidth: 0.05,
+          zerolinecolor: '#002B36',
+          zerolinewidth: 0.25,
+          linecolor: '#B58900',
+          linewidth: 0.25,
         },
-        showgrid: true,
-        zeroline: false,
-        showline: false,
-        mirror: 'ticks',
-        gridcolor: '#073642',
-        gridwidth: 0.05,
-        zerolinecolor: '#002B36',
-        zerolinewidth: 0.25,
-        linecolor: '#B58900',
-        linewidth: 0.25,
       },
     };
     var $histogram = document.getElementById('histogram-bar-chart');
@@ -433,17 +432,23 @@ function infoBoardMostCommon(square) {
   });
 }
 
-function flashEmUp(elementID) {
+function flashEmUp(zoneId, zoneDescId) {
   return function () {
-    d3.select(elementID)
+    d3.select(zoneId)
       .attr('class', 'card shadow-after');
+    d3.select(zoneDescId)
+      .attr('class', 'text-light');
+            
+    
   };
 }
 
-function flashEmDown(elementID) {
+function flashEmDown(zoneId, zoneDescId) {
   return function () {
-    d3.select(elementID)
+    d3.select(zoneId)
       .attr('class', 'card bg-transparent shadow-before');
+    d3.select(zoneDescId)
+      .attr('class', 'text-secondary');    
   };
 }
 

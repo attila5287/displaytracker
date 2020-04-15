@@ -14,6 +14,14 @@
               <div id="avlb-gauge"></div>
             </div>
           </div>
+          <div id="gaugeDesc">
+            <small><em>
+              <i class="fa fa-angle-up" aria-hidden="true"></i>
+              Availaibility gauge shows -percentage- ratio of units stocked with their respective main/preferred items
+            </em>
+            </small>                                
+          </div>
+
         </div>
         <!-- BUBBLE CHART -->
         <div class="col-lg-5 text-center">
@@ -22,32 +30,46 @@
               <div id="item-bubble"></div>
             </div>
           </div>
+          <div id="bubbleDesc">
+            <small><em>
+              <i class="fa fa-angle-up" aria-hidden="true"></i>
+              Bubble size will visualize most common attributes of items on display
+            </em>
+            </small>                                
+          </div>          
         </div>
-
         <!-- INFOBOARD -->
-        <div class="col-lg-4 text-center">
-          <div class="info-section">
-            <div class="row">
+        <div class="col-lg-4">
+          <div class="info-section text-center shadow-gold">
+            <div class="row mx-1">
               <div class="col-md-4">
-                <div class="d-flex flex-column">
-                  <p>id: <i id="squareID"></i></p>
-                  <p>Capacity: <i id="squareArea"></i></p>
+                <div class="d-flex flex-column text-left">
+                  <p>
+                    <i class="fa fa-hashtag" aria-hidden="true"></i>
+                    id: <i id="squareID"></i></p>
+                  <p>
+                    <i class="fa fa-warehouse" aria-hidden="true"></i>
+                    MaxCap:
+                    <i id="squareArea"></i></p>
                 </div>
 
               </div>
+
               <div class="col-md-4">
-                <a id="infoSunburst" class="btn btn-dark border-dark mt-2 mx-0 pt-1 px-4 mb-2 text-uppercase 
-            text-light" style="border-width:thick;border-radius: 22px;">
-                  <i>
-                    <i id="squareName"></i>
-                  </i>
-                </a>
+
+                  <a id="infoSunburst" class="btn btn-dark border-dark text-light" style="border-width:thick;border-radius: 22px;">
+                      <i id="squareName"></i>
+                  </a>
 
               </div>
               <div class="col-md-4">
-                <div class="d-flex flex-column">
-                  <p>Rows: <i id="rowCount"></i></p>
-                  <p>Columns: <i id="colCount"></i></p>
+                <div class="d-flex flex-column text-right">
+                  <p>
+                    <i class="fas fa-arrows-alt-h"> </i>
+                    Rows: <i id="rowCount"></i></p>
+                  <p>
+                    <i class="fas fa-arrows-alt-v"> </i>
+                    Cols: <i id="colCount"></i></p>
                 </div>
               </div>
             </div>
@@ -68,6 +90,22 @@
                   items on display
                   <i id="avlbItemsPerc" class="text-primary"></i>
                 </small>
+              </a>
+              <a id="infoBubble" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">
+                    <i class="fa fa-braille" aria-hidden="true"></i>
+                  </h6>
+                  <small>
+                    Most In Common
+                  </small>
+                </div>
+                <p class="mb-0"> Displaying:
+                  <em id="dispMostCommon" class="text-primary"></em>
+                </p>
+                <p class="mb-1"> Main/Pref:
+                  <em id="mainMostCommon" class="text-primary"></em>
+                </p>
               </a>
               <a id="infoPie" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
@@ -90,25 +128,9 @@
                   <em id="manufMain" class="text-primary">
                   </em>
                 </small>
+                
               </a>
 
-              <a id="infoBubble" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">
-                    <i class="fa fa-braille" aria-hidden="true"></i>
-                  </h6>
-                  <small>
-                    Most In Common
-                  </small>
-                </div>
-                <p class="mb-0"> Displaying:
-                  <em id="dispMostCommon" class="text-primary"></em>
-                </p>
-                <p class="mb-1"> Main/Pref:
-                  <em id="mainMostCommon" class="text-primary"></em>
-                </p>
-
-              </a>
               <a id="infoHist" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h6 class="mb-1">
@@ -125,20 +147,39 @@
               </a>
             </div>
           </div>
+            <small><em>
+              <i class="fa fa-angle-up" aria-hidden="true"></i>
+              InfoBoard will flash related visual when hovering list items, check it out!
+            </em>
+            </small>          
         </div>
       </div>
       <div class="row mt-2">
         <!-- PIE CHART -->
         <div class="col-lg-4 text-center">
+          <div id="pieDesc">
+            <small><em>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+              Pie chart will group and visualize manufacturers of all items on display
+            </em>
+            </small>                                
+          </div>           
           <div class="card bg-transparent shadow-before" id="pieZone" style="border-radius: 10px;">
             <div class="dash-section">
               <div id="manuf-pie"></div>
             </div>
           </div>
-
+         
         </div>
         <!-- HISTOGRAM -->
         <div class="col-lg-4 text-center">
+          <div id="histDesc">
+            <small><em>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+              Histogram will be listing all item attributes on database regardless 
+            </em>
+            </small>                                
+          </div>                    
           <div class="card bg-transparent shadow-before" id="histZone" style="border-radius: 10px;">
             <div class="dash-section">
               <div id="histogram-bar-chart"></div>
@@ -146,12 +187,20 @@
           </div>
         </div>
         <div class="col-lg-4 text-center">
+          <div id="sunburstDesc">
+            <small><em>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+              Sunburst element will visualizing the general concept of Square > Unit > Main Item/ 
+            </em>
+            </small>                                
+          </div>                              
           <div class="card bg-transparent shadow-before" id="sunburstZone" style="border-radius: 10px;">
             <div class="dash-section">
               <div id="models-sunburst">
               </div>
             </div>
           </div>
+
         </div>
 
         <!-- -------------DASH-END------------ -->
@@ -210,72 +259,72 @@
 
     <div class="container">
       <!-- SQUARE LAYOUT AS BUTTONS -->
-    <div class="row">
-      {% for square in squares[:-3] %}
-      <div class="col-md-3 offset-md-7 text-left">
-        <div class="d-flex flex-column">
-          <i class="text-uppercase text-monospace">
-            <i class="fa fa-th-large mr-2" aria-hidden="true">
+      <div class="row">
+        {% for square in squares[:-3] %}
+        <div class="col-md-3 offset-md-7 text-left">
+          <div class="d-flex flex-column">
+            <i class="text-uppercase text-monospace">
+              <i class="fa fa-th-large mr-2" aria-hidden="true">
+              </i>
+              {{square.name }}
+
             </i>
-            {{square.name }}
-
-          </i>
-          <i class="fas fa-arrows-alt-h"> <small>{{square.col_count}}</small></i>
-          <i class="fas fa-arrows-alt-v"> <small>{{square.row_count}}</small></i>
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg btn-rounded py-5 px-0 mb-1"
-          href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
-          style="border-radius: 1rem; border-width: medium;">
-          <i class="fas fa-grip-vertical fa-2x text-secondary">
-          </i>
-        </a>
-      </div>
-      {% endfor %}
-
-      <!-- bottom row -->
-      <div class="d-flex w-100 flex-column-reverse pr-4">
-        <div class="row">
-          {% for square in squares[-3:] %}
-          <div class="col-md-4">
-            <div class="row">
-              <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg px-4 py-1 mx-1"
-                href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
-                style="border-radius: 1rem; border-width: medium;">
-                <i class="fas fa-grip-horizontal text-secondary fa-2x"></i>
-              </a>
-            </div>
-
-            <div class="row text-center">
-              <div class="d-flex flex-column">
-                <i class="text-uppercase text-monospace">
-                  <i class="fa fa-th-large mr-2" aria-hidden="true">
-                  </i>
-                  {{square.name }}
-                </i>
-                <i class="fas fa-arrows-alt-h text-muted">
-                  <small>
-                    {{square.col_count}}
-                  </small>
-
-                </i>
-                <i class="fas fa-arrows-alt-v text-muted">
-                  <small>
-                    {{square.row_count}}
-                  </small>
-
-                </i>
-              </div>
-            </div>
-
+            <i class="fas fa-arrows-alt-h"> <small>{{square.col_count}}</small></i>
+            <i class="fas fa-arrows-alt-v"> <small>{{square.row_count}}</small></i>
           </div>
-          {% endfor %}
         </div>
-      </div>
 
-    </div>
+        <div class="col-md-2">
+          <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg btn-rounded py-5 px-0 mb-1"
+            href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
+            style="border-radius: 1rem; border-width: medium;">
+            <i class="fas fa-grip-vertical fa-2x text-secondary">
+            </i>
+          </a>
+        </div>
+        {% endfor %}
+
+        <!-- bottom row -->
+        <div class="d-flex w-100 flex-column-reverse pr-4">
+          <div class="row">
+            {% for square in squares[-3:] %}
+            <div class="col-md-4">
+              <div class="row">
+                <a name="" id="" class="btn btn-dark border-0 btn-block btn-lg px-4 py-1 mx-1"
+                  href="{{ url_for('square_byid', square_id=square.id) }}" role="button"
+                  style="border-radius: 1rem; border-width: medium;">
+                  <i class="fas fa-grip-horizontal text-secondary fa-2x"></i>
+                </a>
+              </div>
+
+              <div class="row text-center">
+                <div class="d-flex flex-column">
+                  <i class="text-uppercase text-monospace">
+                    <i class="fa fa-th-large mr-2" aria-hidden="true">
+                    </i>
+                    {{square.name }}
+                  </i>
+                  <i class="fas fa-arrows-alt-h text-muted">
+                    <small>
+                      {{square.col_count}}
+                    </small>
+
+                  </i>
+                  <i class="fas fa-arrows-alt-v text-muted">
+                    <small>
+                      {{square.row_count}}
+                    </small>
+
+                  </i>
+                </div>
+              </div>
+
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
     </div>
 
 

@@ -841,8 +841,6 @@ def fetch_itemattrs_bysqr(square_id):
     print(items)
 
     dictOfLists = defaultdict(list)
-    print('dictOfLists init')
-    print(dictOfLists)
 
     for item in items:
         pass
@@ -852,13 +850,8 @@ def fetch_itemattrs_bysqr(square_id):
             pass
             dictOfLists.setdefault(key, list()).append(value)
             
-
-    print('dictOfLists final')
-    print(dictOfLists)
     
     histogram = defaultdict(int)
-    print(' --------- histogram init---------')
-    print(histogram)
     for key, _list in dictOfLists.items():
         pass
         for item_attr in _list:
@@ -870,16 +863,13 @@ def fetch_itemattrs_bysqr(square_id):
                 pass
                 histogram[key] += 0
             
-    print('--------- histogram final ---------')
-    print(histogram)
-    print(histogram.keys())
-    print(histogram.values())
 
 
     data = [{
         "title":'Histogram',
-        "x": list(histogram.keys()),
-        "y": list(histogram.values())
+        "x": list(histogram.values()),
+        "y": list(histogram.keys()),
+        "orientation": "h",
         }
         ]
 
@@ -1192,132 +1182,6 @@ def display_mainitem(square_id):
 
 @app.route("/update/invstatus/<int:square_id>")
 def update_invstatus(square_id):
-    pass
-    square = Square.query.get_or_404(square_id)
-    squareName = square.name
-    units = Unit.query.filter_by(square_id=square_id).all()
-
-    for unit in units:
-        pass
-        item = Item.query.get_or_404(unit.mainitem_id)
-        _updated_status = item.inv_outofstock
-        unit.maininv_out = _updated_status
-        db.session.commit()
-    flash('all units main item inv status updated! Square Name: '+squareName.upper(), 'info')
-
-    return redirect(url_for('sqr_home'))
-
-
-
-@app.route('/random/populate/all')
-def random_populate_all():
-    pass
-    square = Square.query.get_or_404(square_id)
-    squareName = square.name
-    squareRowCount = int(square.row_count)
-    squareColCount = int(square.col_count)
-    
-    items = Item.query.all()
-    list_of_ids = [
-        _item.id for _item in items
-    ]
-    _rows = [
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-        'J',
-        'K',
-        'L',
-        'M',
-        'N',
-        'O',
-        'P',
-        'Q',
-        'R',
-        'S',
-        'T',
-        'U',
-        'V',
-        'W',
-        'X',
-        'Y',
-        'Z',
-    ]
-    _cols = [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15',
-        '16',
-        '17',
-        '18',
-        '19',
-        '20',
-        '21',
-        '22',
-        '23',
-        '24',
-        '25',
-    ]
-
-
-    _rowcols = [
-        row+column for row in _rows[0:squareRowCount] for column in _cols[0:squareColCount]
-    ]
-    _tags = [
-        'S'+str(square_id)+'_'+_position for _position in _rowcols
-    ]
-    units = [
-        Unit(
-            square_id=square_id,
-            pstn_rowcol=_position,
-            unique_tag=_tag,
-            mainitem_id=random.choice(list_of_ids),
-            maininv_out='no',
-            dispitem_id=1,
-        ) for _position, _tag in zip(_rowcols, _tags)
-    ]
-    db.session.add_all(units)
-    db.session.commit()
-    flash('all units populated with random items! square name: '+squareName.upper(), 'primary')
-    return redirect(url_for('sqr_home'))
-
-
-@app.route('/display/mainitem/all')
-def display_mainitem_all():
-    pass
-    square = Square.query.get_or_404(square_id)
-    squareName = square.name
-    units = Unit.query.filter_by(square_id=square_id).all()
-    for unit in units:
-        pass
-        _int = unit.mainitem_id
-        unit.dispitem_id = _int
-        db.session.commit()
-
-    flash('all units now displaying main items! square name: '+squareName.upper(), 'warning')
-    return redirect(url_for('sqr_home'))
-
-
-@app.route("/update/invstatus/all")
-def update_invstatus_all():
     pass
     square = Square.query.get_or_404(square_id)
     squareName = square.name

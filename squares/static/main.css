@@ -200,27 +200,12 @@ html {
   background-color: rgba(190, 47, 195, 0.631);
 }
 
-w
 
 /* ----- default for boilerplate from corey's----- */
 body {
-  /* background: #fafafa; */
-  /* color: #333333; */
   margin-top: 3rem;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  /* color: #444444; */
-}
-
-.bg-steel {
-  background-color: #5f788a;
-}
 
 .site-header .navbar-nav .nav-link {
   color: #f1d2e3;

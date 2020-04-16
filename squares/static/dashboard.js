@@ -9,6 +9,7 @@ infoBoardAvlbPerc(1);
 sunBurnMeUp();
 infoBoardManuf(1);
 infoBoardMostCommon(1);
+ddSlickItemsOf(1);
 
 var $squareSelect = document.getElementById("opts");
 
@@ -17,6 +18,7 @@ dashboardUpdateAll();
 function dashboardUpdateAll() {
   $squareSelect.onchange = function () {
     chosenSquare = $squareSelect.value;
+    
     gaugeMeUp(chosenSquare);
     bubbleMeup(chosenSquare);
     pieMeUp(chosenSquare);
@@ -25,6 +27,8 @@ function dashboardUpdateAll() {
     infoBoardAvlbCount(chosenSquare);
     infoBoardAvlbPerc(chosenSquare);
     infoBoardManuf(chosenSquare);
+    infoBoardMostCommon(chosenSquare);
+    ddSlickItemsOf(chosenSquare);
   };
 }
 
@@ -450,5 +454,18 @@ function flashEmDown(zoneId, zoneDescId) {
     d3.select(zoneDescId)
       .attr('class', 'text-secondary');    
   };
+}
+
+function ddSlickItemsOf(square) {
+  var queryURL = "/fetch/ddslick/square/" + square;
+  d3.json(queryURL, function (error, data) {
+    if (error)
+      return console.warn(error);  
+    $('#itemSelect').ddslick('destroy');
+    $('#itemSelect').ddslick({
+      data: data['disp'],
+      width: 250,
+    });
+  });
 }
 

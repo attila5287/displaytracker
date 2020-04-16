@@ -60,14 +60,14 @@
 
 .demo-content {
   width: 100%;
-  background: #dadada;
+  background: #002B36;
   border: solid 2px #ddd;
   font-size: 1rem;
 }
 
 .demo-live {
   padding: 20px;
-  background: #fff;
+  background: #002B36;
   line-height: 1.4em;
   min-height: 260px;
 }

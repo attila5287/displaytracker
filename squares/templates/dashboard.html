@@ -207,13 +207,13 @@
                     </div>
 
                     <div id="infoDDslick" class="col-md-4">
-                      
-                      
+
+
                       <a class="btn btn-dark border-dark text-light" style="border-width:thick;border-radius: 22px;">
                         <i id="squareName"></i>
                       </a>
-<p class="my-0">
-                        <i class="fas fa-eye"></i> 
+                      <p class="my-0">
+                        <i class="fas fa-eye"></i>
                         <small>
                           <em>
                             on dashboard
@@ -413,10 +413,37 @@
                 border-top: solid 5px rgb(53, 108, 128);
               }
 
+              .dd-container {
+                position: relative;
+                background-color: #002B36;
+                border: solid 3px #002B36;
+              }
+
+              .dd-selected {
+                background-color: #002B36;
+                position: relative;
+                overflow: hidden;
+                display: block;
+                padding: 8px;
+                font-weight: bold;
+                width: 100%;
+                text-align: left;
+                color: #fff;
+                border: solid 3px #002B36;
+                border-radius: 2px;
+              }
+
+              .dd-select {
+                position: relative;
+                cursor: pointer;
+                background-color: #002B36;
+                border: solid 4px rgb(53, 108, 128);
+                border-radius: 6px;
+              }
             </style>
             <div class="container-fluid text-center">
               <div class="d-flex flex-column mt-1 py-1">
-                
+
                 <div id="ddSlickDesc">
                   <small>
                     <em>
@@ -428,9 +455,9 @@
                   </small>
                 </div>
                 <div id="ddslickZone" class="card bg-transparent shadow-before">
-                <div id="itemSelect">
+                  <div id="itemSelect">
+                  </div>
                 </div>
-              </div>
               </div>
 
             </div>

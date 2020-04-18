@@ -1,3 +1,4 @@
+
 from squares.utils import percEmUp
 from collections import defaultdict
 import random
@@ -1008,7 +1009,6 @@ def fetch_square_info(square_id):
 
 # squares_all
 
-@app.route('/', methods=['GET', 'POST'])
 @app.route('/squares/all', methods=['GET', 'POST'])
 def sqr_home():
     ''' SQUARE-HOME: ALL SQRS'''
@@ -1298,9 +1298,6 @@ def fetch_mostcommon_attr(square_id):
 
     return jsonify(data)
 
-
-
-
 @app.route('/fetch/ddslick/<string:manufacturer>', methods=['GET', 'POST'])
 def fetch_ddslick(manufacturer):
     q_items = Item.query.filter_by(manufacturer=manufacturer).all()
@@ -1350,14 +1347,30 @@ def fetch_ddslick_square(square_id):
         }
         for item in disp_items
     ]    
-
     data = {
         'disp': ddSlickObjects,
     }   
-    
-
     return jsonify(data)
 
+
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    ''' DASHBOARD WITH DYNAMIC CHARTS AND FIELDS'''
+    pass
+    form = SquareForm()
+
+    if request.method == 'POST':
+        pass
+        # request form returns id as int thx-to square_query func in app.forms
+        selectedSquare = request.form['opts']
+        return redirect(url_for('square_byid', square_id=selectedSquare))
+
+    return render_template(
+        'dashboard.html',
+        form=form,
+        title='Dashboard',
+    )
 
 
 if __name__ == '__main__':

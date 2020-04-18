@@ -1,7 +1,6 @@
 {% extends 'layout_dash.html' %}
 
 {% block content %}
-<!-- styling dash elements borders etc-->
 <div class="container-fluid mt-2">
   <div class="row">
     <div class="col-lg-10">
@@ -16,7 +15,7 @@
           </div>
           <div id="gaugeDesc">
             <small><em>
-              <i class="fa fa-angle-up" aria-hidden="true"></i>
+              <i class="fa +a-angle-up" aria-hidden="true"></i>
               Availaibility gauge shows -percentage- ratio of units stocked with their respective main/preferred items
             </em>
             </small>                                
@@ -209,6 +208,8 @@
         <!-- -------------DASH-END------------ -->
       </div>
     </div>
+
+    
     <!-- sidebar -->
     <div class="col-lg-2">
       <div class="sidebar-section px-1">
@@ -270,11 +271,8 @@
       </div>
     </div>
 
-
-
-
+    <!-- SQUARE LAYOUT AS L-SHAPED BUTTONS -->
     <div class="container">
-      <!-- SQUARE LAYOUT AS BUTTONS -->
       <div class="row">
         {% for square in squares[:-3] %}
         <div class="col-md-3 offset-md-7 text-left">

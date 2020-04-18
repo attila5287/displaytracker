@@ -464,7 +464,7 @@ function ddSlickItemsOf(square) {
     $('#itemSelect').ddslick('destroy');
     $('#itemSelect').ddslick({
       data: data['disp'],
-      width: 250,
+      width: 220,
     });
   });
 }

@@ -14,8 +14,8 @@
     <link rel="icon" type="image/x-icon" class="favicon" href="{{ url_for('static', filename='dtSquare.png') }}"
       integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    
-      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 
     <script src="{{ url_for('static', filename='plotly-latest.min.js') }}"></script>
     <script src="{{ url_for('static', filename='d3.min.js') }} "></script>
@@ -164,7 +164,8 @@
                   <div id="bubbleDesc">
                     <small><em>
                         <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                        Bubble size will visualize most common attributes of items on display that will briefly introduce a
+                        Bubble size will visualize most common attributes of items on display that will briefly
+                        introduce a
                         profile of the square
                       </em>
                     </small>
@@ -182,15 +183,15 @@
             <div class="col-lg-4">
               <div class="card bg-transparent text-center mt-2 mb-2">
                 <div class="card-body py-0">
-                <small><em>
-                    <i class="fa fa-arrow-down animated infinite bounce delay-1s" aria-hidden="true"></i>
-                    InfoBoard will flash related visual when hovering, check it out!
-                  </em>
-                </small>
+                  <small><em>
+                      <i class="fa fa-arrow-down animated infinite bounce delay-1s" aria-hidden="true"></i>
+                      InfoBoard will flash related visual when hovering, check it out!
+                    </em>
+                  </small>
                 </div>
               </div>
               <div class="info-section text-center shadow-gold">
-                <div id="infoSunburst" >
+                <div id="infoSunburst">
                   <div class="row mx-1">
                     <div class="col-md-4">
                       <div class="d-flex flex-column text-left">
@@ -207,8 +208,7 @@
 
                     <div class="col-md-4">
 
-                      <a class="btn btn-dark border-dark text-light"
-                        style="border-width:thick;border-radius: 22px;">
+                      <a class="btn btn-dark border-dark text-light" style="border-width:thick;border-radius: 22px;">
                         <i id="squareName"></i>
                       </a>
 
@@ -224,7 +224,7 @@
                       </div>
                     </div>
                   </div>
-                </div>    
+                </div>
                 <div class="list-group">
                   <a id="infoGauge" href="#"
                     class="list-group-item list-group-item-action flex-column align-items-start">
@@ -307,14 +307,14 @@
             <div class="col-lg-4 text-center">
               <div class="card bg-transparent mt-2 mb-1">
                 <div class="card-body text-center py-0">
-              <div id="pieDesc">
-                <small><em>
-                    <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                    Pie chart will group and visualize manufacturers of all items on display
-                  </em>
-                </small>
-              </div>
-              </div>
+                  <div id="pieDesc">
+                    <small><em>
+                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
+                        Pie chart will group and visualize manufacturers of all items on display
+                      </em>
+                    </small>
+                  </div>
+                </div>
               </div>
 
               <div class="card bg-transparent shadow-before" id="pieZone" style="border-radius: 10px;">
@@ -327,15 +327,15 @@
             <!-- HISTOGRAM -->
             <div class="col-lg-4 text-center">
               <div id="histDesc">
-              <div class="card bg-transparent mt-2 mb-1">
-                <div class="card-body text-center py-0">                
-                <small><em>
-                    <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                    Histogram will be listing all item attributes on database regardless
-                  </em>
-                </small>
-              </div>
-              </div>
+                <div class="card bg-transparent mt-2 mb-1">
+                  <div class="card-body text-center py-0">
+                    <small><em>
+                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
+                        Histogram will be listing all item attributes on database regardless
+                      </em>
+                    </small>
+                  </div>
+                </div>
               </div>
               <div class="card bg-transparent shadow-before" id="histZone" style="border-radius: 10px;">
                 <div class="dash-section">
@@ -345,15 +345,15 @@
             </div>
             <div class="col-lg-4 text-center">
               <div class="card bg-transparent mt-2 mb-1">
-                <div class="card-body text-center py-0">              
-              <div id="sunburstDesc">
-                <small><em>
-                    <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                    Sunburst element will visualizing the general concept of Square > Unit > Main Item/
-                  </em>
-                </small>
-              </div>
-              </div>
+                <div class="card-body text-center py-0">
+                  <div id="sunburstDesc">
+                    <small><em>
+                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
+                        Sunburst element will visualizing the general concept of Square > Unit > Main Item/
+                      </em>
+                    </small>
+                  </div>
+                </div>
               </div>
               <div class="card bg-transparent shadow-before" id="sunburstZone" style="border-radius: 10px;">
                 <div class="dash-section">
@@ -394,22 +394,33 @@
               </button>
 
             </form>
-            <div class="container-fluid text-center">
 
-              <div class="d-flex flex-column mt-2 py-3">
+            <style>
+              .dd-select {
+                border: solid 4px rgb(53, 108, 128);
+                border-radius: 6px;
+              }
+
+              .dd-pointer-down {
+                border-top: solid 5px rgb(53, 108, 128);
+              }
+
+            </style>
+            <div class="container-fluid text-center">
+              <div class="d-flex flex-column mt-1 py-1">
                 <div id="ddSlickDesc">
                   <small>
                     <em>
-                      <i class="fa fa-eye" aria-hidden="true"></i>
+                      <i class="fas fa-caret-down">
+                      </i>
                       Take a quick peek at the square
+
                     </em>
                   </small>
                 </div>
-                
                 <div id="itemSelect">
                 </div>
               </div>
-
             </div>
 
             <div class="list-group sidebar-section text-center mt-1 mb-0" style="border-radius: 4px;">
@@ -435,7 +446,7 @@
         </div>
       </div>
     </main>
-    <!-- Optional JavaScript (doesn't work here, better bottom)-->
+    <!-- Optional JavaScript (doesn't work here, better bottom/AT)-->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/jsmodules/ddslick/master/dist/jquery.ddslick.min.js"></script>

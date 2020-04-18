@@ -45,9 +45,12 @@ function startWearingPurpleNow() {
   d3.select('#infoHist')
     .on("mouseenter", flashEmUp('#histZone','#histDesc'))
     .on("mouseleave", flashEmDown('#histZone','#histDesc'));
+  d3.select('#infoDDslick')
+    .on("mouseenter", flashEmUp('#ddslickZone', '#ddSlickDesc'))
+    .on("mouseleave", flashEmDown('#ddslickZone', '#ddSlickDesc'));
   d3.select('#infoSunburst')
-    .on("mouseenter", flashEmUp('#sunburstZone','#sunburstDesc'))
-    .on("mouseleave", flashEmDown('#sunburstZone','#sunburstDesc'));  
+    .on("mouseenter", flashEmUp('#sunburstZone', '#sunburstDesc'))
+    .on("mouseleave", flashEmDown('#sunburstZone', '#sunburstDesc'));
 }
 
 function gaugeMeUp(square) {

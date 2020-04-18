@@ -1020,7 +1020,10 @@ def sqr_home():
         pass
         # request form returns id as int thx-to square_query func in app.forms
         selectedSquare = request.form['opts']
-        return redirect(url_for('square_byid', square_id=selectedSquare))
+        print('---------- sel sqyare ----------')
+        print(selectedSquare)
+        
+        return redirect(url_for('square_byid', square_id=int(selectedSquare)))
 
     return render_template(
         'squares_home.html',

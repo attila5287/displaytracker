@@ -1,458 +1,122 @@
-<!DOCTYPE html>
-<html>
-
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='ddslick/ddslick_stylesheet.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="icon" type="image/x-icon" class="favicon" href="{{ url_for('static', filename='dtSquare.png') }}"
-      integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-
-    <script src="{{ url_for('static', filename='plotly-latest.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='d3.min.js') }} "></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
-      integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+{% extends 'layout_dash.html' %}
+{% block content %}
 
 
+<style>
+  .btn-square {
+    border-radius: 0.75rem;
+  }
+</style>
 
-
-    <!-- set title on route by render_template(... ,title='test') -->
-    {% if title %}
-    <title>Squares - {{ title }}</title>
-    {% else %}
-    <title> Squares &middot; Dashboard!</title>
-    {% endif %}
-  </head>
-
-  <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-purpseethru fixed-top py-1">
-        <a class="navbar-brand mr-4" href="https://displaytracker.herokuapp.com" style="font-family: cursive;">
-          <img class="m-0 p-0" src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/dtSquare.png"
-            style="height: 36px;">
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-          aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon">
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
-            <i class="fas fa-caret-down"></i>
-          </span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarToggle">
-          <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{{ url_for('home') }}">
-              <i class="fas fa-envelope-open"></i>
-              PostHome</a>
-            <a class="nav-item nav-link" href="{{ url_for('inv_home') }}">
-              <i class="fas fa-th-large"></i>
-              InvHome</a>
-            <a class="nav-item nav-link" href="{{ url_for('inv_lister') }}">
-              <i class="fas fa-th-list"></i>
-              InvList</a>
-            <a class="nav-item nav-link" href="{{ url_for('sqr_home') }}">
-              <i class="fas fa-th"></i>
-              Squares
-            </a>
-            <a class="nav-item nav-link" href="{{ url_for('csv_feed') }}">
-              <i class="fas fa-boxes"></i>
-              InvFeed</a>
-            <a class="nav-item nav-link" href="{{ url_for('create_item') }}">
-              <i class="fas fa-dolly"></i>
-              ItemForm</a>
-            <a class="nav-item nav-link" href="{{ url_for('about') }}">
-              <i class="fas fa-info-circle    "></i>
-              About</a>
+<div class="d-flex flex-row justify-content-around mt-2">
+  {% for square in squares[:-3] %}
+  <a href="{{ url_for('square_byid', square_id=square.id) }}"
+    class="btn btn-primary btn-lg btn-block btn-square mt-auto" type="button" style="height: 2.75rem;">
+    <i class="fas fa-grip-horizontal mr-2 mt-0"></i>
+    <i class="mt-0">
+      <small>
+        {{ square.name.upper() }}
+      </small>
+    </i>
+  </a>
+  {% endfor %}
+</div>
+<div class="d-flex flex-column text-right">
+  <div class="row">
+    <div class="col-lg-11">
+      <div class="container-fluid mt-4">
+        <div class="row">
+          <div class="col-lg-4">
+            INFOBOARD
           </div>
-          <!-- Navbar Right Side -->
-          <div class="navbar-nav">
-            {% if current_user.is_authenticated %}
-            <a class="nav-item nav-link" href="{{ url_for('new_post') }}">
-              <i class="fa fa-envelope" aria-hidden="true"></i>
-              NewPost</a>
-            <a class="nav-item nav-link" href="{{ url_for('account') }}">
-              <i class="fas fa-cogs    "></i>
-              Account</a>
-            <a class="nav-item nav-link" href="{{ url_for('logout') }}">
-              <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
-              Logout</a>
-
-            {% else %}
-            <a class="nav-item nav-link" href="{{ url_for('login') }}">
-              <i class="fas fa-sign-in-alt"></i>
-              Login</a>
-            <a class="nav-item nav-link" href="{{ url_for('register') }}">
-              <i class="fas fa-registered    "></i>
-              Register</a>
-
-            {% endif %}
-          </div>
-        </div>
-
-      </nav>
-    </header>
-
-    <!-- this is only cosmetic to give a bottom border to navbar that is not gonna slide down with the real one! -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-info mt-5 py-2 text-center justify-content-center">
-      <div class="d-flex text-center">
-        <i class="fas fa-battery-empty text-light"> . . . </i>
-        <i class="fas fa-battery-quarter text-warning"> . . . </i>
-        <i class="fas fa-battery-half text-primary"> . . . </i>
-        <i class="fa fa-battery-three-quarters text-danger"> . . . </i>
-      </div>
-    </nav>
-
-    <main role="main" class="container-fluid">
-      <div class="flash-message-section">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-          <strong>
-            {{message}}
-          </strong>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-      </div>
-
-      <div class="row">
-        <div class="col-lg-10">
-          <div class="row mb-4">
-            <!-- -----------------DASH-START-------- -->
-            <div class="col-lg-3 text-center">
-              <div class="card bg-transparent mt-2 mb-1">
-                <div class="card-body py-0">
-                  <div id="gaugeDesc">
-                    <small>
-                      <em>
-                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                        Availaibility gauge shows %-ratio of units stocked with main/preferred items
-                      </em>
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <div class="card bg-transparent shadow-before" id="gaugeZone" style="border-radius: 10px;">
-                <div class="dash-section">
-                  <!-- GAUGE -->
-                  <div id="avlb-gauge"></div>
-                </div>
-              </div>
-            </div>
-            <!-- BUBBLE CHART -->
-            <div class="col-lg-5">
-              <div class="card bg-transparent mt-2 mb-1">
-                <div class="card-body text-center py-0">
-                  <div id="bubbleDesc">
-                    <small><em>
-                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                        Bubble size will visualize most common attributes of items on display that will briefly
-                        introduce a
-                        profile of the square
-                      </em>
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <div class="card bg-transparent shadow-before" id="bubbleZone" style="border-radius: 10px;">
-                <div class="dash-section">
-                  <div id="item-bubble"></div>
-                </div>
-              </div>
-
-            </div>
-            <!-- INFOBOARD -->
-            <div class="col-lg-4">
-              <div class="card bg-transparent text-center mt-2 mb-2">
-                <div class="card-body py-0">
-                  <small><em>
-                      <i class="fa fa-arrow-down animated infinite bounce delay-1s" aria-hidden="true"></i>
-                      InfoBoard will flash related visual when hovering, check it out!
-                    </em>
-                  </small>
-                </div>
-              </div>
-              <div class="info-section text-center shadow-gold">
-                <div id="infoSunburst">
-                  <div class="row mx-1">
-                    <div class="col-md-4">
-                      <div class="d-flex flex-column text-left">
-                        <p>
-                          <i class="fa fa-hashtag" aria-hidden="true"></i>
-                          id: <i id="squareID"></i></p>
-                        <p>
-                          <i class="fa fa-warehouse" aria-hidden="true"></i>
-                          MaxCap:
-                          <i id="squareArea"></i></p>
-                      </div>
-
-                    </div>
-
-                    <div class="col-md-4">
-
-                      <a class="btn btn-dark border-dark text-light" style="border-width:thick;border-radius: 22px;">
-                        <i id="squareName"></i>
-                      </a>
-
-                    </div>
-                    <div class="col-md-4">
-                      <div class="d-flex flex-column text-right">
-                        <p>
-                          <i class="fas fa-arrows-alt-h"> </i>
-                          Rows: <i id="rowCount"></i></p>
-                        <p>
-                          <i class="fas fa-arrows-alt-v"> </i>
-                          Cols: <i id="colCount"></i></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="list-group">
-                  <a id="infoGauge" href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-1">
-                        <i class="fa fa-tachometer-alt" aria-hidden="true"></i>
-                      </h6>
-                      <small>
-                        InventoryStatus
-                      </small>
-                    </div>
-                    <small>
-                      main/preferred
-                      <i id="avlbItemsCount"></i>
-                      items on display
-                      <i id="avlbItemsPerc" class="text-primary"></i>
-                    </small>
-                  </a>
-                  <a id="infoBubble" href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-1">
-                        <i class="fa fa-braille" aria-hidden="true"></i>
-                      </h6>
-                      <small>
-                        Most In Common
-                      </small>
-                    </div>
-                    <p class="mb-0"> Displaying:
-                      <em id="dispMostCommon" class="text-primary"></em>
-                    </p>
-                    <p class="mb-1"> Main/Pref:
-                      <em id="mainMostCommon" class="text-primary"></em>
-                    </p>
-                  </a>
-                  <a id="infoPie" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-1">
-                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                      </h6>
-                      <small>
-                        Manufacturer
-                      </small>
-                    </div>
-                    <small>
-                      Displayed Items:
-                      <em id="manufDisp" class="text-primary"></em>
-                    </small>
-                    <br>
-                    <small>
-                      Main Items:
-                      <em id="manufMain" class="text-primary">
-                      </em>
-                    </small>
-
-                  </a>
-
-                  <a id="infoHist" href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-1">
-                        <i class="fas far fa-chart-bar fa-rotate-90 fa-fw" aria-hidden="true"></i>
-
-                        Overall Histogram &middot;
-                      </h6>
-                      <small>
-                        bar
-                      </small>
-                    </div>
-                    <small>
-                      List all attributes regardless
-                    </small>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <!-- PIE CHART -->
-            <div class="col-lg-4 text-center">
-              <div class="card bg-transparent mt-2 mb-1">
-                <div class="card-body text-center py-0">
-                  <div id="pieDesc">
-                    <small><em>
-                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                        Pie chart will group and visualize manufacturers of all items on display
-                      </em>
-                    </small>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card bg-transparent shadow-before" id="pieZone" style="border-radius: 10px;">
-                <div class="dash-section">
-                  <div id="manuf-pie"></div>
-                </div>
-              </div>
-
-            </div>
-            <!-- HISTOGRAM -->
-            <div class="col-lg-4 text-center">
-              <div id="histDesc">
-                <div class="card bg-transparent mt-2 mb-1">
-                  <div class="card-body text-center py-0">
-                    <small><em>
-                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                        Histogram will be listing all item attributes on database regardless
-                      </em>
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <div class="card bg-transparent shadow-before" id="histZone" style="border-radius: 10px;">
-                <div class="dash-section">
-                  <div id="histogram-bar-chart"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 text-center">
-              <div class="card bg-transparent mt-2 mb-1">
-                <div class="card-body text-center py-0">
-                  <div id="sunburstDesc">
-                    <small><em>
-                        <i class="fa fa-angle-down fa-2x fa-pull-left" aria-hidden="true"></i>
-                        Sunburst element will visualizing the general concept of Square > Unit > Main Item/
-                      </em>
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <div class="card bg-transparent shadow-before" id="sunburstZone" style="border-radius: 10px;">
-                <div class="dash-section">
-                  <div id="models-sunburst">
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- -------------DASH-END------------ -->
-          </div>
-        </div>
-
-
-        <!-- sidebar -->
-        <div class="col-lg-2">
           <div class="sidebar-section px-1">
-            <div class="text-center py-0 mt-0">
-              <img class="img-fluid mt-0 mb-1" alt="sidebar top img"
-                src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_denver_realPhoto.png"
-                style="height: 8rem;">
+
+            <div class="card bg-transparent mt-2 mb-1">
+              <div class="card-text text-center py-0">
+                <small>
+                  <em>
+                    Change selection for action!
+                    <i class="fa fa-sort text-primary ml-2 animated infinite heartBeat delay-1s" aria-hidden="true"></i>
+                  </em>
+                </small>
+              </div>
             </div>
+
             <!-- $squareSelect is the opts field of form -->
             <form method="POST" action="">
-
               <div class="form-group">
                 {{ form.csrf_token }}
-                <i class="fas fa-edit text-muted"></i>
-                {{form.opts.label(class="text-muted mb-0", style="font-size:6px;")}}
-                {{form.opts(class="custom-select border-primary text-center mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
+                {{form.opts(class="custom-select border-primary text-center text-uppercase mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
               </div>
-
-              <button type="button" class="btn btn-dark btn-block sidebar-section text-secondary py-1 mb-0 mt-1"
-                type="submit" style="font-size:1rem;">
-                <i class="fa fa-th-large" aria-hidden="true"></i>
-                GO TO SQUARE
-              </button>
+              <div class="form-group">
+                <a>
+                  <button class="btn btn-dark btn-block sidebar-section text-secondary py-1 mb-0 mt-1" type="submit"
+                    style="font-size:1rem;">
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                    GO TO SQUARE
+                  </button></a>
+              </div>
 
             </form>
 
-            <style>
-              .dd-select {
-                border: solid 4px rgb(53, 108, 128);
-                border-radius: 6px;
-              }
-
-              .dd-pointer-down {
-                border-top: solid 5px rgb(53, 108, 128);
-              }
-
-            </style>
             <div class="container-fluid text-center">
               <div class="d-flex flex-column mt-1 py-1">
+
                 <div id="ddSlickDesc">
                   <small>
                     <em>
-                      <i class="fas fa-caret-down">
+                      <i class="fas fa-eye">
                       </i>
-                      Take a quick peek at the square
+                      Dropdown lists all items on square
 
                     </em>
                   </small>
                 </div>
-                <div id="itemSelect">
+                <div id="ddslickZone" class="card bg-transparent shadow-before">
+                  <div id="itemSelect">
+                  </div>
                 </div>
               </div>
+
             </div>
 
-            <div class="list-group sidebar-section text-center mt-1 mb-0" style="border-radius: 4px;">
-              <a href="/register" class="list-group-item list-group-item-action">
-                <i class="fas fa-registered    "></i>
-                Register
-              </a>
-              <a href="/login" class="list-group-item list-group-item-action">
-                <i class="fas fa-sign-in-alt"></i>
-                Login
-              </a>
-              <a href="/about" class="list-group-item list-group-item-action">
-                <i class="fas fa-info-circle"></i>
-                About
-              </a>
-            </div>
-            <div class="text-center py-0">
-              <img class="img-fluid mb-2 mt-0" alt="sidebar bottom img"
-                src="https://raw.githubusercontent.com/attila5287/displayTracker_img/master/general/sidebar_bottom_waves05.png"
-                style="height: 7rem;">
-            </div>
+
+
           </div>
         </div>
       </div>
-    </main>
-    <!-- Optional JavaScript (doesn't work here, better bottom/AT)-->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/jsmodules/ddslick/master/dist/jquery.ddslick.min.js"></script>
-    <script src="{{url_for('static', filename='popper.min.js') }}"></script>
-    <script src="{{url_for('static', filename='bootstrap.min.js') }}"></script>
-    <script src="{{url_for('static', filename='dashboard.js') }}"></script>
-  </body>
+    </div>
+    <div class="col-lg-1">
+      {% for square in squares[-3:] %}
+      <div class="d-flex flex-row justify-content-end">
+        <div class="d-flex flex-column text-right">
+          <i class="fa fa-th-large fa-rotate-90 my-auto" aria-hidden="true">
+            <i class="text-uppercase text-monospace">
+              {{square.name }}
+            </i>
+          </i>
+        </div>
+        <a class="btn btn-primary btn-lg btn-block btn-square text-center py-5 ml-5" type="button"
+          href="{{ url_for('square_byid', square_id=square.id) }}">
+          <i class="fas fa-grip-vertical">
+          </i>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-</html>
+</form>
+<!-- GRID : d3 parent element that appends rows-->
+<div class="container grid">
+
+</div>
+<div class="card-deck">
+</div>
+
+
+
+<script src="{{ url_for('static', filename='squareshome.js') }}"></script>
+
+{% endblock %}

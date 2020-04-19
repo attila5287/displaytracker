@@ -93,8 +93,8 @@ def mark_as_outofstock(item_id):
             request.args.get('next') or \
             url_for(default)
     item = Item.query.get(item_id)  # this is the item to edit
-    print()
-    print(item)
+    #print()
+    #print(item)
 
     if item.inv_outofstock == 'no':
         pass
@@ -106,7 +106,7 @@ def mark_as_outofstock(item_id):
         db.session.commit()
     else:
         pass
-        print('\n\t item could not be modified check yes-no values')
+        #print('\n\t item could not be modified check yes-no values')
 
     return redirect(redir3ct_url())
 
@@ -120,9 +120,9 @@ def mark_as_lowinv(item_id):
         return request.referrer or \
             request.args.get('next') or \
             url_for(default)
-    print('item to edit is....')
+    #print('item to edit is....')
     item = Item.query.get(item_id)
-    print(item)
+    #print(item)
 
     if item.inv_lowinstock == 'no':
         pass
@@ -134,7 +134,7 @@ def mark_as_lowinv(item_id):
         db.session.commit()
     else:
         pass
-        print('\n\t item could not be modified check yes-no values')
+        #print('\n\t item could not be modified check yes-no values')
 
     return redirect(redir3ct_url())
 
@@ -548,7 +548,7 @@ def findnext_byid(item_id=10):
 
     item = Item.query.get_or_404(item_id)
 
-    print('\n {} \n test find next'.format(item))
+    #print('\n {} \n test find next'.format(item))
 
     only_yes = item.similar_attrs()
 
@@ -556,7 +556,7 @@ def findnext_byid(item_id=10):
 
     next_item = random.choice(suggested_items)
 
-    print('\n next item is', next_item)
+    #print('\n next item is', next_item)
 
     return redirect(redir3ct_url())
 
@@ -568,11 +568,11 @@ def unit_nextitem(unique_tag, item_id):
     unit = Unit.query.filter_by(unique_tag=unique_tag).first()
     item = Item.query.get_or_404(item_id)
 
-    print('\n {} \n test find next'.format(item))
+    #print('\n {} \n test find next'.format(item))
     only_yes = item.similar_attrs()
     suggested_items = Item.query.filter_by(**only_yes).all()
     next_item = random.choice(suggested_items)
-    print('\n unit next item is\n', next_item)
+    #print('\n unit next item is\n', next_item)
 
     unit.dispitem_id = next_item.id
     db.session.commit()
@@ -601,7 +601,6 @@ def unit_show_mainitem(unique_tag):
     return redirect(url_for('square_byid', square_id=unit.square_id))
 
 
-
 @app.route('/square/byid/<int:square_id>')
 def square_byid(square_id):
     pass
@@ -624,7 +623,7 @@ def square_byid(square_id):
     ]
     results_itemid_dict = dict(zip(result_itemids, result_items))
     display = dict()
-    print('\n display: ', display)
+    #print('\n display: ', display)
     for unit, query_untdispid in unit_itemid.items():
         pass
 
@@ -635,8 +634,8 @@ def square_byid(square_id):
                 pass
                 display[unit] = result_item
 
-    print('\n display final')
-    print(display)
+    #print('\n display final')
+    #print(display)
 
     return render_template(
         'square_00.html',
@@ -667,7 +666,7 @@ def square_byid_lite(square_id):
     ]
     results_itemid_dict = dict(zip(result_itemids, result_items))
     display = dict()
-    print('\ndisplay: ', display)
+    #print('\ndisplay: ', display)
     for unit, query_untdispid in unit_itemid.items():
         pass
 
@@ -678,8 +677,8 @@ def square_byid_lite(square_id):
                 pass
                 display[unit] = result_item
 
-    print('\n display final')
-    print(display)
+    #print('\n display final')
+    #print(display)
 
     return render_template(
         'square_00_lite.html',
@@ -701,7 +700,7 @@ def color_finder():
     ]
 
     all_colors = primary_colors + secondary_colors
-    print(all_colors)
+    #print(all_colors)
 
     d = defaultdict(int)
     for color in all_colors:
@@ -709,7 +708,7 @@ def color_finder():
 
     for color, count in d.items():
         pass
-        print(color)
+        #print(color)
 
     return redirect(url_for('sqr_home'))
 
@@ -740,7 +739,7 @@ def unit_mainitem_low(unique_tag, item_id):
         db.session.commit()
     else:
         pass
-        print('\n\t unit or item could not be modified check again')
+        #print('\n\t unit or item could not be modified check again')
 
     return redirect(redir3ct_url())
 
@@ -769,10 +768,9 @@ def unit_mainitem_out(unique_tag, item_id):
         db.session.commit()
     else:
         pass
-        print('\n\t item could not be modified check yes-no values')
+        #print('\n\t item could not be modified check yes-no values')
 
     return redirect(redir3ct_url())
-
 
 
 @app.route('/ddslick/simple', methods=['GET', 'POST'])
@@ -806,6 +804,7 @@ def test():
 
     return jsonify(data)
 
+
 @app.route("/itemattr/histogram/<int:square_id>", methods=['GET', 'POST'])
 def fetch_itemattrs_bysqr(square_id):
     pass
@@ -820,7 +819,7 @@ def fetch_itemattrs_bysqr(square_id):
         unit.dispitem_id for unit in units
     ]
     items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
-    print(items)
+    #print(items)
 
     dictOfLists = defaultdict(list)
 
@@ -831,8 +830,7 @@ def fetch_itemattrs_bysqr(square_id):
         for key, value in _dict.items():
             pass
             dictOfLists.setdefault(key, list()).append(value)
-            
-    
+
     histogram = defaultdict(int)
     for key, _list in dictOfLists.items():
         pass
@@ -844,17 +842,14 @@ def fetch_itemattrs_bysqr(square_id):
             else:
                 pass
                 histogram[key] += 0
-            
-
 
     data = [{
-        "title":'Histogram',
+        "title": 'Histogram',
         "x": list(histogram.values()),
         "y": list(histogram.keys()),
         "orientation": "h",
-        }
-        ]
-
+    }
+    ]
 
     return jsonify(data)
 
@@ -874,27 +869,26 @@ def fetch_manuf_bysqr(square_id):
         unit.dispitem_id for unit in units
     ]
     items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
-    print(items)
-
+    #print(items)
 
     manuf_dict = defaultdict(int)
-    print(' --------- histogram init---------')
-    print(manuf_dict)
+    #print(' --------- histogram init---------')
+    #print(manuf_dict)
 
     for item in items:
         pass
         manuf_dict[item.manufacturer] += 1
 
-    print('--------- histogram final ---------')
-    print(manuf_dict)
-    print(manuf_dict.keys())
-    print(manuf_dict.values())
-    
+    #print('--------- histogram final ---------')
+    #print(manuf_dict)
+    #print(manuf_dict.keys())
+    #print(manuf_dict.values())
+
     data = [{
         "title": 'Manufacturers',
         "labels": [key for key in manuf_dict.keys()],
         "values": [value for value in manuf_dict.values()]
-        }
+    }
     ]
 
     return jsonify(data)
@@ -911,19 +905,15 @@ def fetch_mainavlb_perc(square_id):
 
     square_size = square.row_count * square.col_count
     count_avlb = square_size
-    print(count_avlb)
+    #print(count_avlb)
 
-    
     for unit in units:
         pass
         if str(unit.maininv_out) == 'yes':
             pass
-            count_avlb-=1
+            count_avlb -= 1
         else:
             pass
-
-
-    
     return jsonify(round(count_avlb/square_size*100))
 
 
@@ -937,7 +927,7 @@ def fetch_mainavlb_count(square_id):
 
     square_size = square.row_count * square.col_count
     count_avlb = square_size
-    print(count_avlb)
+    #print(count_avlb)
 
     for unit in units:
         pass
@@ -960,8 +950,7 @@ def fetch_items4bubble_bysqr(square_id):
         unit.dispitem_id for unit in units
     ]
     items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
-    print(items)
-
+    #print(items)
 
     histogram = defaultdict(int)
     for item in items:
@@ -974,11 +963,10 @@ def fetch_items4bubble_bysqr(square_id):
                 pass
                 histogram[key] += 1
 
-
-    print('--------- histogram final ---------')
-    print(histogram)
-    print(histogram.keys())
-    print(histogram.values())
+    #print('--------- histogram final ---------')
+    #print(histogram)
+    #print(histogram.keys())
+    #print(histogram.values())
 
     data = [{
         "title": 'Histogram',
@@ -1002,8 +990,8 @@ def fetch_square_info(square_id):
             'name': str(square.name).upper(),
             'row_count': square.row_count,
             'col_count': square.col_count,
-        }]
-        
+            }]
+
     return jsonify({'data': data})
 
 
@@ -1014,22 +1002,23 @@ def sqr_home():
     ''' SQUARE-HOME: ALL SQRS'''
     pass
     form = SquareForm()
+    form.opts.data = 1
     squares = Square.query.all()
 
     if request.method == 'POST':
         pass
         # request form returns id as int thx-to square_query func in app.forms
         selectedSquare = request.form['opts']
-        print('---------- sel sqyare ----------')
-        print(selectedSquare)
-        
+        #print('---------- sel sqyare ----------')
+        #print(selectedSquare)
+
         return redirect(url_for('square_byid', square_id=int(selectedSquare)))
 
     return render_template(
         'squares_home.html',
         form=form,
         squares=squares,
-        title='SqrHome',
+        title='Squares Layout',
     )
 
 
@@ -1058,7 +1047,6 @@ def createall_squares():
     return redirect(url_for('sqr_home'))
 
 
-
 @app.route('/random/populate/<int:square_id>')
 def random_populate(square_id):
     pass
@@ -1066,7 +1054,7 @@ def random_populate(square_id):
     squareName = square.name
     squareRowCount = int(square.row_count)
     squareColCount = int(square.col_count)
-    
+
     items = Item.query.all()
     list_of_ids = [
         _item.id for _item in items
@@ -1127,7 +1115,6 @@ def random_populate(square_id):
         '25',
     ]
 
-
     _rowcols = [
         row+column for row in _rows[0:squareRowCount] for column in _cols[0:squareColCount]
     ]
@@ -1146,7 +1133,8 @@ def random_populate(square_id):
     ]
     db.session.add_all(units)
     db.session.commit()
-    flash('all units populated with random items! square name: '+squareName.upper(), 'primary')
+    flash('all units populated with random items! square name: ' +
+          squareName.upper(), 'primary')
     return redirect(url_for('sqr_home'))
 
 
@@ -1162,7 +1150,8 @@ def display_mainitem(square_id):
         unit.dispitem_id = _int
         db.session.commit()
 
-    flash('all units now displaying main items! square name: '+squareName.upper(), 'warning')
+    flash('all units now displaying main items! square name: ' +
+          squareName.upper(), 'warning')
     return redirect(url_for('sqr_home'))
 
 
@@ -1179,7 +1168,8 @@ def update_invstatus(square_id):
         _updated_status = item.inv_outofstock
         unit.maininv_out = _updated_status
         db.session.commit()
-    flash('all units main item inv status updated! Square Name: '+squareName.upper(), 'info')
+    flash('all units main item inv status updated! Square Name: ' +
+          squareName.upper(), 'info')
 
     return redirect(url_for('sqr_home'))
 
@@ -1189,12 +1179,15 @@ def update_invstatus(square_id):
 def test_info_board():
     ''' TEST: INFO-BOARD '''
     pass
-    form = SquareForm()
 
+    form = SquareForm()
+    form.opts.data = 1
+    squares = Square.query.all()
 
     return render_template(
         'test_info_board.html',
         form=form,
+        squares=squares,
         title='testInfoBar',
     )
 
@@ -1205,7 +1198,6 @@ def fetch_manuf_info(square_id):
     ''' RETURNS ITEM CT PER MNF '''
     units = Unit.query.filter_by(square_id=square_id).\
         order_by(Unit.id.asc()).all()
-
 
     unit_mainitem_ids = [
         unit.mainitem_id for unit in units
@@ -1219,8 +1211,6 @@ def fetch_manuf_info(square_id):
         pass
         _data_main[item.manufacturer] += 1
 
-
-
     mainJSONArray = [
         {'manufacturer': key, 'percentage': value, } for key, value in zip(_data_main.keys(), percEmUp(_data_main.values()))
     ]
@@ -1231,16 +1221,15 @@ def fetch_manuf_info(square_id):
         pass
         _data_disp[item.manufacturer] += 1
 
-
-    dispJSONArray = [
+    listJSONArray = [
         {'manufacturer': key, 'percentage': value, } for key, value in zip(_data_disp.keys(), percEmUp(_data_disp.values()))
-]
+
+    ]
     data = {
         'main': mainJSONArray,
-        'disp': dispJSONArray, 
-        
-    }
+        'disp': listJSONArray,
 
+    }
 
     return jsonify(data)
 
@@ -1255,7 +1244,6 @@ def fetch_mostcommon_attr(square_id):
     unit_dispitem_ids = [
         unit.dispitem_id for unit in units
     ]
-
 
     disp_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
 
@@ -1297,9 +1285,9 @@ def fetch_mostcommon_attr(square_id):
         "disp": dispArray[:2],
         "main": mainArray[:2],
     }
-    
 
     return jsonify(data)
+
 
 @app.route('/fetch/ddslick/<string:manufacturer>', methods=['GET', 'POST'])
 def fetch_ddslick(manufacturer):
@@ -1320,41 +1308,6 @@ def fetch_ddslick(manufacturer):
 
     return jsonify({'items': itemArray})
 
-# info board Most Common Attr
-@app.route("/fetch/ddslick/square/<int:square_id>", methods=['GET', 'POST'])
-def fetch_ddslick_square(square_id):
-    pass
-    # these are the units as query results
-    units = Unit.query.filter_by(square_id=square_id).\
-        order_by(Unit.id.asc()).all()
-
-    # collect the item IDs
-    unit_dispitem_ids = [
-        unit.dispitem_id for unit in units
-    ]
-
-    # another query this time for items
-    disp_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
-    
-    # previosly set up img folder on github
-    img_baseURL = 'https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/'
-
-    # create an array of JSON objects with the required structure of ddSlick-image dropdown
-    ddSlickObjects = [
-        {
-            'text': item.catalog_no,
-            'value': item.id,
-            'selected': False,
-            'description': item.color_primary+' '+item.color_secondary,
-            'imageSrc': img_baseURL+item.manufacturer+'/'+item.imagelist_url
-        }
-        for item in disp_items
-    ]    
-    data = {
-        'disp': ddSlickObjects,
-    }   
-    return jsonify(data)
-
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/dashboard', methods=['GET', 'POST'])
@@ -1374,6 +1327,131 @@ def dashboard():
         form=form,
         title='Dashboard',
     )
+
+
+@app.route("/fetch/ddslick/square/<int:square_id>", methods=['GET', 'POST'])
+def fetch_ddslick_square(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    unit_itemid = dict(zip(units, unit_dispitem_ids))
+    unqtag_itemid = dict(zip(unit_unqtags, unit_dispitem_ids))
+    result_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+
+    result_itemids = [
+        item.id for item in result_items
+    ]
+    results_itemid_dict = dict(zip(result_itemids, result_items))
+    display = dict()
+    #print('\n display: ', display)
+    for unit, query_untdispid in unit_itemid.items():
+        pass
+
+        for result_itemid, result_item in results_itemid_dict.items():
+            pass
+
+            if int(query_untdispid) == int(result_itemid):
+                pass
+                display[unit] = result_item
+
+    #print('\n display final')
+    #print(display)
+
+    # previosly set up img folder on github
+    img_baseURL = 'https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/'
+
+    # create an array of JSON objects with the required structure of ddSlick-image dropdown
+    ddSlickObjects = [
+        {
+            'text': unit.pstn_rowcol+'-'+item.manufacturer.title(),
+            'value': item.id,
+            'selected': False,
+            'description': item.catalog_no+'/'+item.color_primary+'-'+item.color_secondary,
+            'imageSrc': img_baseURL+item.manufacturer+'/'+item.imagelist_url,
+        }
+        for item, unit in zip(display.values(), display.keys())
+    ]
+    data = {
+        'disp': ddSlickObjects,
+    }
+    return jsonify(data)
+
+
+@app.route("/fetch/d3/grid/<int:square_id>", methods=['GET', 'POST'])
+def fetch_d3_grid(square_id):
+    pass
+    units = Unit.query.filter_by(square_id=square_id).\
+        order_by(Unit.id.asc()).all()
+
+    unit_unqtags = [
+        unit.unique_tag for unit in units
+    ]
+
+    unit_dispitem_ids = [
+        unit.dispitem_id for unit in units
+    ]
+    unit_itemid = dict(zip(units, unit_dispitem_ids))
+    unqtag_itemid = dict(zip(unit_unqtags, unit_dispitem_ids))
+    result_items = Item.query.filter(Item.id.in_(unit_dispitem_ids)).all()
+
+    result_itemids = [
+        item.id for item in result_items
+    ]
+    results_itemid_dict = dict(zip(result_itemids, result_items))
+    display = dict()
+    # print\('\n display: ', display)
+    for unit, query_untdispid in unit_itemid.items():
+        pass
+
+        for result_itemid, result_item in results_itemid_dict.items():
+            pass
+
+            if int(query_untdispid) == int(result_itemid):
+                pass
+                display[unit] = result_item
+
+    # print\('\n display final')
+    # print\(display)
+
+    # previosly set up img folder on github
+    img_baseURL = 'https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/'
+
+    # create an array of JSON objects for dynamic d3 table
+    listJSON = [
+        {
+            'unit': unit.pstn_rowcol,
+            'unique_tag': unit.unique_tag,
+            'manufacturer': item.manufacturer.title(),
+            'catalog_no': item.catalog_no,
+            'colors': item.color_primary+'-'+item.color_secondary,
+            'value': item.id,
+            'imageSrc': img_baseURL+item.manufacturer+'/'+item.imagelist_url,
+        }
+        for item, unit in zip(display.values(), display.keys())
+    ]
+    
+    # pull square info to splice by rows
+    square = Square.query.get_or_404(square_id)
+    col_count = square.col_count
+    row_count = square.row_count
+    start, finish = 0, int(col_count)
+    dictOfLists = defaultdict(list)
+    for row_number in range(row_count):
+        pass
+        dictOfLists[str(row_number)] = listJSON[start:finish]
+        start, finish = finish, finish+col_count
+        
+    
+    return jsonify(dictOfLists)
+
 
 
 if __name__ == '__main__':

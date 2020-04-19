@@ -26,4 +26,3 @@ SQLAlchemy==1.2.0b3
 Werkzeug==1.0.0
 wincertstore==0.2
 WTForms==2.2.1
-WTForms-SQLAlchemy==0.1

@@ -6,8 +6,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
-
-infoBoardSquare(3);
+updateByDefault();
 
 function infoBoardSquareUp(squareID) {
   return function () {
@@ -17,8 +16,6 @@ function infoBoardSquareUp(squareID) {
 }
 
 
-updateByDefault();
-
 for (let index = 0; index < 10; index += 1) {
   initMouseOver(index);
 }
@@ -26,6 +23,7 @@ for (let index = 0; index < 10; index += 1) {
 
 function initMouseOver(squareID) {  
   d3.select(`#squareButton0${squareID}`)
+  .on('mouseenter', infoBoardSquareUp(squareID))
   .on('mouseenter', gridViewUp(squareID))
   .on('mouseleave', gridViewDown());
   
@@ -174,7 +172,7 @@ function gridView(square) {
 
           const newHeader = $card.append('div').attr('class', 'card-header border-success text-center text-success shadow-gold py-1 mb-3');
 
-          newHeader.append('i').attr('class', 'fa fa-tag fa-pull-left');
+          newHeader.append('i').attr('class', 'fa fa-tag fa-pull-left mt-1');
 
           newHeader.append('small')
                    .append('em')
@@ -190,7 +188,7 @@ function gridView(square) {
 
           const newBodyTitle = $cardBody.append('h6').attr('class', 'card-title text-light text-title mb-0 mt-0').append('small').append('em').text(JSONobj.colors);
 
-          const newFooter = $card.append('div').attr('class', 'card-footer border-success text-success py-1').append('small').append('em').text(JSONobj.manufacturer);
+          const newFooter = $card.append('div').attr('class', 'card-footer border-success text-success py-0').append('small').append('em').text(JSONobj.manufacturer);
 
           newFooter.append('i').attr('class', 'fas fa-barcode ml-2');
         }

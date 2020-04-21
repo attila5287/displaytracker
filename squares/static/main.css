@@ -1,5 +1,11 @@
-.i {
-  font-size: 6px;
+.btn-grid{
+  border-radius: 1.25rem;
+  border-width: 1px;
+  margin-top:0.25rem;
+}
+
+.btn-square {
+  border-radius: 0.75rem;
 }
 
 .dash-section {

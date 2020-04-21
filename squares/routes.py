@@ -1422,7 +1422,8 @@ def fetch_d3_grid(square_id):
     # print\(display)
 
     # previosly set up img folder on github
-    img_baseURL = 'https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/'
+    # img_baseURL = 'https://raw.githubusercontent.com/attila5287/displayTracker_img/master/img/list/'
+    img_baseURL = '/static/img/list/'
 
     # create an array of JSON objects for dynamic d3 table
     listJSON = [
@@ -1451,6 +1452,27 @@ def fetch_d3_grid(square_id):
         
     
     return jsonify(dictOfLists)
+
+# squares for dynamic field
+@app.route('/fetch/square/all', methods=['GET', 'POST'])
+def fetch_square_all():
+    ''' RETURNS JSONIFIED DATA FOR SQUARES-HOME SELECT ELEMENT'''
+    pass
+
+    squares = Square.query.all()
+
+    allSquares = [{
+            'id': square.id,
+            'name': str(square.name).upper(),
+            'row_count': square.row_count,
+            'col_count': square.col_count,
+            }
+            for square in squares
+            ]
+
+    return jsonify({'data': allSquares})
+
+
 
 
 

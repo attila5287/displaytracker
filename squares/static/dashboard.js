@@ -3,10 +3,10 @@ gaugeMeUp(1);
 bubbleMeup(1);
 pieMeUp(1);
 histogramMeUp(1);
+sunBurnMeUp();
 infoBoardSquare(1);
 infoBoardAvlbCount(1);
 infoBoardAvlbPerc(1);
-sunBurnMeUp();
 infoBoardManuf(1);
 infoBoardMostCommon(1);
 ddSlickItemsOf(1);
@@ -380,6 +380,7 @@ function sunBurnMeUp() {
       b: 0,
       t: 0
     },
+
     sunburstcolorway: [
       "#00cc9", '#B58900', "#636efa", "#EF553B",
       '#6610f2', '#6f42c1'
@@ -445,8 +446,6 @@ function flashEmUp(zoneId, zoneDescId) {
       .attr('class', 'card shadow-after');
     d3.select(zoneDescId)
       .attr('class', 'text-light');
-            
-    
   };
 }
 

@@ -1,0 +1,261 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Bcrypt	../squares\__init__.py	/^from flask_bcrypt import Bcrypt$/;"	kind:namespace	line:3
+CSVReaderForm	../squares\forms.py	/^class CSVReaderForm(FlaskForm):$/;"	kind:class	line:118
+Flask	../squares\__init__.py	/^from flask import Flask$/;"	kind:namespace	line:1
+FlaskForm	../squares\forms.py	/^from flask_wtf import FlaskForm $/;"	kind:namespace	line:3
+Form	../squares\forms.py	/^class Form(FlaskForm):$/;"	kind:class	line:141
+Item	../squares\models.py	/^class Item(db.Model):$/;"	kind:class	line:37
+ItemForm	../squares\forms.py	/^class ItemForm(FlaskForm):$/;"	kind:class	line:77
+LoginForm	../squares\forms.py	/^class LoginForm(FlaskForm):$/;"	kind:class	line:42
+LoginManager	../squares\__init__.py	/^from flask_login import LoginManager$/;"	kind:namespace	line:4
+LowInStckStyler	../squares\routes.py	/^    def LowInStckStyler(yes_or_no):$/;"	kind:function	line:363
+LowInStckStylerGrid	../squares\routes.py	/^    def LowInStckStylerGrid(yes_or_no):$/;"	kind:function	line:438
+LowInvIconizer	../squares\routes.py	/^    def LowInvIconizer(yes_or_no):$/;"	kind:function	line:468
+OutInvIconizer	../squares\routes.py	/^    def OutInvIconizer(yes_or_no):$/;"	kind:function	line:483
+OutOfStckStyler	../squares\routes.py	/^    def OutOfStckStyler(yes_or_no):$/;"	kind:function	line:408
+OutOfStckStylerGrid	../squares\routes.py	/^    def OutOfStckStylerGrid(yes_or_no):$/;"	kind:function	line:423
+Post	../squares\models.py	/^class Post(db.Model):$/;"	kind:class	line:25
+PostForm	../squares\forms.py	/^class PostForm(FlaskForm):$/;"	kind:class	line:72
+QuerySelectField	../squares\forms.py	/^from wtforms_sqlalchemy.fields import QuerySelectField$/;"	kind:namespace	line:1
+QuerySelectField	../squares\forms.py	/^from wtforms_sqlalchemy.fields import QuerySelectField$/;"	kind:namespace	line:18
+RegistrationForm	../squares\forms.py	/^class RegistrationForm(FlaskForm):$/;"	kind:class	line:20
+SQLAlchemy	../squares\__init__.py	/^from flask_sqlalchemy import SQLAlchemy$/;"	kind:namespace	line:2
+Square	../squares\models.py	/^class Square(db.Model):$/;"	kind:class	line:260
+SquareForm	../squares\forms.py	/^class SquareForm(FlaskForm):$/;"	kind:class	line:134
+Unit	../squares\models.py	/^class Unit(db.Model):$/;"	kind:class	line:274
+UnitInvOutIconizer	../squares\routes.py	/^    def UnitInvOutIconizer(yes_or_no):$/;"	kind:function	line:393
+UnitInvOutStyler	../squares\routes.py	/^    def UnitInvOutStyler(yes_or_no):$/;"	kind:function	line:378
+UpdateAccountForm	../squares\forms.py	/^class UpdateAccountForm(FlaskForm):$/;"	kind:class	line:49
+User	../squares\models.py	/^class User(db.Model, UserMixin):$/;"	kind:class	line:12
+UserMixin	../squares\models.py	/^from flask_login import UserMixin$/;"	kind:namespace	line:3
+YesNoIconizer	../squares\routes.py	/^    def YesNoIconizer(yes_or_no):$/;"	kind:function	line:453
+__init__.py	../squares\__init__.py	1;"	kind:file	line:1
+__repr__	../squares\models.py	/^    def __repr__(self):$/;"	kind:member	line:21
+__repr__	../squares\models.py	/^    def __repr__(self):$/;"	kind:member	line:249
+__repr__	../squares\models.py	/^    def __repr__(self):$/;"	kind:member	line:269
+__repr__	../squares\models.py	/^    def __repr__(self):$/;"	kind:member	line:299
+__repr__	../squares\models.py	/^    def __repr__(self):$/;"	kind:member	line:33
+__tablename__	../squares\models.py	/^    __tablename__ = 'square'$/;"	kind:variable	line:263
+__tablename__	../squares\models.py	/^    __tablename__ = 'unit'$/;"	kind:variable	line:278
+about	../squares\routes.py	/^def about():$/;"	kind:function	line:187
+account	../squares\routes.py	/^def account():$/;"	kind:function	line:268
+allow_blank	../squares\forms.py	/^        allow_blank=False,$/;"	kind:variable	line:137
+app	../run.py	/^from squares import app$/;"	kind:namespace	line:1
+app	../squares\__init__.py	/^app = Flask(__name__)$/;"	kind:variable	line:7
+bcrypt	../squares\__init__.py	/^bcrypt = Bcrypt(app)$/;"	kind:variable	line:13
+catalog_fullname	../squares\forms.py	/^    catalog_fullname = StringField($/;"	kind:variable	line:83
+catalog_fullname	../squares\models.py	/^    catalog_fullname = db.Column(db.String(256))$/;"	kind:variable	line:42
+catalog_no	../squares\forms.py	/^    catalog_no = StringField($/;"	kind:variable	line:81
+catalog_no	../squares\models.py	/^    catalog_no = db.Column(db.String(32))$/;"	kind:variable	line:41
+choices	../squares\forms.py	/^                                 choices=[('no', 'NO'), ('yes', 'YES')],  default='no')$/;"	kind:variable	line:114
+choices	../squares\forms.py	/^                                 choices=[('no', 'NO'), ('yes', 'YES')], default='no')$/;"	kind:variable	line:110
+choices	../squares\forms.py	/^                                 choices=[('no', 'NO'), ('yes', 'YES')], default='no')$/;"	kind:variable	line:116
+choices	../squares\forms.py	/^                                choices=[('no', 'NO'), ('yes', 'YES')], default='no')$/;"	kind:variable	line:100
+choices	../squares\forms.py	/^                                choices=[('no', 'NO'), ('yes', 'YES')], default='yes')$/;"	kind:variable	line:108
+choices	../squares\forms.py	/^                               choices=[('no', 'NO'), ('yes', 'YES')],  default='no')$/;"	kind:variable	line:112
+choices	../squares\forms.py	/^                              choices=[('no', 'NO'), ('yes', 'YES')], default='no')$/;"	kind:variable	line:98
+choices	../squares\forms.py	/^                             choices=[('no', 'NO'), ('yes', 'YES')], default='no')$/;"	kind:variable	line:102
+choices	../squares\forms.py	/^                            choices=[('no', 'NO'), ('yes', 'YES')],  default='no')$/;"	kind:variable	line:106
+choices	../squares\forms.py	/^                           choices=[('no', 'NO'), ('yes', 'YES')],  default='no')$/;"	kind:variable	line:104
+codecs	../squares\routes.py	/^import codecs$/;"	kind:namespace	line:8
+col_count	../squares\models.py	/^    col_count = db.Column(db.Integer)$/;"	kind:variable	line:267
+color_finder	../squares\routes.py	/^def color_finder():$/;"	kind:function	line:691
+color_primary	../squares\forms.py	/^    color_primary = StringField($/;"	kind:variable	line:85
+color_primary	../squares\models.py	/^    color_primary = db.Column(db.String(32))$/;"	kind:variable	line:43
+color_secondary	../squares\forms.py	/^    color_secondary = StringField($/;"	kind:variable	line:87
+color_secondary	../squares\models.py	/^    color_secondary = db.Column(db.String(32))$/;"	kind:variable	line:44
+confirm_password	../squares\forms.py	/^    confirm_password = PasswordField('Confirm Password',$/;"	kind:variable	line:26
+content	../squares\forms.py	/^    content = TextAreaField('Content', validators=[DataRequired()])$/;"	kind:variable	line:74
+content	../squares\models.py	/^    content = db.Column(db.Text, nullable=False)$/;"	kind:variable	line:30
+create_item	../squares\routes.py	/^def create_item():$/;"	kind:function	line:193
+createall_squares	../squares\routes.py	/^def createall_squares():$/;"	kind:function	line:1026
+csv	../squares\routes.py	/^import csv$/;"	kind:namespace	line:7
+csv_feed	../squares\routes.py	/^def csv_feed():$/;"	kind:function	line:144
+csv_file	../squares\forms.py	/^    csv_file = FileField($/;"	kind:variable	line:119
+current_user	../squares\forms.py	/^from flask_login import current_user$/;"	kind:namespace	line:8
+dashboard	../squares\routes.py	/^def dashboard():$/;"	kind:function	line:1314
+date_posted	../squares\models.py	/^    date_posted = db.Column(db.DateTime, nullable=False,$/;"	kind:variable	line:28
+datetime	../squares\models.py	/^from datetime import datetime$/;"	kind:namespace	line:1
+db	../squares\__init__.py	/^db = SQLAlchemy(app)$/;"	kind:variable	line:12
+db	../squares\models.py	/^from squares import db, login_manager$/;"	kind:namespace	line:2
+ddslick_master	../squares\routes.py	/^def ddslick_master():$/;"	kind:function	line:777
+default	../squares\models.py	/^                            default=datetime.utcnow)$/;"	kind:variable	line:29
+default	../squares\models.py	/^                           default='default.png')$/;"	kind:variable	line:17
+defaultdict	../squares\routes.py	/^from collections import defaultdict$/;"	kind:namespace	line:3
+delete_item	../squares\routes.py	/^def delete_item(item_id):$/;"	kind:function	line:33
+delete_post	../squares\routes.py	/^def delete_post(post_id):$/;"	kind:function	line:331
+describe_attrs	../squares\models.py	/^    def describe_attrs(self):$/;"	kind:member	line:219
+dispitem_id	../squares\models.py	/^    dispitem_id = db.Column(db.Integer, db.ForeignKey('item.id'))$/;"	kind:variable	line:286
+display_mainitem	../squares\routes.py	/^def display_mainitem(square_id):$/;"	kind:function	line:1142
+display_properties	../squares\models.py	/^    def display_properties(self):$/;"	kind:member	line:61
+display_tablerow	../squares\models.py	/^    def display_tablerow(self):$/;"	kind:member	line:88
+edit_item	../squares\routes.py	/^def edit_item(item_id):$/;"	kind:function	line:43
+email	../squares\forms.py	/^    email = StringField('Email',$/;"	kind:variable	line:23
+email	../squares\forms.py	/^    email = StringField('Email',$/;"	kind:variable	line:43
+email	../squares\forms.py	/^    email = StringField('Email',$/;"	kind:variable	line:52
+email	../squares\models.py	/^    email = db.Column(db.String(120), unique=True, nullable=False)$/;"	kind:variable	line:15
+fetch_d3_grid	../squares\routes.py	/^def fetch_d3_grid(square_id):$/;"	kind:function	line:1389
+fetch_ddslick	../squares\routes.py	/^def fetch_ddslick(manufacturer):$/;"	kind:function	line:1293
+fetch_ddslick_square	../squares\routes.py	/^def fetch_ddslick_square(square_id):$/;"	kind:function	line:1333
+fetch_itemattrs_bysqr	../squares\routes.py	/^def fetch_itemattrs_bysqr(square_id):$/;"	kind:function	line:809
+fetch_items4bubble_bysqr	../squares\routes.py	/^def fetch_items4bubble_bysqr(square_id):$/;"	kind:function	line:944
+fetch_mainavlb_count	../squares\routes.py	/^def fetch_mainavlb_count(square_id):$/;"	kind:function	line:921
+fetch_mainavlb_perc	../squares\routes.py	/^def fetch_mainavlb_perc(square_id):$/;"	kind:function	line:899
+fetch_manuf_bysqr	../squares\routes.py	/^def fetch_manuf_bysqr(square_id):$/;"	kind:function	line:858
+fetch_manuf_info	../squares\routes.py	/^def fetch_manuf_info(square_id):$/;"	kind:function	line:1196
+fetch_mostcommon_attr	../squares\routes.py	/^def fetch_mostcommon_attr(square_id):$/;"	kind:function	line:1239
+fetch_square_all	../squares\routes.py	/^def fetch_square_all():$/;"	kind:function	line:1458
+fetch_square_info	../squares\routes.py	/^def fetch_square_info(square_id):$/;"	kind:function	line:982
+fetchitems_by	../squares\routes.py	/^def fetchitems_by(manufacturer):$/;"	kind:function	line:783
+filterby_manuf	../squares\routes.py	/^def filterby_manuf(item_manufacturer):$/;"	kind:function	line:495
+findnext_byid	../squares\routes.py	/^def findnext_byid(item_id=10):$/;"	kind:function	line:539
+forms.py	../squares\forms.py	1;"	kind:file	line:1
+gen_attr_dict	../squares\models.py	/^    def gen_attr_dict(self):$/;"	kind:member	line:121
+get_label	../squares\forms.py	/^        get_label='name',$/;"	kind:variable	line:138
+has_curvedbill	../squares\forms.py	/^    has_curvedbill = SelectField('Has curved bill?',$/;"	kind:variable	line:109
+has_curvedbill	../squares\models.py	/^    has_curvedbill = db.Column(db.String(32))$/;"	kind:variable	line:54
+has_flatbill	../squares\forms.py	/^    has_flatbill = SelectField('Has flat bill?',$/;"	kind:variable	line:111
+has_flatbill	../squares\models.py	/^    has_flatbill = db.Column(db.String(32))$/;"	kind:variable	line:55
+has_meshback	../squares\models.py	/^    has_meshback = db.Column(db.String(32))$/;"	kind:variable	line:53
+home	../squares\routes.py	/^def home():$/;"	kind:function	line:181
+id	../squares\models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	kind:variable	line:13
+id	../squares\models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	kind:variable	line:26
+id	../squares\models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	kind:variable	line:264
+id	../squares\models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	kind:variable	line:39
+id	../squares\models.py	/^    id = db.Column(db.Integer, unique=True, primary_key=True)$/;"	kind:variable	line:280
+image_file	../squares\models.py	/^    image_file = db.Column(db.String(20), nullable=False,$/;"	kind:variable	line:16
+imagegrid_url	../squares\forms.py	/^    imagegrid_url = StringField($/;"	kind:variable	line:89
+imagegrid_url	../squares\models.py	/^    imagegrid_url = db.Column(db.String(256))$/;"	kind:variable	line:56
+imagelist_url	../squares\forms.py	/^    imagelist_url = StringField($/;"	kind:variable	line:91
+imagelist_url	../squares\models.py	/^    imagelist_url = db.Column(db.String(256))$/;"	kind:variable	line:57
+inject_LowInvBts4Grid	../squares\routes.py	/^def inject_LowInvBts4Grid():$/;"	kind:function	line:435
+inject_LowInvButtons	../squares\routes.py	/^def inject_LowInvButtons():$/;"	kind:function	line:360
+inject_LowInvIcons	../squares\routes.py	/^def inject_LowInvIcons():$/;"	kind:function	line:465
+inject_OutInvBtns4Grid	../squares\routes.py	/^def inject_OutInvBtns4Grid():$/;"	kind:function	line:420
+inject_OutInvButtons	../squares\routes.py	/^def inject_OutInvButtons():$/;"	kind:function	line:405
+inject_OutInvIcons	../squares\routes.py	/^def inject_OutInvIcons():$/;"	kind:function	line:480
+inject_TableHeaders	../squares\routes.py	/^def inject_TableHeaders():$/;"	kind:function	line:342
+inject_UnitInvOutIconizer	../squares\routes.py	/^def inject_UnitInvOutIconizer():$/;"	kind:function	line:390
+inject_UnitInvOutStyler	../squares\routes.py	/^def inject_UnitInvOutStyler():$/;"	kind:function	line:375
+inject_YesNoIcons	../squares\routes.py	/^def inject_YesNoIcons():$/;"	kind:function	line:450
+inv_home	../squares\routes.py	/^def inv_home():$/;"	kind:function	line:167
+inv_lister	../squares\routes.py	/^def inv_lister():$/;"	kind:function	line:73
+inv_lowinstock	../squares\forms.py	/^    inv_lowinstock = SelectField('Low In Stocks?',$/;"	kind:variable	line:113
+inv_lowinstock	../squares\models.py	/^    inv_lowinstock = db.Column(db.String(32))$/;"	kind:variable	line:45
+inv_outofstock	../squares\forms.py	/^    inv_outofstock = SelectField('Out of Stock?',$/;"	kind:variable	line:115
+inv_outofstock	../squares\models.py	/^    inv_outofstock = db.Column(db.String(32))$/;"	kind:variable	line:46
+is_adjustable	../squares\forms.py	/^    is_adjustable = SelectField('Velcro\/Strap?',$/;"	kind:variable	line:99
+is_adjustable	../squares\models.py	/^    is_adjustable = db.Column(db.String(32))$/;"	kind:variable	line:47
+is_fitted	../squares\forms.py	/^    is_fitted = SelectField('Fitted',$/;"	kind:variable	line:105
+is_fitted	../squares\models.py	/^    is_fitted = db.Column(db.String(32))$/;"	kind:variable	line:50
+is_flexfit	../squares\forms.py	/^    is_flexfit = SelectField('Flexfit',$/;"	kind:variable	line:101
+is_flexfit	../squares\models.py	/^    is_flexfit = db.Column(db.String(32))$/;"	kind:variable	line:49
+is_snapback	../squares\forms.py	/^    is_snapback = SelectField('Snapback?',$/;"	kind:variable	line:97
+is_snapback	../squares\models.py	/^    is_snapback = db.Column(db.String(32))$/;"	kind:variable	line:48
+is_unstructured	../squares\forms.py	/^    is_unstructured = SelectField('Has structured crown?',$/;"	kind:variable	line:107
+is_unstructured	../squares\models.py	/^    is_unstructured = db.Column(db.String(32))$/;"	kind:variable	line:52
+is_youth	../squares\forms.py	/^    is_youth = SelectField('Youth',$/;"	kind:variable	line:103
+is_youth	../squares\models.py	/^    is_youth = db.Column(db.String(32))$/;"	kind:variable	line:51
+item	../squares\forms.py	/^    item = SelectField('item', choices=[])$/;"	kind:variable	line:144
+json	../squares\routes.py	/^import json$/;"	kind:namespace	line:9
+just_ran_out	../squares\models.py	/^    def just_ran_out(self):$/;"	kind:member	line:112
+load_user	../squares\models.py	/^def load_user(user_id):$/;"	kind:function	line:8
+login	../squares\routes.py	/^def login():$/;"	kind:function	line:230
+login_manager	../squares\__init__.py	/^login_manager = LoginManager(app)$/;"	kind:variable	line:14
+login_manager	../squares\models.py	/^from squares import db, login_manager$/;"	kind:namespace	line:2
+logout	../squares\routes.py	/^def logout():$/;"	kind:function	line:246
+maininv_out	../squares\models.py	/^    maininv_out = db.Column(db.String(32))$/;"	kind:variable	line:285
+mainitem_id	../squares\models.py	/^    mainitem_id = db.Column(db.Integer)$/;"	kind:variable	line:284
+mainitem_out	../squares\models.py	/^    def mainitem_out(self):$/;"	kind:member	line:289
+mainitem_restck	../squares\models.py	/^    def mainitem_restck(self):$/;"	kind:member	line:293
+manufacturer	../squares\forms.py	/^    manufacturer = SelectField($/;"	kind:variable	line:142
+manufacturer	../squares\forms.py	/^    manufacturer = StringField($/;"	kind:variable	line:79
+manufacturer	../squares\models.py	/^    manufacturer = db.Column(db.String(32))$/;"	kind:variable	line:40
+mark_as_lowinv	../squares\routes.py	/^def mark_as_lowinv(item_id):$/;"	kind:function	line:115
+mark_as_outofstock	../squares\routes.py	/^def mark_as_outofstock(item_id):$/;"	kind:function	line:87
+models.py	../squares\models.py	1;"	kind:file	line:1
+name	../squares\models.py	/^    name = db.Column(db.String(32))$/;"	kind:variable	line:265
+new_post	../squares\routes.py	/^def new_post():$/;"	kind:function	line:290
+now_restock3d	../squares\models.py	/^    def now_restock3d(self):$/;"	kind:member	line:117
+now_restocked	../squares\models.py	/^    def now_restocked(self):$/;"	kind:member	line:108
+opts	../squares\forms.py	/^    opts = QuerySelectField($/;"	kind:variable	line:135
+os	../squares\__init__.py	/^import os$/;"	kind:namespace	line:5
+os	../squares\routes.py	/^import os$/;"	kind:namespace	line:5
+password	../squares\forms.py	/^    password = PasswordField('Password', validators=[DataRequired()])$/;"	kind:variable	line:25
+password	../squares\forms.py	/^    password = PasswordField('Password', validators=[DataRequired()])$/;"	kind:variable	line:45
+password	../squares\models.py	/^    password = db.Column(db.String(60), nullable=False)$/;"	kind:variable	line:18
+percEmUp	../squares\routes.py	/^from squares.utils import percEmUp$/;"	kind:namespace	line:2
+percEmUp	../squares\utils.py	/^def percEmUp(iterable):$/;"	kind:function	line:1
+picture	../squares\forms.py	/^    picture = FileField('Update Profile Picture', validators=[$/;"	kind:variable	line:54
+post	../squares\routes.py	/^def post(post_id):$/;"	kind:function	line:304
+posts	../squares\models.py	/^    posts = db.relationship('Post', backref='author', lazy=True)$/;"	kind:variable	line:19
+product_url	../squares\forms.py	/^    product_url = StringField($/;"	kind:variable	line:93
+product_url	../squares\models.py	/^    product_url = db.Column(db.String(256))$/;"	kind:variable	line:58
+pstn_rowcol	../squares\models.py	/^    pstn_rowcol = db.Column(db.String(32))$/;"	kind:variable	line:282
+query_factory	../squares\forms.py	/^        query_factory=square_query,$/;"	kind:variable	line:136
+random	../squares\routes.py	/^import random$/;"	kind:namespace	line:4
+random_populate	../squares\routes.py	/^def random_populate(square_id):$/;"	kind:function	line:1051
+redir3ct_url	../squares\routes.py	/^    def redir3ct_url(default='inv_lister'):$/;"	kind:function	line:118
+redir3ct_url	../squares\routes.py	/^    def redir3ct_url(default='inv_lister'):$/;"	kind:function	line:543
+redir3ct_url	../squares\routes.py	/^    def redir3ct_url(default='inv_lister'):$/;"	kind:function	line:720
+redir3ct_url	../squares\routes.py	/^    def redir3ct_url(default='inv_lister'):$/;"	kind:function	line:90
+redir3ct_url	../squares\routes.py	/^    def redir3ct_url(default='sqr_home'):$/;"	kind:function	line:751
+register	../squares\routes.py	/^def register():$/;"	kind:function	line:212
+remember	../squares\forms.py	/^    remember = BooleanField('Remember Me')$/;"	kind:variable	line:46
+request	../squares\forms.py	/^from flask import request$/;"	kind:namespace	line:2
+routes	../squares\__init__.py	/^from squares import routes$/;"	kind:namespace	line:18
+routes.py	../squares\routes.py	1;"	kind:file	line:1
+row_count	../squares\models.py	/^    row_count = db.Column(db.Integer)$/;"	kind:variable	line:266
+run.py	../run.py	1;"	kind:file	line:1
+running_low	../squares\models.py	/^    def running_low(self):$/;"	kind:member	line:103
+save_picture	../squares\routes.py	/^def save_picture(form_picture):$/;"	kind:function	line:251
+secrets	../squares\routes.py	/^import secrets$/;"	kind:namespace	line:6
+show_item	../squares\routes.py	/^def show_item(item_id):$/;"	kind:function	line:64
+showonly_invlow	../squares\routes.py	/^def showonly_invlow():$/;"	kind:function	line:511
+showonly_invout	../squares\routes.py	/^def showonly_invout():$/;"	kind:function	line:525
+similar_attrs	../squares\models.py	/^    def similar_attrs(self):$/;"	kind:member	line:188
+sqr_home	../squares\routes.py	/^def sqr_home():$/;"	kind:function	line:1001
+square_byid	../squares\routes.py	/^def square_byid(square_id):$/;"	kind:function	line:605
+square_byid_lite	../squares\routes.py	/^def square_byid_lite(square_id):$/;"	kind:function	line:648
+square_id	../squares\models.py	/^    square_id = db.Column(db.Integer)$/;"	kind:variable	line:281
+square_query	../squares\forms.py	/^def square_query():$/;"	kind:function	line:130
+submit	../squares\forms.py	/^    submit = SubmitField('Feed Inv | Read CSV')$/;"	kind:variable	line:125
+submit	../squares\forms.py	/^    submit = SubmitField('Login')$/;"	kind:variable	line:47
+submit	../squares\forms.py	/^    submit = SubmitField('Post')$/;"	kind:variable	line:75
+submit	../squares\forms.py	/^    submit = SubmitField('Sign Up')$/;"	kind:variable	line:28
+submit	../squares\forms.py	/^    submit = SubmitField('Update')$/;"	kind:variable	line:56
+test	../squares\routes.py	/^def test():$/;"	kind:function	line:800
+test_info_board	../squares\routes.py	/^def test_info_board():$/;"	kind:function	line:1179
+title	../squares\forms.py	/^    title = StringField('Title', validators=[DataRequired()])$/;"	kind:variable	line:73
+title	../squares\models.py	/^    title = db.Column(db.String(100), nullable=False)$/;"	kind:variable	line:27
+unique_tag	../squares\models.py	/^    unique_tag = db.Column(db.String(32),unique=True)$/;"	kind:variable	line:283
+unit_mainitem_low	../squares\routes.py	/^def unit_mainitem_low(unique_tag, item_id):$/;"	kind:function	line:717
+unit_mainitem_out	../squares\routes.py	/^def unit_mainitem_out(unique_tag, item_id):$/;"	kind:function	line:748
+unit_nextitem	../squares\routes.py	/^def unit_nextitem(unique_tag, item_id):$/;"	kind:function	line:565
+unit_show_mainitem	../squares\routes.py	/^def unit_show_mainitem(unique_tag):$/;"	kind:function	line:594
+unit_update_maininvout	../squares\routes.py	/^def unit_update_maininvout(unique_tag):$/;"	kind:function	line:584
+update_invstatus	../squares\routes.py	/^def update_invstatus(square_id):$/;"	kind:function	line:1159
+update_post	../squares\routes.py	/^def update_post(post_id):$/;"	kind:function	line:311
+update_via_wtforms	../squares\models.py	/^    def update_via_wtforms(self, form):$/;"	kind:member	line:167
+url_for	../squares\models.py	/^from flask import url_for$/;"	kind:namespace	line:4
+user_id	../squares\models.py	/^    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)$/;"	kind:variable	line:31
+username	../squares\forms.py	/^    username = StringField('Username',$/;"	kind:variable	line:21
+username	../squares\forms.py	/^    username = StringField('Username',$/;"	kind:variable	line:50
+username	../squares\models.py	/^    username = db.Column(db.String(20), unique=True, nullable=False)$/;"	kind:variable	line:14
+utils.py	../squares\utils.py	1;"	kind:file	line:1
+validate_email	../squares\forms.py	/^    def validate_email(self, email):$/;"	kind:member	line:36
+validate_email	../squares\forms.py	/^    def validate_email(self, email):$/;"	kind:member	line:65
+validate_username	../squares\forms.py	/^    def validate_username(self, username):$/;"	kind:member	line:30
+validate_username	../squares\forms.py	/^    def validate_username(self, username):$/;"	kind:member	line:58
+validators	../squares\forms.py	/^                                     validators=[DataRequired(), EqualTo('password')])$/;"	kind:variable	line:27
+validators	../squares\forms.py	/^                           validators=[DataRequired(), Length(min=2, max=20)])$/;"	kind:variable	line:22
+validators	../squares\forms.py	/^                           validators=[DataRequired(), Length(min=2, max=20)])$/;"	kind:variable	line:51
+validators	../squares\forms.py	/^                        validators=[DataRequired(), Email()])$/;"	kind:variable	line:24
+validators	../squares\forms.py	/^                        validators=[DataRequired(), Email()])$/;"	kind:variable	line:44
+validators	../squares\forms.py	/^                        validators=[DataRequired(), Email()])$/;"	kind:variable	line:53
+validators	../squares\forms.py	/^        validators=[$/;"	kind:variable	line:121

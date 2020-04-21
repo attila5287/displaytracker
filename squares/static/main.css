@@ -1,7 +1,11 @@
+.btn-gr1d{
+  border-radius: 1rem;
+  border-width: 1px;
+}
+
 .btn-grid{
   border-radius: 1.25rem;
   border-width: 1px;
-  margin-top:0.25rem;
 }
 
 .btn-square {
@@ -10,6 +14,11 @@
 
 .dash-section {
   padding: 12px;
+}
+
+.shadow-turqoise {
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(147, 190, 189, 0.233) !important;
+  box-shadow: 0 0.5rem 1rem rgba(147, 190, 189, 0.233) !important;
 }
 
 .shadow-gold {

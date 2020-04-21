@@ -7,11 +7,21 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
 
+infoBoardSquare(3);
+
+function infoBoardSquareUp(squareID) {
+  return function () {
+    infoBoardSquare(squareID);
+    console.log(` ---- info Board UP ----${squareID}----`);
+  };
+}
+
+
+updateByDefault();
+
 for (let index = 0; index < 10; index += 1) {
   initMouseOver(index);
 }
-
-updateByDefault();
 
 
 function initMouseOver(squareID) {  
@@ -20,6 +30,7 @@ function initMouseOver(squareID) {
   .on('mouseleave', gridViewDown());
   
 }
+
 
 function gridViewDown() {
   return function () {
@@ -159,22 +170,25 @@ function gridView(square) {
           const JSONobj = row[i];
           
           const $card = $cardDeck.append('div')
-            .attr('class', 'card bg-dark border-success shadow-gold text-center mx-1 my-2').style('border-radius','16px').style('border-width','2px');
+            .attr('class', 'card bg-dark border-success shadow-after text-center mx-1 my-2').style('border-radius','16px').style('border-width','2px');
 
-          const newHeader = $card.append('div').attr('class', 'card-header text-success py-1').text(JSONobj.unique_tag);
+          const newHeader = $card.append('div').attr('class', 'card-header border-success text-center text-success shadow-gold py-1 mb-3');
 
-          newHeader.append('i').attr('class', 'fa fa-tag ml-2');
-          
+          newHeader.append('i').attr('class', 'fa fa-tag fa-pull-left');
 
-          const newImg = $card.append('img').attr('class', 'card-img-top bg-white border-none mt-2').style('border-radius', '4px').attr('src', JSONobj.imageSrc);
+          newHeader.append('small')
+                   .append('em')
+                   .text(JSONobj.unique_tag);
+
+          const newImg = $card.append('img').attr('class', 'card-img-top bg-white border-none mt-0 mb-1').style('border-radius', '4px').attr('src', JSONobj.imageSrc);
 
           const $cardBody = $card.append('div').attr('class', 'card-body text-center p-0');
 
           const $containerFluid = $cardBody.append('div').attr('class', 'container-fluid');
 
-          const newButton = $containerFluid.append('a').attr('class', 'btn btn-dark btn-block btn-grid border-success text-light px-2 py-0').append('em').text(JSONobj.catalog_no);
+          const newButton = $containerFluid.append('a').attr('class', 'btn btn-dark btn-block btn-grid border-success text-light shadow-turqoise px-2 py-0').append('em').text(JSONobj.catalog_no);
 
-          const newBodyTitle = $cardBody.append('h6').attr('class', 'card-title text-secondary text-title mb-0 mt-0').append('small').append('em').text(JSONobj.colors);
+          const newBodyTitle = $cardBody.append('h6').attr('class', 'card-title text-light text-title mb-0 mt-0').append('small').append('em').text(JSONobj.colors);
 
           const newFooter = $card.append('div').attr('class', 'card-footer border-success text-success py-1').append('small').append('em').text(JSONobj.manufacturer);
 

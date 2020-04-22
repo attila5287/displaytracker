@@ -18,7 +18,7 @@ dashboardUpdateAll();
 function dashboardUpdateAll() {
   $squareSelect.onchange = function () {
     chosenSquare = $squareSelect.value;
-    
+
     gaugeMeUp(chosenSquare);
     bubbleMeup(chosenSquare);
     pieMeUp(chosenSquare);
@@ -34,17 +34,17 @@ function dashboardUpdateAll() {
 
 function startWearingPurpleNow() {
   d3.select('#infoBubble')
-    .on("mouseenter", flashEmUp('#bubbleZone','#bubbleDesc'))
-    .on("mouseleave", flashEmDown('#bubbleZone','#bubbleDesc'));
+    .on("mouseenter", flashEmUp('#bubbleZone', '#bubbleDesc'))
+    .on("mouseleave", flashEmDown('#bubbleZone', '#bubbleDesc'));
   d3.select('#infoGauge')
-    .on("mouseenter", flashEmUp('#gaugeZone','#gaugeDesc'))
-    .on("mouseleave", flashEmDown('#gaugeZone','#gaugeDesc'));
+    .on("mouseenter", flashEmUp('#gaugeZone', '#gaugeDesc'))
+    .on("mouseleave", flashEmDown('#gaugeZone', '#gaugeDesc'));
   d3.select('#infoPie')
-    .on("mouseenter", flashEmUp('#pieZone','#pieDesc'))
-    .on("mouseleave", flashEmDown('#pieZone','#pieDesc'));
+    .on("mouseenter", flashEmUp('#pieZone', '#pieDesc'))
+    .on("mouseleave", flashEmDown('#pieZone', '#pieDesc'));
   d3.select('#infoHist')
-    .on("mouseenter", flashEmUp('#histZone','#histDesc'))
-    .on("mouseleave", flashEmDown('#histZone','#histDesc'));
+    .on("mouseenter", flashEmUp('#histZone', '#histDesc'))
+    .on("mouseleave", flashEmDown('#histZone', '#histDesc'));
   d3.select('#infoDDslick')
     .on("mouseenter", flashEmUp('#ddslickZone', '#ddSlickDesc'))
     .on("mouseleave", flashEmDown('#ddslickZone', '#ddSlickDesc'));
@@ -262,7 +262,7 @@ function histogramMeUp(square) {
     };
     // Create the data array for the plot
     var data = [trace1];
-    var layout = {      
+    var layout = {
       margin: {
         t: 4
       },
@@ -286,7 +286,7 @@ function histogramMeUp(square) {
         linewidth: 0.25,
       },
       yaxis: {
-        autorange:"reversed",
+        autorange: "reversed",
         tickfont: {
           size: 10,
           color: '#B58900',
@@ -454,7 +454,7 @@ function flashEmDown(zoneId, zoneDescId) {
     d3.select(zoneId)
       .attr('class', 'card bg-transparent shadow-before');
     d3.select(zoneDescId)
-      .attr('class', 'text-secondary');    
+      .attr('class', 'text-secondary');
   };
 }
 
@@ -462,7 +462,7 @@ function ddSlickItemsOf(square) {
   var queryURL = "/fetch/ddslick/square/" + square;
   d3.json(queryURL, function (error, data) {
     if (error)
-      return console.warn(error);  
+      return console.warn(error);
     $('#itemSelect').ddslick('destroy');
     $('#itemSelect').ddslick({
       data: data['disp'],
@@ -470,4 +470,3 @@ function ddSlickItemsOf(square) {
     });
   });
 }
-

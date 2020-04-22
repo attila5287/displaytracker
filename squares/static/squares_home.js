@@ -8,13 +8,6 @@
 /* eslint-disable no-use-before-define */
 updateByDefault();
 
-function infoBoardSquareUp(squareID) {
-  return function () {
-    infoBoardSquare(squareID);
-    console.log(` ---- info Board UP ----${squareID}----`);
-  };
-}
-
 
 for (let index = 0; index < 10; index += 1) {
   initMouseOver(index);
@@ -23,24 +16,28 @@ for (let index = 0; index < 10; index += 1) {
 
 function initMouseOver(squareID) {  
   d3.select(`#squareButton0${squareID}`)
-  .on('mouseenter', infoBoardSquareUp(squareID))
   .on('mouseenter', gridViewUp(squareID))
   .on('mouseleave', gridViewDown());
-  
 }
 
 
 function gridViewDown() {
   return function () {
     d3.selectAll('.card-deck').remove();
-    console.log(`---- grid View DOWN ----`);
+    console.log(`---- grid View> grid View DOWN ----`);
   };
 }
+
 
 function gridViewUp(squareID) {
   return function () {
     d3.selectAll('.card-deck').remove();
     gridView(squareID);
+    infoBoardSquare(squareID);
+    infoBoardAvlbCount(squareID);
+    infoBoardAvlbPerc(squareID);
+    infoBoardManuf(squareID);
+    infoBoardMostCommon(squareID);
     console.log(` ---- grid View UP ----${squareID}----`);
   };
 }
@@ -48,7 +45,6 @@ function gridViewUp(squareID) {
 const $squareSel3ct = document.getElementById('opts');
 
 $squareSel3ct.onchange = function () {
-  d3.selectAll('.card-deck').remove();
   const square = $squareSel3ct.value;
   gridView(square);
   infoBoardSquare(square);

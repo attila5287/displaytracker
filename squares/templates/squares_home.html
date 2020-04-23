@@ -1,178 +1,291 @@
-{% extends 'layout_dash.html' %}
+{% extends 'layout_sqrhome.html' %}
 {% block content %}
 
-
-<!-- part of squares layout buttons -->
-<div class="d-flex flex-row justify-content-around">
-  {% for square in squares[:7] %}
-  <a href="{{ url_for('square_byid', square_id=square.id) }}"
-    class="btn btn-dark btn-lg btn-block btn-square shadow-gold mt-auto" type="button" style="height: 2.75rem;"
-    id="squareButton0{{square.id}}">
-    <i class="fas fa-grip-horizontal mr-2 mt-0"></i>
-    <i class="mt-0">
-      <small>
-        {{ square.name.upper() }}
-      </small>
-    </i>
-  </a>
-  {% endfor %}
-</div>
+<!-- LAST COL IS SQR L4YOUT OTHER THAN THOSE ARE MAIN CONTAINERS -->
 <div class="d-flex flex-row justify-content-around">
   <div class="col-lg-7">
-    <!-- this is the grid d3 selects as parent node and appends all child -->
-    <div class="grid mt-4"></div>
-    <div class="card-deck"></div>
+    <div class="hero-image border-dark">
+      <!-- this is the grid d3 selects as parent node and appends all child -->
+      <div class="grid mt-4"></div>
+      <div class="card-deck"></div>
+    </div>
   </div>
-
   <!-- form to select squares -->
-  <div class="col-lg-4">
-    <div class="infoboard-section border-success shadow-after px-1 mt-4">
-      <!-- select field options form info card -->
-      <div class="card bg-transparent border-0">
-        <div class="card-body text-right py-0">
-          <em>
-            Change selection for action!
+  <div class="col-lg-5">
+    <!-- select field options form info card -->
+    <!-- $squareSelect is the opts field of form -->
+    <form method="POST" action="" class="mt-4">
+
+  <div class="card infoboard-section bg-transparent border-success text-right">
+    <div class="card-header py-1 border-success">
+      Header
+    </div>
+    <div class="card-body my-0 py-1">
+      <p class="card-text">
+                  <em>
+            Change selection for dynamic update all info!
             <i class="fa fa-sort text-primary ml-2 animated infinite heartBeat delay-1s" aria-hidden="true"></i>
           </em>
-        </div>
-        <!-- $squareSelect is the opts field of form -->
-        <form method="POST" action="">
-          <div class="form-group">
-            {{ form.csrf_token }}
-            {{form.opts(class="custom-select border-primary text-center text-uppercase mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
-          </div>
-          <div class="form-group">
-            <a>
-              <button class="btn btn-dark btn-block border-dark text-primary btn-grid py-1 mb-0 mt-1" type="submit"
-                style="font-size:1rem;">
-                <i class="fa fa-th-large" aria-hidden="true"></i>
-                GO TO SQUARE
-              </button></a>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="infoboard-section text-center shadow-after border-success mt-4">
-      <div class="row mx-1">
-        <div class="col-md-4">
-          <div class="d-flex flex-column text-left">
-            <p>
-              <i class="fa fa-hashtag" aria-hidden="true"></i>
-              id: <i id="squareID"></i></p>
-            <p>
-              <i class="fa fa-warehouse" aria-hidden="true"></i>
-              MaxCap:
-              <i id="squareArea"></i></p>
-          </div>
 
-        </div>
-        <div class="col-md-4">
-          <a class="btn btn-dark border-dark px-3" style="border-width:thick;border-radius: 22px;">
-            <small>
-              <i class="fa fa-2x animated infinite pulse delay-1s text-secondary">
-                <em class="text-secondary">
-                  <i id="squareName"></i>
-                </em>
-              </i>
-            </small>
-          </a>
-          <p class="mt-1">
-            <i class="fas fa-eye"></i>
-            <small>
-              <em>
-                on grid view
-              </em>
-            </small>
-          </p>
-        </div>
-        <div class="col-md-4">
-          <div class="d-flex flex-column text-right">
-            <p>
-              <i class="fas fa-arrows-alt-h"> </i>
-              Rows: <i id="rowCount"></i></p>
-            <p>
-              <i class="fas fa-arrows-alt-v"> </i>
-              Cols: <i id="colCount"></i></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="infoboard-section text-center shadow-after border-success mt-4">
-      <div class="list-group">
-        <a id="infoGauge" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h6 class="mb-1">
-              <i class="fa fa-tachometer-alt" aria-hidden="true"></i>
-            </h6>
-            <small>
-              InventoryStatus
-            </small>
-          </div>
-          <small>
-            main/preferred
-            <i id="avlbItemsCount"></i>
-            items on display
-            <i id="avlbItemsPerc" class="text-primary"></i>
-          </small>
-        </a>
-        <a id="infoBubble" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h6 class="mb-1">
-              <i class="fa fa-braille" aria-hidden="true"></i>
-            </h6>
-            <small>
-              Most In Common
-            </small>
-          </div>
-          <p class="mb-0"> Displaying:
-            <em id="dispMostCommon" class="text-primary"></em>
-          </p>
-          <p class="mb-1"> Main/Pref:
-            <em id="mainMostCommon" class="text-primary"></em>
-          </p>
-        </a>
-        <a id="infoPie" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h6 class="mb-1">
-              <i class="fa fa-pie-chart" aria-hidden="true"></i>
-            </h6>
-            <small>
-              Manufacturer
-            </small>
-          </div>
-          <small>
-            Displayed Items:
-            <em id="manufDisp" class="text-primary"></em>
-          </small>
-          <br>
-          <small>
-            Main Items:
-            <em id="manufMain" class="text-primary">
-            </em>
-          </small>
-
-        </a>
-      </div>
+        </p>
+        <div class="form-group">
+          {{ form.csrf_token }}
+          {{form.opts(class="custom-select border-primary text-center text-uppercase mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
+        </div>                
     </div>
   </div>
+  <div class="card infoboard-section bg-transparent border-success text-success text-center mt-2">
+    <div class="card-body my-0 py-1">
 
-  <!-- part of squares layout -->
-  <div class="col-lg-1">
-    {% for square in squares[7:] %}
-    <div class="d-flex flex-row justify-content-end">
-      <div class="d-flex flex-column text-right ml-2">
-        <i class="text-uppercase text-monospace fa-rotate-90 my-auto ml-5">
-          {{square.name }}
-        </i>
+        <div class="form-group">
+          <a>
+            <button class="btn btn-dark btn-block border-dark text-primary btn-grid py-1 mb-0 mt-1" type="submit"
+              style="font-size:1rem;">
+              <i class="fa fa-th-large" aria-hidden="true"></i>
+              GO TO SQUARE
+            </button></a>
+        </div>
+          
+    </div>
+    <div class="card-footer border-success text-secondary py-0">
+      <i class="fa fa-info" aria-hidden="true"></i>
+      <small>
+        <em>
+          Change the selection or mouse pointer over squares above for Grid on the left and Info Board below dynamically update
+        </em>
+      </small>
+      
+    </div>
+  </div>          
+
+    </form>
+    <!-- square button pulsing -->
+    <div class="d-flex flex-row justify-content-around align-items-center text-center">
+      <div class="fa-fw">
+        <i class="fas fa-cog fa-spin fa-2x"></i>
+        <i class="fas fa-cog fa-spin fa-2x text-success"></i>
       </div>
-      <a class="btn btn-dark btn-lg btn-block btn-square shadow-turqoise text-center py-5 ml-5 mt-3" type="button"
-        href="{{ url_for('square_byid', square_id=square.id) }}">
-        <i class="fas fa-grip-vertical">
+      <div class="fa-fw">
+        <i class="fas fa-sun fa-cog text-success"></i>
+        <span class="fa-stack">
+          <i class="far fa-fw fa-circle fa-stack-2x text-success"></i>
+          <i class="fas fa-fw fa-sun fa-stack-1x fa-spin"></i>
+        </span>
+        <i class="fas fa-cog fa-spin fa-fw"></i>
+      </div>
+      <div class="fa-fw">
+        <i class="fas fa-cog fa-spin"></i>
+        <i class="fas fa-cog fa-spin text-success"></i>
+      </div>
+      <a class="btn btn-dark border-dark px-3" style="border-width:thick;border-radius: 2rem;">
+        <i class="fa fa-2x animated infinite pulse delay-1s text-secondary">
+          <em class="text-secondary">
+            <i id="squareName"></i>
+          </em>
         </i>
       </a>
+      <div class="d-flex flex-column">
+        <span class="fa-stack">
+          <i class="fas fa-circle fa-stack-2x  text-dark"></i>
+          <i class="fas fa-wifi fa-stack-1x fa-spin text-success"></i>
+        </span>            
+        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+        <i class="fa fa-signal text-success" aria-hidden="true"></i>
+        </div>
+
+        <div class="d-flex flex-column">
+          <span class="fa-stack">
+            <i class="fa fa-circle-notch fa-stack-2x fa-pulse text-success"></i>
+            <i class="fas fa-globe-americas fa-stack-1x  text-secondary"></i>
+          </span>      
+          <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          <i class="fa fa-server text-success" aria-hidden="true"></i>
+          
+        </div>
+        
+        <div class="fa-fw">
+          <i class="fa fa-sync text-success" aria-hidden="true"></i>
+          <i class="fa fa-sitemap text-success" aria-hidden="true"></i>
+          <i class="fa fa-link text-success" aria-hidden="true"></i>
+        </div>
     </div>
-    {% endfor %}
+    <p class="my-0 text-center">
+      <small>
+        <em>
+          currently being displayed
+        </em>
+      </small>
+    </p>
+
+    <!-- FOUR CARDS FOR SQUARE INTRO -->
+    <div class="card-group mt-1">
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success py-1">
+
+          ID:
+        </div>
+        <div class="card-body my-0 py-1 py-0">
+          <i class="fa fa-id-badge fa-fw fa-2x fa-pull-left mt-1" aria-hidden="true"></i>
+          <h1 class="card-title" id="squareID">
+          </h1>
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success py-1">
+          Capacity
+        </div>
+        <div class="card-body my-0 py-1 py-0">
+          <i class="fa fa-warehouse fa-2x fa-fw fa-pull-left mt-2" aria-hidden="true"></i>
+          <h3 class="card-title" id="squareArea">
+          </h3>
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success py-1">
+          Rows
+        </div>
+        <div class="card-body my-0 py-1 py-0">
+          <i class="fa fa-arrows-alt-h fa-2x fa-pull-left mt-1" aria-hidden="true"></i>
+          <h1 class="card-title" id="rowCount">
+          </h1>
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success py-1">
+
+          Columns
+        </div>
+        <div class="card-body my-0 py-1 py-0">
+          <i class="fas fa-arrows-alt-v fa-2x fa-pull-left mt-1"> </i>
+          <h1 class="card-title" id="colCount">
+          </h1>
+        </div>
+      </div>
+    </div>
+    <!-- THREE CARDS FOR MAIN ITEMS DISP RATIO -->
+    <div class="card-group mt-4">
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+
+        <div class="card-header py-1 border-success">
+          <i class="fa fa-map-pin" aria-hidden="true"></i>
+          Main Items~
+        </div>
+        <div class="card-body my-0 py-1">
+          <h2 class="card-title">
+            <i class="fa fa-hashtag" aria-hidden="true"></i>
+            <i id="avlbItemsCount" class="text-primary"></i>
+          </h2>
+          <p class="card-text">
+              on display
+            </p>
+        </div>
+        <div class="card-footer border-success">
+          ~Avlb Ratio
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success">
+          Cont'd
+        </div>
+        <div class="card-body my-0 py-1">
+          <h2 class="card-title">
+            <i class="fa fa-percent" aria-hidden="true"></i>
+            <i id="avlbItemsPerc" class="text-primary"></i>
+          </h2>
+          <p class="card-text">percentage</p>
+        </div>
+        <div class="card-footer border-success">   
+          <i class="fa fa-th-large" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success">
+          <i class="fa fa-info" aria-hidden="true"></i>
+          Info
+        </div>
+        <div class="card-body my-0 py-1">
+          <p class="card-text text-right">
+            <small>
+              <em>
+                Main items are those previously determined by the user and stored in database via Unit table
+              </em>
+            </small>
+
+          </p>
+        </div>
+        <div class="card-footer border-success">
+          <i class="fa fa-expand" aria-hidden="true"></i>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- THREE MORE CARDS FOR MANUF INFO -->
+    <div class="card-group mt-4">
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success">
+          Manufacturer~
+        </div>
+        <div class="card-body my-0 py-1">
+          <h5 class="card-title">
+            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+            <em id="manufDisp" class="text-primary"></em>
+          </h5>
+          <p class="card-text">
+            Displayed Items:
+          </p>
+        </div>
+        <div class="card-footer border-success">
+          <i class="fa fa-expand" aria-hidden="true"></i>
+          ~Ratio
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success">
+          Cont'd
+        </div>
+        <div class="card-body my-0 py-1">
+          <h5 class="card-title">
+  <em id="manufMain" class="text-primary"></em>
+
+          </h5>
+          <p class="card-text">
+            <small>
+              <em>
+                Applied for main items
+              </em>
+            </small>
+
+          </p>
+        </div>
+        <div class="card-footer border-success">
+          <i class="fa fa-expand" aria-hidden="true"></i>
+          
+        </div>
+      </div>
+      <div class="card infoboard-section bg-transparent border-success text-success text-center">
+        <div class="card-header py-1 border-success">
+          <i class="fa fa-info" aria-hidden="true"></i>
+          Info
+        </div>
+        <div class="card-body my-0 py-1">
+          <p class="card-text">
+            <small>
+              <em>
+                First ratio is the manuf dist. of items currently on display, latter for Main Items
+              </em>
+            </small>
+
+          </p>
+        </div>
+        <div class="card-footer border-success">
+          <i class="fa fa-expand" aria-hidden="true"></i>
+          
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>
 
 <script src="{{ url_for('static', filename='squares_home.js') }}"></script>

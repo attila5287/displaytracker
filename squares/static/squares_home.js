@@ -8,11 +8,26 @@
 /* eslint-disable no-use-before-define */
 updateByDefault();
 
+const $squareSel3ct = document.getElementById('opts');
+
+newFunction();
 
 for (let index = 0; index < 10; index += 1) {
   initMouseOver(index);
 }
 
+
+function newFunction() {
+  $squareSel3ct.onchange = function () {
+    const square = $squareSel3ct.value;
+    gridView(square);
+    infoBoardSquare(square);
+    infoBoardAvlbCount(square);
+    infoBoardAvlbPerc(square);
+    infoBoardManuf(square);
+    infoBoardMostCommon(square);
+  };
+}
 
 function initMouseOver(squareID) {  
   d3.select(`#squareButton0${squareID}`)
@@ -23,7 +38,6 @@ function initMouseOver(squareID) {
 
 function gridViewDown() {
   return function () {
-    d3.selectAll('.card-deck').remove();
     console.log(`---- grid View> grid View DOWN ----`);
   };
 }
@@ -42,17 +56,6 @@ function gridViewUp(squareID) {
   };
 }
 
-const $squareSel3ct = document.getElementById('opts');
-
-$squareSel3ct.onchange = function () {
-  const square = $squareSel3ct.value;
-  gridView(square);
-  infoBoardSquare(square);
-  infoBoardAvlbCount(square);
-  infoBoardAvlbPerc(square);
-  infoBoardManuf(square);
-  infoBoardMostCommon(square);
-};
 
 function updateByDefault() {
   gridView(1);
@@ -70,12 +73,12 @@ function infoBoardSquare(square) {
       return console.warn(error);
     }
     var squareJSON = response.data[0];
-    d3.select('#squareID').text(squareJSON.id).attr('class', 'text-primary').style('font-size', '1rem');
+    d3.select('#squareID').text(squareJSON.id).attr('class', 'text-primary');
     d3.select('#squareName').text(squareJSON.name).attr('class', 'text-light');
-    d3.select('#rowCount').text(squareJSON.row_count).attr('class', 'text-primary').style('font-size', '1rem');
-    d3.select('#colCount').text(squareJSON.col_count).attr('class', 'text-primary').style('font-size', '1rem');
+    d3.select('#rowCount').text(squareJSON.row_count).attr('class', 'text-primary');
+    d3.select('#colCount').text(squareJSON.col_count).attr('class', 'text-primary');
     const squareArea = squareJSON.row_count * squareJSON.col_count;
-    d3.select('#squareArea').text(squareArea).attr('class', 'text-primary').style('font-size', '1rem');
+    d3.select('#squareArea').text(squareArea).attr('class', 'text-primary');
   });
 }
 
@@ -85,7 +88,7 @@ function infoBoardAvlbCount(square) {
     if (error) {
       return console.warn(error);
     }
-    d3.select('#avlbItemsCount').text(response).attr('class', 'text-primary').style('font-size', '1rem');
+    d3.select('#avlbItemsCount').text(response);
   });
 }
 
@@ -96,7 +99,7 @@ function infoBoardAvlbPerc(square) {
       return console.warn(error);
     }
 
-    d3.select('#avlbItemsPerc').text(`${response}%`).style('font-size', '1rem');
+    d3.select('#avlbItemsPerc').text(`${response}`);
   });
 }
 
@@ -159,12 +162,12 @@ function gridView(square) {
     d3.json(queryURL, (data) => {
       for (let index = 0; index < squareJSON.row_count; index += 1) {
         const row = data[index];
-        const $cardDeck = $grid.append('div').attr('class', 'card-deck mt-2 px-0');
+        const $cardDeck = $grid.append('div').attr('class', 'card-deck mt-2 mx-3');
         for (let i = 0; i < row.length; i += 1) {
           const JSONobj = row[i];
           
           const $card = $cardDeck.append('div')
-            .attr('class', 'card bg-dark border-success shadow-after text-center mx-1 my-2').style('border-radius','16px').style('border-width','2px');
+            .attr('class', 'card bg-dark border-success shadow-gr1d text-center mx-1 my-3').style('border-radius','16px').style('border-width','2px');
 
           const newHeader = $card.append('div').attr('class', 'card-header border-success text-center text-success shadow-gold py-1 mb-3');
 

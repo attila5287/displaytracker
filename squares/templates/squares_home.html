@@ -15,25 +15,23 @@
     <!-- select field options form info card -->
     <!-- $squareSelect is the opts field of form -->
     <form method="POST" action="" class="mt-4">
-
-  <div class="card infoboard-section bg-transparent border-success text-right">
-    <div class="card-header py-1 border-success">
-      Header
-    </div>
-    <div class="card-body my-0 py-1">
-      <p class="card-text">
-                  <em>
-            Change selection for dynamic update all info!
-            <i class="fa fa-sort text-primary ml-2 animated infinite heartBeat delay-1s" aria-hidden="true"></i>
+      <div class="card infoboard-section bg-transparent border-success text-right">
+        <div class="card-header py-1 border-success">
+          <em>
+          Change selection for dynamic update all info!
+          <i class="fa fa-sort text-primary ml-2 animated infinite heartBeat delay-1s" aria-hidden="true"></i>
           </em>
-
-        </p>
-        <div class="form-group">
-          {{ form.csrf_token }}
-          {{form.opts(class="custom-select border-primary text-center text-uppercase mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
-        </div>                
-    </div>
-  </div>
+        </div>
+        <div class="card-body my-0 py-1">
+          <p class="card-text">
+    
+            </p>
+            <div class="form-group">
+              {{ form.csrf_token }}
+              {{form.opts(class="custom-select border-primary text-center text-uppercase mb-0 p-0", style="border-radius: 9px;border-width: 3px;font-size: 14px;")}}
+            </div>                
+        </div>
+      </div>
   <div class="card infoboard-section bg-transparent border-success text-success text-center mt-2">
     <div class="card-body my-0 py-1">
 
@@ -78,7 +76,7 @@
         <i class="fas fa-cog fa-spin text-success"></i>
       </div>
       <a class="btn btn-dark border-dark px-3" style="border-width:thick;border-radius: 2rem;">
-        <i class="fa fa-2x animated infinite pulse delay-1s text-secondary">
+        <i class="fa fa-2x animated infinite pulse delay-1s text-secondary text-monospace">
           <em class="text-secondary">
             <i id="squareName"></i>
           </em>

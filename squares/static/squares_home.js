@@ -1,3 +1,4 @@
+/* eslint-disable-next-line linebreak-style*/
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable no-console */
 /* eslint-disable linebreak-style */
@@ -6,18 +7,15 @@
 /* eslint-disable no-undef */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
+
 updateByDefault();
-
-const $squareSel3ct = document.getElementById('opts');
-
-newFunction();
 
 for (let index = 0; index < 10; index += 1) {
   initMouseOver(index);
 }
 
+var $squareSel3ct = document.getElementById("opts");
 
-function newFunction() {
   $squareSel3ct.onchange = function () {
     const square = $squareSel3ct.value;
     gridView(square);
@@ -27,7 +25,17 @@ function newFunction() {
     infoBoardManuf(square);
     infoBoardMostCommon(square);
   };
+
+
+function updateByDefault() {
+  gridView(1);
+  infoBoardSquare(1);
+  infoBoardAvlbCount(1);
+  infoBoardAvlbPerc(1);
+  infoBoardManuf(1);
+  infoBoardMostCommon(1);
 }
+
 
 function initMouseOver(squareID) {  
   d3.select(`#squareButton0${squareID}`)
@@ -45,7 +53,6 @@ function gridViewDown() {
 
 function gridViewUp(squareID) {
   return function () {
-    d3.selectAll('.card-deck').remove();
     gridView(squareID);
     infoBoardSquare(squareID);
     infoBoardAvlbCount(squareID);
@@ -56,15 +63,6 @@ function gridViewUp(squareID) {
   };
 }
 
-
-function updateByDefault() {
-  gridView(1);
-  infoBoardSquare(1);
-  infoBoardAvlbCount(1);
-  infoBoardAvlbPerc(1);
-  infoBoardManuf(1);
-  infoBoardMostCommon(1);
-}
 
 function infoBoardSquare(square) {
   const queryURL = `/fetch/square/info/${square}`;
@@ -151,13 +149,13 @@ function infoBoardMostCommon(square) {
   });
 }
 
-
 function gridView(square) {
   const squareURL = `/fetch/square/info/${square}`;
   d3.json(squareURL, (response) => {
     const squareJSON = response.data[0];
     const queryURL = `/fetch/d3/grid/${square}`;
     const $grid = d3.select('.grid');
+    d3.selectAll('.card-deck').remove();
 
     d3.json(queryURL, (data) => {
       for (let index = 0; index < squareJSON.row_count; index += 1) {

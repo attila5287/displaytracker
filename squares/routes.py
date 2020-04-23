@@ -66,9 +66,6 @@ def show_item(item_id):
     custom_title = 'Show ' + str(item.id) + ' ' + item.catalog_fullname
     return render_template('show_item.html', title=custom_title, legend='Show Item ' + str(item.id), item=item)
 
-# @app.route("/")
-
-
 @app.route("/inventory/list")
 def inv_lister():
     pass
@@ -996,7 +993,7 @@ def fetch_square_info(square_id):
 
 
 # squares_all
-
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/squares/all', methods=['GET', 'POST'])
 def sqr_home():
     ''' SQUARE-HOME: ALL SQRS'''
@@ -1309,7 +1306,7 @@ def fetch_ddslick(manufacturer):
     return jsonify({'items': itemArray})
 
 
-@app.route('/', methods=['GET', 'POST'])
+
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     ''' DASHBOARD WITH DYNAMIC CHARTS AND FIELDS'''
